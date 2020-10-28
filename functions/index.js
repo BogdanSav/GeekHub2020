@@ -15,8 +15,8 @@
              let Condition = new Function('a1,b1,a2,b2', 'return ' + condition.value + ";");
 
              if (Condition(Number(a1.value), Number(b1.value), Number(a2.value), Number(b2.value))) {
-                 result.style.backgroundColor = "rgb(182, 215, 168)";
-             } else result.style.backgroundColor = "rgb(255,255,255)";
+                 result.style.backgroundColor = "#b6d7a8";
+             } else result.style.backgroundColor = "#fff";
 
              result.value = calc(Number(a1.value), Number(b1.value), Number(a2.value), Number(b2.value));
 
