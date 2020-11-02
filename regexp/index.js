@@ -2,7 +2,7 @@ document.querySelector('#user-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
     let rules = {
-        name: /[a-щА-щЬьЮюЯяІіЄєҐґЇї]+\s+[a-щА-щЬьЮюЯяІіЄєҐґЇї]+\s+[a-щА-щЬьЮюЯяІіЄєҐґЇї]+$/,
+        name: /^[a-щА-щЬьЮюЯяІіЄєҐґЇї]+\s+[a-щА-щЬьЮюЯяІіЄєҐґЇї]+\s+[a-щА-щЬьЮюЯяІіЄєҐґЇї]+$/,
         email: /^[^@\.][a-zA-Z0-9.-]+[^\.]@[^\.][a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+[^@]$/,
         password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z0-9]{8,}/
     };
@@ -31,7 +31,7 @@ document.querySelectorAll('[data-show]').forEach(function(button) {
         let preview = document.querySelector('#preview');
         let textRules = {
             strong: /[++][^\s](.+)[^\s][++]/gm,
-            italic: /[--][^\s](.+)[^\s][--]/gm,
+            italic: /[--][^\s](.+)[^\s][--][^\s]/gm,
         };
         let replace = {
             strong: "<strong> $1 </strong>",
@@ -43,9 +43,6 @@ document.querySelectorAll('[data-show]').forEach(function(button) {
                 preview.innerHTML = description.value.replace(textRules[key], replace[key]);
             } else preview.innerHTML = description.value;
         }
-
-
-
 
         document.querySelector('#' + e.currentTarget.getAttribute('data-show')).classList.remove('d-none');
 
