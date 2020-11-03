@@ -49,7 +49,7 @@ document.querySelectorAll('[data-show]').forEach(function(button) {
             strong: "<strong> $1 </strong>",
             italic: "<i> $1</i>",
             images: ' <img src="$1$2$3"/>',
-            sites: ' <a href="$1$2"/>$2</a>',
+            sites: ' <a href="$1$2"/>$1$2</a>',
         };
         let splited = description.value.split(" " || ", " || ". ");
 
