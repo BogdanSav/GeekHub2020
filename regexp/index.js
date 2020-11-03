@@ -3,7 +3,7 @@ document.querySelector('#user-form').addEventListener('submit', function(e) {
 
     let rules = {
         name: /^[a-щА-щЬьЮюЯяІіЄєҐґЇї]+\s+[a-щА-щЬьЮюЯяІіЄєҐґЇї]+\s+[a-щА-щЬьЮюЯяІіЄєҐґЇї]+$/,
-        email: /^[^@.][a-zA-Z0-9.-]+[^.@]@[^.@][a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+[^.@]$/,
+        email: /^([^@.][a-zA-Z0-9.-]+)[^.@]@[^.@][a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+[^.@]$/,
         password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z0-9]{8,}/
     };
     let fields = {
