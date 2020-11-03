@@ -3,7 +3,7 @@ document.querySelector('#user-form').addEventListener('submit', function(e) {
 
     let rules = {
         name: /^[a-щА-щЬьЮюЯяІіЄєҐґЇї]+\s+[a-щА-щЬьЮюЯяІіЄєҐґЇї]+\s+[a-щА-щЬьЮюЯяІіЄєҐґЇї]+$/,
-        email: /^[^@\.][a-zA-Z0-9.-]+[^\.]@[^\.][a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+[^@]$/,
+        email: /^[^@.][a-zA-Z0-9.-]+[^.@]@[^.@][a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+[^.@]$/,
         password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z0-9]{8,}/
     };
     let fields = {
@@ -23,29 +23,59 @@ document.querySelector('#user-form').addEventListener('submit', function(e) {
 });
 
 document.querySelectorAll('[data-show]').forEach(function(button) {
+
     button.addEventListener('click', function(e) {
-        e.preventDefault();
+
+        if (button.getAttribute('id') == "btn2") {
+            document.querySelector('#btn1').classList.remove('active');
+            document.querySelector('#btn2').classList.add('active');
+        } else {
+            document.querySelector('#btn2').classList.remove('active');
+            document.querySelector('#btn1').classList.add('active');
+        }
         document.querySelector('#description').classList.add('d-none');
         document.querySelector('#preview').classList.add('d-none');
+
         let description = document.querySelector('#description');
         let preview = document.querySelector('#preview');
+
         let textRules = {
-            strong: /[++][^\s](.+)[^\s][++]/gm,
-            italic: /[--][^\s](.+)[^\s][--][^\s]/gm,
+            strong: /[+][+](\w+)[+][+]/,
+            italic: /[-][-](\w+)[-][-]/,
+            images: /\((https\:\/\/)(.+)(.jpg|.png)\)/i,
+            sites: /(https\:\/\/)(.+)/i,
         };
         let replace = {
             strong: "<strong> $1 </strong>",
-            italic: "<i> $1 </i>",
+            italic: "<i> $1</i>",
+            images: ' <img src="$1$2$3"/>',
+            sites: ' <a href="$1$2"/>$2</a>',
         };
-        for (key in textRules) {
-            if (textRules[key].test(description.value)) {
+        let splited = description.value.split(" " || ", " || ". ");
 
-                preview.innerHTML = description.value.replace(textRules[key], replace[key]);
-            } else preview.innerHTML = description.value;
+        function replaceByRule(input, rules, replaces) {
+            let result = "";
+            for (let i = 0; i < input.length; i++) {
+                if (rules.strong.test(input[i])) {
+                    result += input[i].replace(rules.strong, replaces.strong);
+
+                } else if (rules.italic.test(input[i])) {
+                    result += input[i].replace(rules.italic, replaces.italic);
+
+                } else if (rules.images.test(input[i])) {
+                    result += input[i].replace(rules.images, replaces.images);
+                } else if (rules.sites.test(input[i])) {
+                    result += input[i].replace(rules.sites, replaces.sites);
+                } else result += " " + input[i];
+
+            }
+            return result;
+
+
         }
+        preview.innerHTML = replaceByRule(splited, textRules, replace);
 
         document.querySelector('#' + e.currentTarget.getAttribute('data-show')).classList.remove('d-none');
-
 
     });
 });
