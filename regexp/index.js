@@ -40,8 +40,8 @@ document.querySelectorAll('[data-show]').forEach(function(button) {
         let preview = document.querySelector('#preview');
 
         let textRules = {
-            strong: /[+][+]([a-щА-щЬьЮюЯяІіЄєҐґЇї]*|[a-zA-Z]*)[+][+]/,
-            italic: /[-][-]([a-щА-щЬьЮюЯяІіЄєҐґЇї]*|[a-zA-Z]*)[-][-]/,
+            strong: /[+][+]([a-щА-щЬьЮюЯяІіЄєҐґЇї]+|[a-zA-Z]+)[+][+]/,
+            italic: /[-][-]([a-щА-щЬьЮюЯяІіЄєҐґЇї]+|[a-zA-Z]+)[-][-]/,
             images: /\((https\:\/\/)(.+)(.jpg|.png)\)/i,
             sites: /(https\:\/\/)(.+)/i,
         };
