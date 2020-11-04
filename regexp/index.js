@@ -3,7 +3,7 @@ document.querySelector('#user-form').addEventListener('submit', function(e) {
 
     let rules = {
         name: /^[a-щА-щЬьЮюЯяІіЄєҐґЇї]+\s+[a-щА-щЬьЮюЯяІіЄєҐґЇї]+\s+[a-щА-щЬьЮюЯяІіЄєҐґЇї]+$/,
-        email: /^([^@.][a-zA-Z0-9.-]+)[^.@]@[^.@][a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+[^.@]$/,
+        email: /^([^\W]+[a-zA-Z0-9.-]*)[^\W]@[^\W]([a-zA-Z0-9.-]*)\.([a-zA-Z0-9.-]*[^\W])$/,
         password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z0-9]{8,}/
     };
     let fields = {
@@ -40,14 +40,14 @@ document.querySelectorAll('[data-show]').forEach(function(button) {
         let preview = document.querySelector('#preview');
 
         let textRules = {
-            strong: /[+][+](\w+)[+][+]/,
-            italic: /[-][-](\w+)[-][-]/,
+            strong: /[+][+]([a-щА-щЬьЮюЯяІіЄєҐґЇї]*|[a-zA-Z]*)[+][+]/,
+            italic: /[-][-]([a-щА-щЬьЮюЯяІіЄєҐґЇї]*|[a-zA-Z]*)[-][-]/,
             images: /\((https\:\/\/)(.+)(.jpg|.png)\)/i,
             sites: /(https\:\/\/)(.+)/i,
         };
         let replace = {
-            strong: "<strong> $1 </strong>",
-            italic: "<i> $1</i>",
+            strong: "<strong>$1</strong>",
+            italic: "<i>$1</i>",
             images: ' <img src="$1$2$3"/>',
             sites: ' <a href="$1$2"/>$1$2</a>',
         };
