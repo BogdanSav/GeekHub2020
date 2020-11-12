@@ -1,21 +1,42 @@
+let rowInd, colInd;
+jQuery('tr').on('click', function(e) {
+    rowInd = e.currentTarget.rowIndex;
+});
+jQuery('td').on('click', function(e) {
+    colInd = e.currentTarget.cellIndex;
+});
+
 jQuery('input').on('paste', function(e) {
     e.preventDefault();
 
     var text = e.originalEvent.clipboardData.getData('text/plain');
+    let table = document.querySelector('#table');
     var input = e.currentTarget;
+
+
     let data = text.split("\n");
     let splitedData = [];
+    data.forEach(element => {
+        splitedData.push(element.split(';'));
+    });
 
-    for (let i = 0; i < data.length; i++) {
-        splitedData.push(data[i].split(";"));
-
+    for (let i = rowInd; i < (splitedData.length); i++) {
+        let tr = document.createElement('tr');
+        for (let j = colInd; j < (splitedData[i].length); j++) {
+            let td = document.createElement('td');
+            tr.appendChild(td);
+        }
+        table.appendChild(tr);
     }
-    console.log(splitedData);
+
+
 
 
 
 
 });
+
+
 
 var currentColumn;
 
