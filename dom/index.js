@@ -5,63 +5,100 @@ jQuery('input').on('paste', function(e) {
     let thead = document.querySelector('#table thead tr');
     let tbody = document.querySelector("#tbody")
     let tbodytr = document.querySelectorAll('#tbody tr');
+    console.log(tbodytr);
+
     var input = e.currentTarget;
     let currentName = input.name.split('');
     console.log(currentName);
+
+
     let names = [];
     let splitedData = [];
+
     text.split("\n").forEach(element => {
         splitedData.push(element.split(';'));
     });
     console.log(splitedData);
+    let secondSplited = [];
+    for (let i = 0; i < splitedData.length; i++) {
 
-    document.querySelectorAll("input").forEach(function(e) {
-        names.push(e.name);
-    });
-    console.log(names);
-
-    function addRowsAndCells(curName, array) {
-
+        secondSplited = secondSplited.concat(splitedData[i]);
+    }
+    console.log(secondSplited);
 
 
-        let alphabet = 'abcdefgh1jklmnopqrstuvwxyz';
-        for (let j = Number(curName[1]); j < (array.length + Number(curName[1])); j++) {
-            for (let i = alphabet.indexOf(curName[0]); i < (array[0].length + alphabet.indexOf(curName[0])); i++) {
-                let item = document.getElementsByName(alphabet[i] + j)[0];
-                if (!item) {
-                    if (document.getElementsByName(alphabet[i - 1] + j)) {
-                        let th = document.createElement('th');
-                        th.innerHTML = alphabet[i].toUpperCase();
-                        thead.appendChild(th);
-                        for (let k = 0; k < tbodytr.length; k++) {
-                            let colItem = tbodytr[k].appendChild(document.createElement('td'));
-                            colItem.innerHTML = '<input type="text" name="' + alphabet[i] + j + '" value=""/>';
+    function addThead(array, curName) {
+        let aplphabet = 'abcdefghijklmnopqrstuvwxyz';
+        for (let i = 0; i <= (array.length + aplphabet.indexOf(curName[0])); i++) {
+            if (!thead.children[i]) {
+                let th = document.createElement('th');
+                th.innerHTML = aplphabet[i - 1].toUpperCase();
+                thead.appendChild(th);
+            }
+
+        }
+    }
+
+    function addElements(curName, array) {
+        let aplphabet = 'abcdefghijklmnopqrstuvwxyz';
+        for (let i = aplphabet.indexOf(curName[0]); i < (array.length + aplphabet.indexOf(curName[0])); i++) {
+
+            for (let j = Number(curName[1]); j < (array[0].length + Number(curName[1])); j++) {
+                if (!tbody.children[j - 1]) {
+                    let tr = document.createElement('tr');
+                    tr.innerHTML = "<th>" + j + "</th>";
+                    for (let k = 0; k < tbodytr.length + aplphabet.indexOf(curName[0]) + 1; k++) {
+                        if (!tr[k]) {
+                            let td = document.createElement('td');
+                            td.innerHTML = '<input type=text name="' + aplphabet[k] + (j) + '" value=""/>';
+                            tr.appendChild(td);
                         }
-                        item = document.getElementsByName(alphabet[i] + j)[0];
-                    } else {
-                        let tr = document.createElement('tr');
-                        tr.innerHTML = '<th>' + j + '</th>';
-                        tbody.appendChild(tr);
-                        for (let k = 0; k < tbodytr.length - 1; k++) {
-                            let colItem = tbodytr[k].appendChild(document.createElement('td'));
-                            colItem.innerHTML = '<input type="text" name="' + alphabet[i] + j + '" value=""/>';
-                        }
-                        item = document.getElementsByName(alphabet[i] + j)[0];
                     }
+                    tbody.appendChild(tr);
                 }
-                item.value = array[j - Number(curName[1])][i - alphabet.indexOf(curName[0])];
+
 
             }
 
         }
+        for (let h = 0; h < 2; h++) {
+            for (let k = 0; k < tbodytr.length + aplphabet.indexOf(curName[0]) + 2; k++) {
+                if (!tbodytr[h].children[k]) {
+                    let td = document.createElement('td');
+                    td.innerHTML = '<input type=text name="' + aplphabet[k - 1] + (h + 1) + '" value=""/>';
+                    tbodytr[h].appendChild(td);
+                }
+            }
+        }
+
+        // document.querySelectorAll("input").forEach(function(e) {
+        //     names.push(e.name);
+        // });
+        let namesOfCells = [];
+        for (let i = aplphabet.indexOf(curName[0]); i <= (array.length + aplphabet.indexOf(curName[0])); i++) {
+            for (let j = Number(curName[1]); j < (array[0].length + Number(curName[1])); j++) {
+
+                let nameOfCell = document.getElementsByName((aplphabet[j - 1] + (i + 1)))[0];
+                if (nameOfCell) {
+                    namesOfCells.push(nameOfCell);
+                }
+
+            }
+
+        }
+        namesOfCells.forEach(function(item, index) {
+            console.log(item.name, index);
+            item.value = secondSplited[index];
+        });
 
     }
-    addRowsAndCells(currentName, splitedData)
-        // for (let j = Number(curName[1]); j < (array.length + Number(curName[1])); j++) {
-        //     for (let i = alphabet.indexOf(curName[0]); i < (array[0].length + alphabet.indexOf(curName[0])); i++) 
 
+    function textPaste(curName, array) {
 
+    }
 
+    addThead(splitedData, currentName);
+    addElements(currentName, splitedData);
 
 });
 

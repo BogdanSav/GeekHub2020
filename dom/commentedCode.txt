@@ -1,0 +1,39 @@
+// function addRowsAndCells(curName, array) {
+
+
+
+    //     let alphabet = 'abcdefgh1jklmnopqrstuvwxyz';
+    //     for (let j = Number(curName[1]); j < (array.length + Number(curName[1])); j++) {
+    //         for (let i = alphabet.indexOf(curName[0]); i < (array[0].length + alphabet.indexOf(curName[0])); i++) {
+    //             let item = document.getElementsByName(alphabet[i] + j)[0];
+    //             if (!item) {
+    //                 if (document.getElementsByName(alphabet[i - 1] + j)) {
+    //                     let th = document.createElement('th');
+    //                     th.innerHTML = alphabet[i].toUpperCase();
+    //                     thead.appendChild(th);
+    //                     for (let k = 0; k < tbodytr.length; k++) {
+    //                         let colItem = tbodytr[k].appendChild(document.createElement('td'));
+    //                         colItem.innerHTML = '<input type="text" name="' + alphabet[i] + j + '" value=""/>';
+    //                     }
+    //                     item = document.getElementsByName(alphabet[i] + j)[0];
+    //                 } else {
+    //                     let tr = document.createElement('tr');
+    //                     tr.innerHTML = '<th>' + j + '</th>';
+    //                     tbody.appendChild(tr);
+    //                     for (let k = 0; k < tbodytr.length - 1; k++) {
+    //                         let colItem = tbodytr[k].appendChild(document.createElement('td'));
+    //                         colItem.innerHTML = '<input type="text" name="' + alphabet[i] + j + '" value=""/>';
+    //                     }
+    //                     item = document.getElementsByName(alphabet[i] + j)[0];
+    //                 }
+    //             }
+    //             item.value = array[j - Number(curName[1])][i - alphabet.indexOf(curName[0])];
+
+    //         }
+
+    //     }
+
+    // }
+    // addRowsAndCells(currentName, splitedData)
+    //     // for (let j = Number(curName[1]); j < (array.length + Number(curName[1])); j++) {
+    //     //     for (let i = alphabet.indexOf(curName[0]); i < (array[0].length + alphabet.indexOf(curName[0])); i++) 
