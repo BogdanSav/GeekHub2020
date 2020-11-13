@@ -1,35 +1,64 @@
-let rowInd, colInd;
-jQuery('tr').on('click', function(e) {
-    rowInd = e.currentTarget.rowIndex;
-});
-jQuery('td').on('click', function(e) {
-    colInd = e.currentTarget.cellIndex;
-});
-
 jQuery('input').on('paste', function(e) {
     e.preventDefault();
 
     var text = e.originalEvent.clipboardData.getData('text/plain');
-    let table = document.querySelector('#table');
+    let thead = document.querySelector('#table thead tr');
+    let tbody = document.querySelector("#tbody")
+    let tbodytr = document.querySelectorAll('#tbody tr');
     var input = e.currentTarget;
-
-
-    let data = text.split("\n");
+    let currentName = input.name.split('');
+    console.log(currentName);
+    let names = [];
     let splitedData = [];
-    data.forEach(element => {
+    text.split("\n").forEach(element => {
         splitedData.push(element.split(';'));
     });
+    console.log(splitedData);
 
-    for (let i = rowInd; i < (splitedData.length); i++) {
-        let tr = document.createElement('tr');
-        for (let j = colInd; j < (splitedData[i].length); j++) {
-            let td = document.createElement('td');
-            tr.appendChild(td);
+    document.querySelectorAll("input").forEach(function(e) {
+        names.push(e.name);
+    });
+    console.log(names);
+
+    function addRowsAndCells(curName, array) {
+
+
+
+        let alphabet = 'abcdefgh1jklmnopqrstuvwxyz';
+        for (let j = Number(curName[1]); j < (array.length + Number(curName[1])); j++) {
+            for (let i = alphabet.indexOf(curName[0]); i < (array[0].length + alphabet.indexOf(curName[0])); i++) {
+                let item = document.getElementsByName(alphabet[i] + j)[0];
+                if (!item) {
+                    if (document.getElementsByName(alphabet[i - 1] + j)) {
+                        let th = document.createElement('th');
+                        th.innerHTML = alphabet[i].toUpperCase();
+                        thead.appendChild(th);
+                        for (let k = 0; k < tbodytr.length; k++) {
+                            let colItem = tbodytr[k].appendChild(document.createElement('td'));
+                            colItem.innerHTML = '<input type="text" name="' + alphabet[i] + j + '" value=""/>';
+                        }
+                        item = document.getElementsByName(alphabet[i] + j)[0];
+                    } else {
+                        let tr = document.createElement('tr');
+                        tr.innerHTML = '<th>' + j + '</th>';
+                        tbody.appendChild(tr);
+                        for (let k = 0; k < tbodytr.length - 1; k++) {
+                            let colItem = tbodytr[k].appendChild(document.createElement('td'));
+                            colItem.innerHTML = '<input type="text" name="' + alphabet[i] + j + '" value=""/>';
+                        }
+                        item = document.getElementsByName(alphabet[i] + j)[0];
+                    }
+                }
+                item.value = array[j - Number(curName[1])][i - alphabet.indexOf(curName[0])];
+
+            }
+
         }
-        table.appendChild(tr);
+
     }
-
-
+    addRowsAndCells(currentName, splitedData)
+        // for (let j = Number(curName[1]); j < (array.length + Number(curName[1])); j++) {
+        //     for (let i = alphabet.indexOf(curName[0]); i < (array[0].length + alphabet.indexOf(curName[0])); i++) 
 
 
 
