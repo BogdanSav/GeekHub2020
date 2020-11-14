@@ -47,7 +47,7 @@ jQuery('input').on('paste', function(e) {
                 if (!tbody.children[j - 1]) {
                     let tr = document.createElement('tr');
                     tr.innerHTML = "<th>" + j + "</th>";
-                    for (let k = 0; k < tbodytr.length + aplphabet.indexOf(curName[0]) + 1; k++) {
+                    for (let k = 0; k < array.length + aplphabet.indexOf(curName[0]); k++) {
                         if (!tr[k]) {
                             let td = document.createElement('td');
                             td.innerHTML = '<input type=text name="' + aplphabet[k] + (j) + '" value=""/>';
@@ -62,7 +62,7 @@ jQuery('input').on('paste', function(e) {
 
         }
         for (let h = 0; h < 2; h++) {
-            for (let k = 0; k < tbodytr.length + aplphabet.indexOf(curName[0]) + 2; k++) {
+            for (let k = 0; k < array.length + aplphabet.indexOf(curName[0]) + 1; k++) {
                 if (!tbodytr[h].children[k]) {
                     let td = document.createElement('td');
                     td.innerHTML = '<input type=text name="' + aplphabet[k - 1] + (h + 1) + '" value=""/>';
@@ -93,9 +93,7 @@ jQuery('input').on('paste', function(e) {
 
     }
 
-    function textPaste(curName, array) {
 
-    }
 
     addThead(splitedData, currentName);
     addElements(currentName, splitedData);

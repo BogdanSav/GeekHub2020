@@ -37,3 +37,8 @@
     // addRowsAndCells(currentName, splitedData)
     //     // for (let j = Number(curName[1]); j < (array.length + Number(curName[1])); j++) {
     //     //     for (let i = alphabet.indexOf(curName[0]); i < (array[0].length + alphabet.indexOf(curName[0])); i++) 
+
+
+    1;2;3;4;5
+    1;2;3;4;5
+    1;2;3;4;5
