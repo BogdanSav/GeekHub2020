@@ -71,14 +71,16 @@ jQuery('input').on('paste', function(e) {
             }
         }
 
-        // document.querySelectorAll("input").forEach(function(e) {
-        //     names.push(e.name);
-        // });
+        document.querySelectorAll("input").forEach(function(e) {
+            names.push(e.name);
+        });
+        // console.log(names);
         let namesOfCells = [];
-        for (let i = aplphabet.indexOf(curName[0]); i <= (array.length + aplphabet.indexOf(curName[0])); i++) {
-            for (let j = Number(curName[1]); j < (array[0].length + Number(curName[1])); j++) {
 
-                let nameOfCell = document.getElementsByName((aplphabet[j - 1] + (i + 1)))[0];
+        for (let j = Number(curName[1]); j < (array[0].length + Number(curName[1])); j++) {
+            for (let i = aplphabet.indexOf(curName[0]); i <= (array.length + aplphabet.indexOf(curName[0])); i++) {
+                console.log(i, j);
+                let nameOfCell = document.getElementsByName((aplphabet[i] + (j)))[0];
                 if (nameOfCell) {
                     namesOfCells.push(nameOfCell);
                 }
@@ -87,7 +89,7 @@ jQuery('input').on('paste', function(e) {
 
         }
         namesOfCells.forEach(function(item, index) {
-            console.log(item.name, index);
+            // console.log(item.name, index);
             item.value = secondSplited[index];
         });
 
