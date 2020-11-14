@@ -29,7 +29,7 @@ jQuery('input').on('paste', function(e) {
 
     function addThead(array, curName) {
         let aplphabet = 'abcdefghijklmnopqrstuvwxyz';
-        for (let i = 0; i <= (array.length + aplphabet.indexOf(curName[0])); i++) {
+        for (let i = 0; i <= (array[0].length + aplphabet.indexOf(curName[0])); i++) {
             if (!thead.children[i]) {
                 let th = document.createElement('th');
                 th.innerHTML = aplphabet[i - 1].toUpperCase();
@@ -43,11 +43,11 @@ jQuery('input').on('paste', function(e) {
         let aplphabet = 'abcdefghijklmnopqrstuvwxyz';
         for (let i = aplphabet.indexOf(curName[0]); i < (array.length + aplphabet.indexOf(curName[0])); i++) {
 
-            for (let j = Number(curName[1]); j < (array[0].length + Number(curName[1])); j++) {
+            for (let j = Number(curName[1]); j < (array.length + Number(curName[1])); j++) {
                 if (!tbody.children[j - 1]) {
                     let tr = document.createElement('tr');
                     tr.innerHTML = "<th>" + j + "</th>";
-                    for (let k = 0; k < array.length + aplphabet.indexOf(curName[0]); k++) {
+                    for (let k = 0; k < array[i].length + aplphabet.indexOf(curName[0]); k++) {
                         if (!tr[k]) {
                             let td = document.createElement('td');
                             td.innerHTML = '<input type=text name="' + aplphabet[k] + (j) + '" value=""/>';
@@ -62,7 +62,7 @@ jQuery('input').on('paste', function(e) {
 
         }
         for (let h = 0; h < 2; h++) {
-            for (let k = 0; k < array.length + aplphabet.indexOf(curName[0]) + 1; k++) {
+            for (let k = 0; k <= array[h].length + aplphabet.indexOf(curName[0]); k++) {
                 if (!tbodytr[h].children[k]) {
                     let td = document.createElement('td');
                     td.innerHTML = '<input type=text name="' + aplphabet[k - 1] + (h + 1) + '" value=""/>';
@@ -78,7 +78,7 @@ jQuery('input').on('paste', function(e) {
         let namesOfCells = [];
 
         for (let j = Number(curName[1]); j < (array[0].length + Number(curName[1])); j++) {
-            for (let i = aplphabet.indexOf(curName[0]); i <= (array.length + aplphabet.indexOf(curName[0])); i++) {
+            for (let i = aplphabet.indexOf(curName[0]); i < (array[0].length + aplphabet.indexOf(curName[0])); i++) {
                 console.log(i, j);
                 let nameOfCell = document.getElementsByName((aplphabet[i] + (j)))[0];
                 if (nameOfCell) {
