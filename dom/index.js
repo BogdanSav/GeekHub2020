@@ -77,7 +77,7 @@ jQuery('input').on('paste', function(e) {
         // console.log(names);
         let namesOfCells = [];
 
-        for (let j = Number(curName[1]); j < (array[0].length + Number(curName[1])); j++) {
+        for (let j = Number(curName[1]); j <= (array.length + Number(curName[1])); j++) {
             for (let i = aplphabet.indexOf(curName[0]); i < (array[0].length + aplphabet.indexOf(curName[0])); i++) {
                 console.log(i, j);
                 let nameOfCell = document.getElementsByName((aplphabet[i] + (j)))[0];
