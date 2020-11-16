@@ -111,6 +111,9 @@ jQuery('thead th').on('contextmenu', function(e) {
 
     currentColumn = e.currentTarget;
 
+    if (currentColumn.innerHTML == "&nbsp;") {
+        return;
+    }
     var menu = jQuery('#column-menu');
 
     menu.addClass('d-block');
