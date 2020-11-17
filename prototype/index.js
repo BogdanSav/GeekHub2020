@@ -40,7 +40,8 @@ function Csv() {
 
             });
         }
-        console.log(this.result);
+        // console.log(this.result);
+        return this.result;
 
 
     }
@@ -57,7 +58,8 @@ function Csv() {
                 this.result += elem.join(separator);
             });
         }
-        console.log(this.result);
+        // console.log(this.result);
+        return this.result;
     }
 
 }
