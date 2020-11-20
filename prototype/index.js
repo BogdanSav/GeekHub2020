@@ -44,23 +44,29 @@ Csv.prototype.parse = function(string, separator) {
     return this.result;
 
 
-}
+};
 Csv.prototype.generate = function(array, separatorGenerate) {
     this.array = array;
     this.separatorGenerate = separatorGenerate || "";
     this.generateResult = "";
     if (!this.separatorGenerate) {
-        array.forEach(elem => {
-            this.generateResult += elem.join(", ") + "\n";
+        this.array.forEach((elem, index, array) => {
+            if (index < array.length - 1) {
+                this.generateResult += elem.join(",") + "\n";
+            } else this.generateResult += elem.join(",");
+
         });
     } else {
-        array.forEach(elem => {
-            this.generateResult += elem.join(separatorGenerate) + "\n";
+        this.array.forEach((elem, index, array) => {
+            if (index < array.length - 1) {
+                this.generateResult += elem.join(this.separatorGenerate) + "\n";
+            } else this.generateResult += elem.join(this.separatorGenerate);
+
         });
     }
     // console.log(this.result);
     return this.generateResult;
-}
+};
 
 function CsvArray() {};
 CsvArray.prototype = Object.create(Array.prototype);
@@ -93,6 +99,7 @@ CsvArray.prototype.parse = function(string, separator) {
                 // console.log(this.separatorValue[key]);
                 this.string.split('\n').forEach(element => {
                     this.push(element.split(this.separatorValue[key]));
+                    console.log(this);
 
                 });
 
@@ -109,37 +116,53 @@ CsvArray.prototype.parse = function(string, separator) {
 
 
 
-}
-CsvArray.prototype.generate = function(array, separatorGenerate) {
-    this.array = array;
+};
+CsvArray.prototype.generate = function(separatorGenerate) {
+
     this.separatorGenerate = separatorGenerate || "";
     this.generateResult = "";
     if (!this.separatorGenerate) {
-        array.forEach(elem => {
-            this.generateResult += elem.join(", ") + "\n";
+        this.forEach((elem, index, array) => {
+            if (index < array.length - 1) {
+                this.generateResult += elem.join(",") + "\n";
+            } else this.generateResult += elem.join(",");
+
         });
     } else {
-        array.forEach(elem => {
-            this.generateResult += elem.join(separatorGenerate) + "\n";
+        this.forEach((elem, index, array) => {
+            if (index < array.length - 1) {
+                this.generateResult += elem.join(this.separatorGenerate) + "\n";
+            } else this.generateResult += elem.join(this.separatorGenerate);
+
         });
     }
     // console.log(this.result);
     return this.generateResult;
-}
+};
 
-
-let testString = "Євпак Віктор Миколайович;ФОП;1985\nБондаренко Анатолій Васильович;міський голова;1974\nМойсієнко Василь Миколайович;перший проректор;1965";
+//#region  test values
+let testString = "Lorem Ipsum - ,це текст-\"риба\" ,що використову,ється в друкарств\nі та дизайні. L,orem Ip,sum є фактично ст,андартною\n \"рибою\" аж з, XVI сторіччя кол,и неві,домий дру";
 let testArray = [
-    ['Євпак Віктор, Миколайович', 'ФОП', '1985'],
-    ['Бондаренко Анатолій Васильович', 'міський голова', '1974'],
-    ['Мойсієнко Василь Миколайович', 'перший проректор', '1965']
+    ["Lorem Ipsum - ", "це текст-\"риба\" ", "що використову", "ється в друкарств"],
+    ["і та дизайні. L", "orem Ip", "sum є фактично ст", "андартною"],
+    [" \"рибою\" аж з", " XVI сторіччя кол", "и неві", "домий дру"]
 ];
-
-// let convertor = new Csv();
-// let csvarr = new CsvArray();
+let trueString = "Lorem Ipsum - ,це текст-\"риба\" ,що використову,ється в друкарств\nі та дизайні. L,orem Ip,sum є фактично ст,андартною\n \"рибою\" аж з, XVI сторіччя кол,и неві,домий дру";
+//#endregion
+let convertor = new Csv();
+let table = new CsvArray();
 // console.log(convertor.parse(testString));
-// csvarr.parse(testString)
-// console.log(csvarr.length, csvarr[0][0], csvarr[1][2]);
+let arrayTestString1 = "zxc,qwe,92\n12,asd,73";
+let arrayTestString2 = "zxc;qwe;92\n12;asd;73";
+table.parse("42,qwe,92\n12,asd,73");
+console.log(table.length, table[0][0], table[1][2]);
+table[0][0] = 'zxc';
+console.log(table.generate());
+console.log(table.generate(';'));
+console.log(arrayTestString1 === table.generate());
+console.log(arrayTestString2 === table.generate(';'));
+
 // console.log(convertor.parse(testString));
 // console.log(convertor.generate(testArray));
+// console.log(trueString === convertor.generate(testArray));
 // // console.log(Object.getPrototypeOf(convertor).hasOwnProperty('parse'));
