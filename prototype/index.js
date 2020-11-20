@@ -139,6 +139,18 @@ CsvArray.prototype.generate = function(separatorGenerate) {
     // console.log(this.result);
     return this.generateResult;
 };
+CsvArray.prototype.getCell = function(cell) {
+    this.parsedCell = cell.split('');
+    this.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for (let i = 0; i < this.length; i++) {
+        for (let j = 0; j < this[i].length; j++) {
+            if (this.parsedCell[1] == (i + 1) && this.parsedCell[0] == this.alphabet[j]) {
+                return this[i][j];
+
+            }
+        }
+    }
+};
 
 //#region  test values
 let testString = "Lorem Ipsum - ,це текст-\"риба\" ,що використову,ється в друкарств\nі та дизайні. L,orem Ip,sum є фактично ст,андартною\n \"рибою\" аж з, XVI сторіччя кол,и неві,домий дру";
@@ -149,20 +161,20 @@ let testArray = [
 ];
 let trueString = "Lorem Ipsum - ,це текст-\"риба\" ,що використову,ється в друкарств\nі та дизайні. L,orem Ip,sum є фактично ст,андартною\n \"рибою\" аж з, XVI сторіччя кол,и неві,домий дру";
 //#endregion
-let convertor = new Csv();
-let table = new CsvArray();
+// let convertor = new Csv();
+// let table = new CsvArray();
 // console.log(convertor.parse(testString));
-let arrayTestString1 = "zxc,qwe,92\n12,asd,73";
-let arrayTestString2 = "zxc;qwe;92\n12;asd;73";
-table.parse("42,qwe,92\n12,asd,73");
-console.log(table.length, table[0][0], table[1][2]);
-table[0][0] = 'zxc';
-console.log(table.generate());
-console.log(table.generate(';'));
-console.log(arrayTestString1 === table.generate());
-console.log(arrayTestString2 === table.generate(';'));
-
+// let arrayTestString1 = "zxc,qwe,92\n12,asd,73";
+// let arrayTestString2 = "zxc;qwe;92\n12;asd;73";
+// table.parse("42,qwe,92\n12,asd,73");
+// console.log(table.length, table[0][0], table[1][2]);
+// table[0][0] = 'zxc';
+// console.log(table.generate());
+// console.log(table.generate(';'));
+// console.log(arrayTestString1 === table.generate());
+// console.log(arrayTestString2 === table.generate(';'));
+// console.log(table.getCell("B2"));
 // console.log(convertor.parse(testString));
 // console.log(convertor.generate(testArray));
 // console.log(trueString === convertor.generate(testArray));
-// // console.log(Object.getPrototypeOf(convertor).hasOwnProperty('parse'));
+// console.log(Object.getPrototypeOf(convertor).hasOwnProperty('parse'));
