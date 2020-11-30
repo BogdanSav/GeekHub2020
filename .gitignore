@@ -1,0 +1,2 @@
+# ignore node modules
+/webpack/node_modules
