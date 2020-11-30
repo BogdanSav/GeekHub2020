@@ -7,6 +7,11 @@ module.exports = {
             template: path.resolve(__dirname, "src", "index.html")
         })
     ],
+    entry: "./src/index.js",
+    output: {
+        path: path.join(__dirname, "/dist"),
+        filename: "index-bundle.js"
+    },
     module: {
         rules: [{
             test: /\.less$/,
