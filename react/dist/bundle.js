@@ -39,25 +39,39 @@ function TH(props) {
 
 ;
 
-function Tr(props) {
+function Td(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    type: "text",
+    name: props.name
+  }));
+}
+
+function TbodyElements(props) {
   var tr = [];
-  var td = [];
 
   for (var i = 0; i < props.rows; i++) {
-    for (var j = 0; j < props.columns; j++) {
-      if (j === 0) {
-        td.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, j + 1));
-      }
+    var tbodyElements = [];
 
-      td.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    for (var j = 0; j <= props.columns; j++) {
+      if (j === 0) {
+        tbodyElements.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+          key: "tbth" + i
+        }, i + 1));
+      } else tbodyElements.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+        key: alpha[j - 1] + (i + 1)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        key: alpha[j - 1] + (i + 1),
         type: "text",
-        name: alpha[j] + (j + 1)
+        name: alpha[j - 1] + (i + 1)
       })));
-      tr[i] = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, td);
     }
+
+    tr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
+      key: "tr" + i
+    }, tbodyElements));
+    console.log(tbodyElements);
   }
 
-  console.log(tr);
   return tr;
 }
 
@@ -68,9 +82,9 @@ function Table(props) {
       data = props.data;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(TH, {
     columns: columns
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Tr, {
-    rows: rows,
-    columns: columns
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(TbodyElements, {
+    columns: columns,
+    rows: rows
   })));
 }
 ;
