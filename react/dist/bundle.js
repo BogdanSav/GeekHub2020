@@ -8,7 +8,7 @@
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -17,6 +17,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ Table
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
+
 
 var alpha = "abcdefghijklmnopqrstuvwxyz";
 
@@ -25,11 +28,13 @@ function TH(props) {
 
   for (var i = 0; i < props.columns; i++) {
     if (i === 0) {
-      th[0] = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "\xA0");
+      th[0] = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+        key: "thth"
+      }, "\xA0");
     }
 
     th.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
-      key: "th" + i
+      key: "thth" + i
     }, alpha[i].toUpperCase()));
     console.log(th);
   }
@@ -39,38 +44,67 @@ function TH(props) {
 
 ;
 
-function Td(props) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-    type: "text",
-    name: props.name
-  }));
-}
-
 function TbodyElements(props) {
   var tr = [];
+  var names = [];
 
-  for (var i = 0; i < props.rows; i++) {
-    var tbodyElements = [];
+  if (props.cell == undefined) {
+    for (var i = 0; i < props.rows; i++) {
+      var tbodyElements = [];
 
-    for (var j = 0; j <= props.columns; j++) {
-      if (j === 0) {
-        tbodyElements.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
-          key: "tbth" + i
-        }, i + 1));
-      } else tbodyElements.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
-        key: alpha[j - 1] + (i + 1)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-        key: alpha[j - 1] + (i + 1),
-        type: "text",
-        name: alpha[j - 1] + (i + 1)
-      })));
+      for (var j = 0; j <= props.columns; j++) {
+        if (j === 0) {
+          tbodyElements.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+            key: "tbth" + i
+          }, i + 1));
+        } else {
+          tbodyElements.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+            key: "td" + (j - 1) + (i + 1)
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+            key: alpha[j - 1] + (i + 1),
+            type: "text",
+            name: alpha[j - 1] + (i + 1)
+          })));
+          names.push(alpha[j - 1] + (i + 1));
+        }
+      }
+
+      tr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
+        key: "tr" + i
+      }, tbodyElements));
+      console.log(tbodyElements);
     }
 
-    tr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
-      key: "tr" + i
-    }, tbodyElements));
-    console.log(tbodyElements);
-  }
+    console.log(names);
+  } //  else {
+  //     console.log(props.cell);
+  //     let curName = props.cell.split('');
+  //     let secondSplited = [];
+  //     for (let i = 0; i < props.data.length; i++) {
+  //         secondSplited = secondSplited.concat(props.data[i]);
+  //     }
+  //     console.log(secondSplited);
+  //     let names =[];
+  //     document.querySelectorAll("input").forEach(function (e) {
+  //         names.push(e.name);
+  //     });
+  //     console.log(names);
+  //     let namesOfCells = [];
+  //     for (let j = Number(curName[1]); j <= (props.data.length + Number(curName[1])); j++) {
+  //         for (let i = alpha.indexOf(curName[0]); i <= (props.data[0].length + alpha.indexOf(curName[0])); i++) {
+  //             console.log(i, j);
+  //             let nameOfCell = document.getElementsByName((alpha[i] + (j)))[0];
+  //             if (nameOfCell) {
+  //                 namesOfCells.push(nameOfCell);
+  //             }
+  //         }
+  //     }
+  //     console.log(namesOfCells)
+  //     namesOfCells.forEach(function (item, index) {
+  //         item.value = secondSplited[index];
+  //     });
+  // }
+
 
   return tr;
 }
