@@ -16,58 +16,40 @@ function TH(props) {
 function TbodyElements(props) {
     let tr = [];
     let names = [];
-    if (props.cell == undefined) {
-
         for (let i = 0; i < props.rows; i++) {
             let tbodyElements = [];
             for (let j = 0; j <= props.columns; j++) {
                 if (j === 0) {
                     tbodyElements.push(<th key={"tbth" + i}>{i + 1}</th>);
-                } else { tbodyElements.push(<td key={"td" + (j - 1) + (i + 1)}><input key={alpha[j - 1] + (i + 1)} type="text" name={alpha[j - 1] + (i + 1)} /></td>); names.push(alpha[j - 1] + (i + 1)); }
+                }
+                
+                else { tbodyElements.push(<td key={"td" + (j - 1) + (i + 1)}><input key={alpha[j - 1] + (i + 1)} type="text" name={alpha[j - 1] + (i + 1)} /></td>); 
+                // names.push(alpha[j - 1] + (i + 1)); 
+            }
             }
             tr.push(<tr key={"tr" + i}>{tbodyElements}</tr>);
             console.log(tbodyElements);
 
         }
-        console.log(names);
-        
-
-    }
-  
-    //  else {
-    //     console.log(props.cell);
-    //     let curName = props.cell.split('');
-    //     let secondSplited = [];
-    //     for (let i = 0; i < props.data.length; i++) {
-
-    //         secondSplited = secondSplited.concat(props.data[i]);
-    //     }
-    //     console.log(secondSplited);
-    //     let names =[];
-    //     document.querySelectorAll("input").forEach(function (e) {
-    //         names.push(e.name);
-    //     });
-    //     console.log(names);
-    //     let namesOfCells = [];
-
-    //     for (let j = Number(curName[1]); j <= (props.data.length + Number(curName[1])); j++) {
-    //         for (let i = alpha.indexOf(curName[0]); i <= (props.data[0].length + alpha.indexOf(curName[0])); i++) {
-    //             console.log(i, j);
-    //             let nameOfCell = document.getElementsByName((alpha[i] + (j)))[0];
-    //             if (nameOfCell) {
-    //                 namesOfCells.push(nameOfCell);
-    //             }
-
-    //         }
-
-    //     }
-    //     console.log(namesOfCells)
-    //     namesOfCells.forEach(function (item, index) {
-    //         item.value = secondSplited[index];
-    //     });
-    // }
-
-
+        if(props.cell!=undefined){
+            let curCell = props.cell.split("");
+            console.log(curCell);
+            for(let i = Number(curCell[1]); i<= props.columns;i++){
+                for (let j = alpha.indexOf(curCell[0]);  j< props.rows; j++){
+                    let elem = document.getElementsByName(alpha[j]+(i));
+                    console.log(alpha[j]+(i));
+                    if(elem){
+                        names.push(elem);
+                    }
+                }
+            }
+            console.log(names);
+            names.forEach(function(input, index){
+                input.value ="1"
+                console.log(input.value);
+            });
+            
+        }
     return tr;
 
 }
@@ -85,7 +67,7 @@ export default function Table(props) {
                 </tr>
             </thead>
             <tbody>
-                <TbodyElements columns={columns} rows={rows} />
+                <TbodyElements columns={columns} rows={rows} cell={cell} data={data}/>
                 
             </tbody>
         </table>);
