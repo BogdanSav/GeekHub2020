@@ -47,6 +47,15 @@ function TH(props) {
 function TbodyElements(props) {
   var tr = [];
   var names = [];
+  var row;
+  var col;
+
+  if (props.cell) {
+    var cell = props.cell.match(/^([a-z]+)(\d+)$/);
+    row = Number(cell[2]) - 1;
+    col = alpha.indexOf(cell[1]) + 1;
+    console.log(row, col);
+  }
 
   for (var i = 0; i < props.rows; i++) {
     var tbodyElements = [];
@@ -56,6 +65,15 @@ function TbodyElements(props) {
         tbodyElements.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
           key: "tbth" + i
         }, i + 1));
+      } else if (i >= row && j >= col && i - row < props.data.length && j - col < props.data[0].length) {
+        tbodyElements.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+          key: "td" + (j - 1) + (i + 1)
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+          key: alpha[j - 1] + (i + 1),
+          type: "text",
+          name: alpha[j - 1] + (i + 1),
+          value: props.data[i - row][j - col]
+        })));
       } else {
         tbodyElements.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
           key: "td" + (j - 1) + (i + 1)
@@ -63,7 +81,7 @@ function TbodyElements(props) {
           key: alpha[j - 1] + (i + 1),
           type: "text",
           name: alpha[j - 1] + (i + 1)
-        }))); // names.push(alpha[j - 1] + (i + 1)); 
+        })));
       }
     }
 
@@ -71,28 +89,6 @@ function TbodyElements(props) {
       key: "tr" + i
     }, tbodyElements));
     console.log(tbodyElements);
-  }
-
-  if (props.cell != undefined) {
-    var curCell = props.cell.split("");
-    console.log(curCell);
-
-    for (var _i = Number(curCell[1]); _i <= props.columns; _i++) {
-      for (var _j = alpha.indexOf(curCell[0]); _j < props.rows; _j++) {
-        var elem = document.getElementsByName(alpha[_j] + _i);
-        console.log(alpha[_j] + _i);
-
-        if (elem) {
-          names.push(elem);
-        }
-      }
-    }
-
-    console.log(names);
-    names.forEach(function (input, index) {
-      input.value = "1";
-      console.log(input.value);
-    });
   }
 
   return tr;
