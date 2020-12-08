@@ -15,8 +15,6 @@ function TH(props) {
 };
 function TbodyElements(props) {
     let tr = [];
-    let names = [];
-
     let row;
     let col;
     if (props.cell) {
@@ -45,12 +43,6 @@ function TbodyElements(props) {
     }
     return tr;
 }
-
-
-
-
-
-
 
 export default function Table(props) {
     let { columns, rows, cell, data } = props;
