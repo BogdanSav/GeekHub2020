@@ -766,17 +766,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    background:", ""]);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
-  _templateObject = function _templateObject() {
-    return data;
-  };
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-  return data;
-}
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -798,62 +798,35 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n    background:", ""]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
-
-var Phone = /*#__PURE__*/function (_PureComponent) {
-  _inherits(Phone, _PureComponent);
-
-  var _super = _createSuper(Phone);
-
-  function Phone(props) {
-    _classCallCheck(this, Phone);
-
-    return _super.call(this, props);
-  }
-
-  _createClass(Phone, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "input-group mb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-        type: "text",
-        className: "form-control",
-        value: this.props.phones[0].number
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
-        className: "custom-select"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
-        value: "home"
-      }, "\u0414\u043E\u043C\u0430\u0448\u043D\u0456\u0439"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
-        value: "mobile"
-      }, "\u041C\u043E\u0431\u0456\u043B\u044C\u043D\u0438\u0439")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "input-group-append"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        className: "btn btn-outline-secondary",
-        type: "button"
-      }, "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438")));
-    }
-  }]);
-
-  return Phone;
-}(react__WEBPACK_IMPORTED_MODULE_0__.PureComponent);
 
 var Input = styled_components__WEBPACK_IMPORTED_MODULE_1__.default.input(_templateObject(), function (props) {
   return props.valid === "" ? "white" : props.valid ? "#C2E0C6" : "#F9D0C4";
 });
 
-var UserForm = /*#__PURE__*/function (_PureComponent2) {
-  _inherits(UserForm, _PureComponent2);
+var UserForm = /*#__PURE__*/function (_PureComponent) {
+  _inherits(UserForm, _PureComponent);
 
-  var _super2 = _createSuper(UserForm);
+  var _super = _createSuper(UserForm);
 
   function UserForm(props) {
     var _this;
 
     _classCallCheck(this, UserForm);
 
-    _this = _super2.call(this, props);
+    _this = _super.call(this, props);
     _this.user = _this.props.user;
     _this.state = {
       name: _this.props.user.name,
@@ -861,17 +834,29 @@ var UserForm = /*#__PURE__*/function (_PureComponent2) {
       password: _this.props.user.password,
       isValidName: "",
       isValidEmail: "",
-      isValidPassword: ""
+      isValidPassword: "",
+      phones: _this.props.user.phones,
+      isValidPhone: Array(_this.props.user.phones.length).fill(''),
+      phoneForms: ''
     };
     _this.rules = {
       name: /^[a-щА-щЬьЮюЯяІіЄєҐґЇї]+\s+[a-щА-щЬьЮюЯяІіЄєҐґЇї]+\s+[a-щА-щЬьЮюЯяІіЄєҐґЇї]+$/,
       email: /^([^\W]+[a-zA-Z0-9.-]*)[^\W]@[^\W]([a-zA-Z0-9.-]*)\.([a-zA-Z0-9.-]*[^\W])$/,
       password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z0-9]{8,}/
     };
+    _this.phoneRules = {
+      home: /^[^0\D]\d{5}$/,
+      mobile: /(^[0]\d{9}$)|(^[3]\d{11}$)/
+    };
     _this.handleNameChange = _this.handleNameChange.bind(_assertThisInitialized(_this));
     _this.handleEmailChange = _this.handleEmailChange.bind(_assertThisInitialized(_this));
     _this.handlePasswordChange = _this.handlePasswordChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handlePhoneChange = _this.handlePhoneChange.bind(_assertThisInitialized(_this));
+    _this.handleSelectChange = _this.handleSelectChange.bind(_assertThisInitialized(_this));
+    _this.deletePhone = _this.deletePhone.bind(_assertThisInitialized(_this));
+    _this.addPhone = _this.addPhone.bind(_assertThisInitialized(_this));
+    console.log(_this.state.isValidPhone);
     return _this;
   }
 
@@ -897,8 +882,62 @@ var UserForm = /*#__PURE__*/function (_PureComponent2) {
       });
     }
   }, {
+    key: "handlePhoneChange",
+    value: function handlePhoneChange(event) {
+      var phones = _toConsumableArray(this.state.phones);
+
+      console.log(phones);
+      phones[event.target.id].number = event.target.value;
+      this.setState({
+        phones: phones
+      });
+    }
+  }, {
+    key: "handleSelectChange",
+    value: function handleSelectChange(event) {
+      var phones = _toConsumableArray(this.state.phones);
+
+      console.log(phones);
+      phones[event.target.getAttribute('ind')].type = event.target.value;
+      this.setState({
+        phones: phones
+      });
+    }
+  }, {
+    key: "addPhone",
+    value: function addPhone(event) {
+      event.preventDefault();
+
+      var isValidPhone = _toConsumableArray(this.state.isValidPhone);
+
+      var phones = _toConsumableArray(this.state.phones);
+
+      phones.push({
+        number: "",
+        type: "home"
+      });
+      isValidPhone.push("");
+      this.setState({
+        phones: phones,
+        isValidPhone: isValidPhone
+      });
+    }
+  }, {
+    key: "deletePhone",
+    value: function deletePhone(event) {
+      var phones = _toConsumableArray(this.state.phones); // console.log(phoneForms);
+
+
+      phones.splice(event.target.getAttribute('index'), 1);
+      this.setState({
+        phones: phones
+      });
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
+      var _this2 = this;
+
       event.preventDefault();
 
       for (var key in this.rules) {
@@ -938,10 +977,23 @@ var UserForm = /*#__PURE__*/function (_PureComponent2) {
           }
         }
       }
+
+      var isValidPhone = _toConsumableArray(this.state.isValidPhone);
+
+      this.state.phones.forEach(function (phone, index) {
+        if (_this2.phoneRules[phone.type].test(phone.number)) {
+          isValidPhone[index] = true;
+        } else isValidPhone[index] = false;
+      });
+      this.setState({
+        isValidPhone: isValidPhone
+      });
     }
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "container p-5"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
@@ -950,6 +1002,7 @@ var UserForm = /*#__PURE__*/function (_PureComponent2) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "form-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "\u041F.\u0406.\u0411."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Input, {
+        key: "full-name",
         type: "text",
         name: "full_name",
         className: "form-control",
@@ -961,6 +1014,7 @@ var UserForm = /*#__PURE__*/function (_PureComponent2) {
       }, "\u041E\u0431\u043E\u0432\u02BC\u044F\u0437\u043A\u043E\u0432\u043E \u043F\u0440\u0456\u0437\u0432\u0438\u0449\u0435, \u0456\u043C\u02BC\u044F \u0442\u0430 \u043F\u043E \u0431\u0430\u0442\u044C\u043A\u043E\u0432\u0456. \u0422\u0456\u043B\u044C\u043A\u0438 \u043B\u0456\u0442\u0435\u0440\u0430\u043C\u0438 \u0443\u043A\u0440\u0430\u0457\u043D\u0441\u043A\u044C\u043E\u0433\u043E \u0430\u043B\u0444\u0430\u0432\u0456\u0442\u0443")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "form-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Input, {
+        key: "email",
         type: "text",
         name: "email",
         className: "form-control",
@@ -972,6 +1026,7 @@ var UserForm = /*#__PURE__*/function (_PureComponent2) {
       }, "\u0410\u0434\u0440\u0435\u0441\u0430 \u0435\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u043E\u0457 \u043F\u043E\u0448\u0442\u0438")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "form-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "\u041F\u0430\u0440\u043E\u043B\u044C"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Input, {
+        key: "password",
         type: "password",
         name: "password",
         className: "form-control",
@@ -980,7 +1035,38 @@ var UserForm = /*#__PURE__*/function (_PureComponent2) {
         valid: this.state.isValidPassword
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("small", {
         className: "form-text text-muted"
-      }, "\u041C\u0456\u043D\u0456\u043C\u0443\u043C 8 \u043B\u0456\u0442\u0435\u0440. \u041E\u0431\u043E\u0432\u02BC\u044F\u0437\u043A\u043E\u0432\u043E \u043F\u043E\u0432\u0438\u043D\u043D\u0456 \u0431\u0443\u0442\u0438 \u0432\u0435\u043B\u0438\u043A\u0456 \u0442\u0430 \u043C\u0430\u043B\u0456 \u043B\u0456\u0442\u0435\u0440\u0438 \u0430\u043D\u0433\u043B\u0456\u0439\u0441\u044C\u043A\u043E\u0433\u043E \u0430\u043B\u0444\u0430\u0432\u0456\u0442\u0443 \u0442\u0430 \u0447\u0438\u0441\u043B\u0430")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      }, "\u041C\u0456\u043D\u0456\u043C\u0443\u043C 8 \u043B\u0456\u0442\u0435\u0440. \u041E\u0431\u043E\u0432\u02BC\u044F\u0437\u043A\u043E\u0432\u043E \u043F\u043E\u0432\u0438\u043D\u043D\u0456 \u0431\u0443\u0442\u0438 \u0432\u0435\u043B\u0438\u043A\u0456 \u0442\u0430 \u043C\u0430\u043B\u0456 \u043B\u0456\u0442\u0435\u0440\u0438 \u0430\u043D\u0433\u043B\u0456\u0439\u0441\u044C\u043A\u043E\u0433\u043E \u0430\u043B\u0444\u0430\u0432\u0456\u0442\u0443 \u0442\u0430 \u0447\u0438\u0441\u043B\u0430")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "Phones"), this.state.phoneForms = this.state.phones.map(function (phone, index) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "input-group mb-3",
+          key: index
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Input, {
+          type: "text",
+          className: "form-control",
+          value: phone.number,
+          id: index,
+          onChange: _this3.handlePhoneChange,
+          valid: _this3.state.isValidPhone[index]
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
+          className: "custom-select",
+          value: phone.type,
+          ind: index,
+          onChange: _this3.handleSelectChange
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+          value: "home"
+        }, "\u0414\u043E\u043C\u0430\u0448\u043D\u0456\u0439"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+          value: "mobile"
+        }, "\u041C\u043E\u0431\u0456\u043B\u044C\u043D\u0438\u0439")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "input-group-append"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+          className: "btn btn-outline-secondary",
+          type: "button",
+          index: index,
+          onClick: _this3.deletePhone
+        }, "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438")));
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        className: "add-phone",
+        onClick: this.addPhone
+      }, "\u0414\u043E\u0434\u0430\u0442\u0438 \u0442\u0435\u043B\u0435\u0444\u043E\u043D"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         type: "submit",
         className: "btn btn-primary"
       }, "Submit")));
