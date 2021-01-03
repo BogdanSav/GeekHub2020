@@ -6,32 +6,38 @@ export default class DoubleSlider extends React.PureComponent {
 		super(props)
 		this.barRef = React.createRef();
 		this.HandlerRef = React.createRef();
+		this.HandlerRef1 = React.createRef();
 		this.state = {
-			value: this.props.value,
+			valueStart: this.props.startValue,
+			valueEnd: this.props.endValue,
 			x: 0,
+			x1:0,
 
 		}
 		this.width = 0,
-		this.dx = 0;
+			this.dx = 0;
 		this.startX = 0;
 		this.firstX = 0;
 
 
 	}
 	componentDidMount() {
-		// this.width = this.barRef.current.clientWidth;
-		// this.dx = this.width / (this.props.max - this.props.min);
-		// this.setState({ x: this.props.value * this.dx });
+		this.width = this.barRef.current.clientWidth;
+		this.dx = this.width / (this.props.max - this.props.min);
+		this.barRect = this.barRef.current.getBoundingClientRect();
+		console.log(this.barRect.width);
+		this.setState({ x: this.props.startValue * this.dx ,
+			x1: this.props.endValue * this.dx});
 
 	}
 
 
 	onDragStart = (e) => {
+		
 		this.firstX = e.clientX;
-		this.startX = e.clientX;
-		console.log(this.state.x);
-		console.log(this.firstX);
-		// this.firstY = e.clientY;
+		this.startX = e.clientX - this.HandlerRef.current.clientWidth;
+
+
 		this.onDrag(e);
 		document.body.addEventListener("mousemove", this.onDrag);
 		document.body.addEventListener("mouseup", this.onDragEnd);
@@ -39,24 +45,25 @@ export default class DoubleSlider extends React.PureComponent {
 
 	};
 	onDrag = (e) => {
-		// let x = this.startX + e.clientX - this.firstX;
+		let x = this.startX + e.clientX - this.firstX;
 
-		// if (x < 0) {
-		// 	x = 0;
-		// }
-		// else if (x > this.width) {
-		// 	x = this.width;
-		// }
-		// this.setState({
-		// 	x: this.startX + e.clientX - this.firstX,
+		if (x < 0) {
+			x = 0;
+		}
+		else if (x + 10 > this.barRect.width) {
+			x = this.barRect.width;
+		}
+		this.setState({
+			x: this.startX + e.clientX - this.firstX,
 
-		// });
-		// if (this.startX < x + this.dx) {
-		// 	this.setState({ value: Math.round(x / this.dx) + this.props.min });
-		// }
-		// if (this.startX > x - this.dx) {
-		// 	this.setState({ value: Math.round(x / this.dx) + this.props.min });
-		// }
+		});
+		if (this.startX < x + this.dx) {
+			this.setState({ valueStart: Math.round(x / this.dx) + this.props.min });
+		}
+		if (this.startX > x - this.dx) {
+			this.setState({ valueStart: Math.round(x / this.dx) + this.props.min });
+		}
+		
 
 	};
 	onDragEnd = () => {
@@ -66,11 +73,20 @@ export default class DoubleSlider extends React.PureComponent {
 		document.body.removeEventListener("mouseup", this.onDragEnd);
 	}
 	valueChange = (e) => {
-		this.setState({
-			value: e.target.value,
-			x: this.state.value * this.dx,
+		if (Number(e.target.value) <= this.props.min) {
+			this.setState({
+				value: this.props.min,
+				x: this.state.valueStart * this.dx - this.props.min
+			});
+		} else if (Number(e.target.value) > this.props.max) {
+			this.setState({
+				value: this.props.max,
+				x: this.state.valueStart * this.dx -this.props.min
+			});
+		} else this.setState({
+			value: Number(e.target.value),
+			x: this.state.valueStart * this.dx - this.props.min
 		});
-
 
 
 	}
@@ -78,12 +94,12 @@ export default class DoubleSlider extends React.PureComponent {
 	render() {
 		return (
 			<Root>
-				<input/>
-				<input/>
+				<input value={this.state.valueStart}/>
+				<input value = {this.state.valueEnd}/>
 
-				<Bar>
-					<Handler value={100}/>
-					<Handler value={200}/>
+				<Bar ref={this.barRef}>
+					<Handler value={this.state.x}  onMouseDown={this.onDragStart} ref={this.HandlerRef}/>
+					<Handler value={this.state.x1}  onMouseDown={this.onDragStart} ref={this.HandlerRef} />
 				</Bar>
 			</Root>
 		);
@@ -104,14 +120,19 @@ const Bar = styled.div`
     margin-top: 10px;
 `;
 
-const Handler = styled.div`
+const Handler = styled.div.attrs(props=>({
+	style:{
+		left: props.value,
+	},
+	
+}))`
     position: absolute;
 	height: 10px;
 	width: 10px;
 	border-radius: 5px;
     background-color: red;
 	top: -4px;
-	left: ${p => p.value + 'px'};
+	
 `;
 
 //endregion
