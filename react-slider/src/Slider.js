@@ -14,7 +14,7 @@ export default class Slider extends React.PureComponent {
 
 		}
 		this.width = 0,
-		this.dx = 0;
+			this.dx = 0;
 		this.startX = 0;
 		this.firstX = 0;
 
@@ -33,8 +33,8 @@ export default class Slider extends React.PureComponent {
 	onDragStart = (e) => {
 		this.firstX = e.clientX;
 		this.startX = e.clientX - this.HandlerRef.current.clientWidth;
-		
-	
+
+
 		this.onDrag(e);
 		document.body.addEventListener("mousemove", this.onDrag);
 		document.body.addEventListener("mouseup", this.onDragEnd);
@@ -47,7 +47,7 @@ export default class Slider extends React.PureComponent {
 		if (x < 0) {
 			x = 0;
 		}
-		else if (x+10 > this.barRect.width) {
+		else if (x + 10 > this.barRect.width) {
 			x = this.barRect.width;
 		}
 		this.setState({
@@ -69,14 +69,24 @@ export default class Slider extends React.PureComponent {
 		document.body.removeEventListener("mouseup", this.onDragEnd);
 	}
 	valueChange = (e) => {
-		this.setState({
-			value: e.target.value,
-			x: this.state.value * this.dx,
+		if (Number(e.target.value) <= this.props.min) {
+			this.setState({
+				value: this.props.min,
+				x: this.state.value * this.dx - this.props.min
+			});
+		} else if (Number(e.target.value) > this.props.max) {
+			this.setState({
+				value: this.props.max,
+				x: this.state.value * this.dx -this.props.min
+			});
+		} else this.setState({
+			value: Number(e.target.value),
+			x: this.state.value * this.dx - this.props.min
 		});
 
 
-
 	}
+	
 
 
 
@@ -85,7 +95,7 @@ export default class Slider extends React.PureComponent {
 
 		return (
 			<Root>
-				<input value={this.state.value} onChange={this.valueChange}/>
+				<input value={this.state.value} onChange={this.valueChange} />
 				<Bar ref={this.barRef}>
 					<Handler x={this.state.x} onMouseDown={this.onDragStart} ref={this.HandlerRef} />
 
