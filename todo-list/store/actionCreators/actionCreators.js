@@ -1,4 +1,4 @@
-import { ADD_ITEM, DELETE_ITEM } from '../actions/actions';
+import {ADD_ITEM, COMPLETED, DELETE_ITEM} from '../actions/actions';
 
 export function addItem(item) {
     return {
@@ -11,4 +11,11 @@ export function deleteItem(index) {
         type: DELETE_ITEM,
         index: index
     }
+}
+export function setComplete(value) {
+    return{
+        type: COMPLETED,
+        value : value
+    }
+
 }

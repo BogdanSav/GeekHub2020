@@ -1,16 +1,34 @@
-import { ADD_ITEM, DELETE_ITEM } from '../actions/actions';
+// import { ADD_ITEM, DELETE_ITEM, COMPLETED } from '../actions/actions';
+import {createSlice} from "@reduxjs/toolkit";
 
-function reducer(state, action) {
-    console.log(action, state);
-    switch (action.type) {
-        case ADD_ITEM:
-            return { items: state.items.concat([action.item]) }
-
-        case DELETE_ITEM:
-            return { items: state.items.splice(action.index - 1, 1) };
-        default:
-            return state;
-    }
-
+const  initialState ={
+    items:[],
+    completed: false,
 }
-export default reducer;
+const listReducer = createSlice(
+    {
+        name:"listReducer",
+        initialState,
+        reducers:{
+            addItem(state,action){
+                return {items: state.items.concat([action.payload])};
+            },
+            deleteItem(state,action){
+                return {items: state.items.filter((item,index)=>{
+                    if(index != action.payload){
+                        return item;
+                    }})};
+            },
+            completeTodo(state){
+                return {
+                    items: state.items,
+                    completed: !state.completed
+                }
+            }
+
+        }
+
+    }
+)
+export default listReducer.reducer;
+export const {addItem ,deleteItem ,completeTodo} = listReducer.actions;

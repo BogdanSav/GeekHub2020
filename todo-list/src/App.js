@@ -1,6 +1,6 @@
 import React from 'react';
-import ToDoHeader from "./ToDoHeader";
-import ToDoList from "./ToDoList";
+import TODOHEADER from "./ToDoHeader";
+import TODOLIST from "./ToDoList";
 import ToDoFilters from './ToDoFilters';
 import './index.css'
 class App extends React.Component {
@@ -10,8 +10,8 @@ class App extends React.Component {
     render() {
         return (
             <section className="todoapp">
-                <ToDoHeader/>
-                <ToDoList state = {this.props.state}/>
+                <TODOHEADER/>
+                <TODOLIST/>
                 <ToDoFilters/>
             </section>
         );

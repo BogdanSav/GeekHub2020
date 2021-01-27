@@ -1,7 +1,9 @@
 import React from 'react';
 import store from '../store/store';
-import {addItem} from '../store/actionCreators/actionCreators';
-
+// import {addItem} from '../store/actionCreators/actionCreators';
+import mapToStateProps from '../store/maptoStateProps';
+import mapToDispatchProps from '../store/mapToDispatchProps';
+import {connect} from 'react-redux';
 class ToDoHeader extends React.Component {
     constructor(props) {
         super(props);
@@ -10,7 +12,7 @@ class ToDoHeader extends React.Component {
     }
     KeyDown(e) {
         if (e.keyCode === 13) {
-            store.dispatch(addItem(e.target.value));
+           this.props.addItem(e.target.value);
         }
     }
     render() {
@@ -22,4 +24,5 @@ class ToDoHeader extends React.Component {
         );
     }
 }
-export default ToDoHeader;
+const TODOHEADER = connect(null,mapToDispatchProps('ToDoHeader'))(ToDoHeader);
+export default TODOHEADER;

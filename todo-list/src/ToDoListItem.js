@@ -1,6 +1,8 @@
 import React from 'react';
 import store from '../store/store';
 import {deleteItem} from "../store/actionCreators/actionCreators"
+import {connect} from "react-redux";
+import mapToDispatchProps from "../store/mapToDispatchProps";
 
 
 class ToDoListItem extends React.Component {
@@ -17,13 +19,18 @@ class ToDoListItem extends React.Component {
        
         if(this.checkRef.current.checked){
             this.liRef.current.classList.toggle('completed')
+            this.props.completeTodo();
         }
         else{
             this.liRef.current.classList.toggle('completed')
+            this.props.completeTodo();
         }
+        console.log(this.props);
+
     }
     delete(e){
-        store.dispatch(deleteItem(Number(e.target.getAttribute('index'))));
+        // store.dispatch(deleteItem(Number(e.target.getAttribute('index'))));
+        this.props.deleteItem(Number(e.target.getAttribute("index")));
     }
     render() {
         return (
@@ -40,4 +47,5 @@ class ToDoListItem extends React.Component {
 
 
 }
-export default ToDoListItem;
+const TODOLISTITEM = connect(null, mapToDispatchProps('ToDoListItem'))(ToDoListItem)
+export default TODOLISTITEM;
