@@ -1,27 +1,31 @@
 import React from 'react';
-
-class ToDoFilters extends React.PureComponent{
+import maptoStateProps from "../store/maptoStateProps";
+import mapToDispatchProps from "../store/mapToDispatchProps";
+import {connect} from "react-redux";
+class ToDoFilters extends React.Component{
     constructor(props){
         super(props);
+
     }
     render(){
+		this.conut = this.props.count.filter(item=>!item.completed);
         return(
             <footer className="footer">
-				<span className="todo-count"><strong>0</strong> item left</span>
+				<span className="todo-count"><strong>{this.conut.length}</strong> item left</span>
 				<ul className="filters">
 					<li>
-						<a className="selected" href="#/">All</a>
+						<a className="selected" onClick={this.props.All}>All</a>
 					</li>
 					<li>
-						<a href="#/active">Active</a>
+						<a onClick={this.props.Active}>Active</a>
 					</li>
 					<li>
-						<a href="#/completed">Completed</a>
+						<a onClick={this.props.Completed}>Completed</a>
 					</li>
 				</ul>
-				<button className="clear-completed">Clear completed</button>
+				<button className="clear-completed" onClick={this.props.clear}>Clear completed</button>
 			</footer>
         );
     }
 }
-export default ToDoFilters;
+export default connect(maptoStateProps('ToDoFilters'),mapToDispatchProps('ToDoFilters'))(ToDoFilters);

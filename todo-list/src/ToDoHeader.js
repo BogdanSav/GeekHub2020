@@ -24,5 +24,4 @@ class ToDoHeader extends React.Component {
         );
     }
 }
-const TODOHEADER = connect(null,mapToDispatchProps('ToDoHeader'))(ToDoHeader);
-export default TODOHEADER;
+export default connect(null,mapToDispatchProps('ToDoHeader'))(ToDoHeader);

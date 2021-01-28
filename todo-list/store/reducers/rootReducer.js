@@ -1,9 +1,11 @@
 import {combineReducers} from "redux";
 import reducer from "./listReducer";
+import filterReducer from './filterReducer';
+
 
 const rootReducer = combineReducers(
     {
-        todos: reducer
+        todos: reducer,
     }
 )
 export default rootReducer;

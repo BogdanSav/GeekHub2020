@@ -1,15 +1,20 @@
 import React from 'react';
-import TODOLISTITEM from './ToDoListItem'
+import ToDoListItem from './ToDoListItem'
 import {connect} from "react-redux";
 import mapToStateProps from "../store/maptoStateProps";
+import mapToDispatchProps from "../store/mapToDispatchProps";
+
 
 class ToDoList extends React.Component {
     constructor(props) {
         super(props);
-        this.item;
-
-
+        this.item = undefined;
+        this.onChange = this.onChange.bind(this);
     }
+    onChange(){
+        this.props.completeAll();
+    }
+
     render() {
         console.log(this.props)
         return (
@@ -18,8 +23,8 @@ class ToDoList extends React.Component {
                 <label htmlFor="toggle-all">Mark all as complete</label>
                 <ul className="todo-list">
                     {
-                        this.item = this.props.value.map((text, index)=>(
-                            <TODOLISTITEM text={text} index={index}/>
+                        this.item = this.props.value.map((text, index) => (
+                            <ToDoListItem text={text.text} index={index}/>
                         ))
                     }
                 </ul>
@@ -27,6 +32,4 @@ class ToDoList extends React.Component {
         );
     }
 }
-
-const TODOLIST = connect(mapToStateProps,null)(ToDoList)
-export default TODOLIST;
+export default connect(mapToStateProps('ToDoList'),mapToDispatchProps('ToDoList'))(ToDoList)
