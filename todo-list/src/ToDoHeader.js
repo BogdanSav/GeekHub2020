@@ -10,9 +10,11 @@ class ToDoHeader extends React.Component {
         this.KeyDown = this.KeyDown.bind(this);
 
     }
+
     KeyDown(e) {
-        if (e.keyCode === 13) {
+        if (e.keyCode === 13 && e.target.value) {
            this.props.addItem(e.target.value);
+           e.target.value = ""
         }
     }
     render() {

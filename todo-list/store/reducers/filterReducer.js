@@ -2,13 +2,12 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const filterReducer  =createSlice({
     name:"filterReducer",
-    initialState: [],
+    initialState: "SHOW_ALL",
     reducers:{
-        showAll(state){
-            console.log(state);
-            return true;
-        }
+       setVisibilityFilter(state,action){
+           return action.payload;
+       },
     }
 })
 export  default filterReducer.reducer;
-export const {showAll}=filterReducer.actions;
+export const {setVisibilityFilter}=filterReducer.actions;

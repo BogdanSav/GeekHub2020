@@ -2,6 +2,7 @@ import React from 'react';
 import maptoStateProps from "../store/maptoStateProps";
 import mapToDispatchProps from "../store/mapToDispatchProps";
 import {connect} from "react-redux";
+import FilterLink from "./FilterLink";
 class ToDoFilters extends React.Component{
     constructor(props){
         super(props);
@@ -14,13 +15,13 @@ class ToDoFilters extends React.Component{
 				<span className="todo-count"><strong>{this.conut.length}</strong> item left</span>
 				<ul className="filters">
 					<li>
-						<a className="selected" onClick={this.props.All}>All</a>
+						<FilterLink text="All"/>
 					</li>
 					<li>
-						<a onClick={this.props.Active}>Active</a>
+						<FilterLink text="Active"/>
 					</li>
 					<li>
-						<a onClick={this.props.Completed}>Completed</a>
+						<FilterLink text="Completed"/>
 					</li>
 				</ul>
 				<button className="clear-completed" onClick={this.props.clear}>Clear completed</button>

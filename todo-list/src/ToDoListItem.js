@@ -11,19 +11,14 @@ class ToDoListItem extends React.Component {
         this.liRef = React.createRef();
         this.setCompleted = this.setCompleted.bind(this);
         this.delete = this.delete.bind(this);
-
-
     }
 
     setCompleted() {
         this.props.completeTodo(this.props.index);
-        if (this.props.completed) {
-            this.liRef.current.classList.add('completed');
+        if (this.props.completed && this.checkRef.current.checked) {
+            this.liRef.current.classList.toggle('completed');
 
-        } else {
-            this.liRef.current.classList.remove('completed');
         }
-        console.log(this.props);
 
     }
 
@@ -38,7 +33,7 @@ class ToDoListItem extends React.Component {
                 <div className="view">
                     <input className="toggle" type="checkbox" ref={this.checkRef} onClick={this.setCompleted}/>
                     <label>{this.props.text}</label>
-                    <button className="destroy"  onClick={this.delete}> </button>
+                    <button className="destroy" onClick={this.delete}></button>
                 </div>
                 <input className="edit" value="Create a TodoMVC template"/>
             </li>
@@ -48,4 +43,4 @@ class ToDoListItem extends React.Component {
 
 }
 
- export default connect(maptoStateProps("ToDoListItem"), mapToDispatchProps('ToDoListItem'))(ToDoListItem)
+export default connect(maptoStateProps("ToDoListItem"), mapToDispatchProps('ToDoListItem'))(ToDoListItem)

@@ -37,7 +37,7 @@ const listReducer = createSlice(
                 }));
             },
             clearCompleted(state){
-              return state.filter(item=>!item.completed);
+              return state.filter(item=>item.completed===false);
             },
             showAll(state){
                 return state.map(item=>item);

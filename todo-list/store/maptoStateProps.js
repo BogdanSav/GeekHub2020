@@ -11,12 +11,19 @@ export default function mapToStateProps(component) {
             return function (state){
                 return {
                     count: state.todos,
+
                 }
             }
         case  'ToDoListItem':
             return function (state){
                 return{
                     completed: state.todos.completed
+                }
+            }
+        case 'FilterLink' :
+            return function (state,action){
+                return{
+                    active: action.payload === state.filter
                 }
             }
     }
