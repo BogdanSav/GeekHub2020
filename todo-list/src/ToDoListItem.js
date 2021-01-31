@@ -15,19 +15,26 @@ class ToDoListItem extends React.Component {
 
     setCompleted() {
         this.props.completeTodo(this.props.index);
-        if (this.props.completed && this.checkRef.current.checked) {
-            this.liRef.current.classList.toggle('completed');
-
-        }
-
+        this.liRef.current.classList.toggle('completed');
+        console.log(this.liRef)
     }
-
     delete(e) {
         // store.dispatch(deleteItem(Number(e.target.getAttribute('index'))));
         this.props.deleteItem(Number(this.props.index));
     }
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if(!this.props.state[this.props.index].completed){
+    //         this.liRef.current.classList.remove('completed');
+    //         this.checkRef.current.checked = false;
+    //     }
+    //     else {
+    //         this.liRef.current.classList.add('completed');
+    //         this.checkRef.current.checked = true;
+    //     }
+    // }
 
     render() {
+
         return (
             <li ref={this.liRef}>
                 <div className="view">
@@ -39,8 +46,6 @@ class ToDoListItem extends React.Component {
             </li>
         );
     }
-
-
 }
 
 export default connect(maptoStateProps("ToDoListItem"), mapToDispatchProps('ToDoListItem'))(ToDoListItem)

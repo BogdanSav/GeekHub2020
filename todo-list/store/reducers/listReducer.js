@@ -39,15 +39,7 @@ const listReducer = createSlice(
             clearCompleted(state){
               return state.filter(item=>item.completed===false);
             },
-            showAll(state){
-                return state.map(item=>item);
-            },
-            showActive(state){
-                return state.map(item=>!item.completed ? item : "");
-            },
-            showCompleted(state){
-              return state.map(item=>item.completed);
-            }
+
 
 
 
@@ -56,4 +48,4 @@ const listReducer = createSlice(
     }
 )
 export default listReducer.reducer;
-export const {addItem, deleteItem, completeTodo,completeAll ,showAll,showActive,showCompleted,clearCompleted} = listReducer.actions;
+export const {addItem, deleteItem, completeTodo,completeAll ,clearCompleted} = listReducer.actions;

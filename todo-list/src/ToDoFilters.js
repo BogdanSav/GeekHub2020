@@ -6,7 +6,6 @@ import FilterLink from "./FilterLink";
 class ToDoFilters extends React.Component{
     constructor(props){
         super(props);
-
     }
     render(){
 		this.conut = this.props.count.filter(item=>!item.completed);
@@ -15,13 +14,13 @@ class ToDoFilters extends React.Component{
 				<span className="todo-count"><strong>{this.conut.length}</strong> item left</span>
 				<ul className="filters">
 					<li>
-						<FilterLink text="All"/>
+						<FilterLink text="All" filter="ALL"/>
 					</li>
 					<li>
-						<FilterLink text="Active"/>
+						<FilterLink text="Active" filter="ACTIVE"/>
 					</li>
 					<li>
-						<FilterLink text="Completed"/>
+						<FilterLink text="Completed" filter="COMPLETED"/>
 					</li>
 				</ul>
 				<button className="clear-completed" onClick={this.props.clear}>Clear completed</button>

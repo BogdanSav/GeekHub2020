@@ -1,5 +1,5 @@
 import { bindActionCreators } from 'redux';
-import { addItem, deleteItem,completeTodo,completeAll,clearCompleted } from './reducers/listReducer';
+import { addItem, deleteItem,completeTodo,clearCompleted,} from './reducers/listReducer';
 import {setVisibilityFilter} from "./reducers/filterReducer";
 
 export default function mapToDispatchProps(component) {
@@ -21,20 +21,21 @@ export default function mapToDispatchProps(component) {
         case "ToDoList" :
             return function (dispatch){
                 return {
-                    completeAll : bindActionCreators(completeAll,dispatch)
+                    // completeAll : bindActionCreators(completeAll,dispatch)
                 }
             }
         case "ToDoFilters" :
             return function (dispatch){
                 return{
 
-                    clear: bindActionCreators(clearCompleted,dispatch)
+                    clear: bindActionCreators(clearCompleted,dispatch),
+
                 }
             }
         case 'FilterLink':
             return function (dispatch){
                 return{
-                    setFilter : bindActionCreators(setVisibilityFilter,dispatch),
+                     setFilter : bindActionCreators(setVisibilityFilter,dispatch),
                 }
             }
     }

@@ -1,9 +1,11 @@
+import {getVisibleTodos} from "./selectors/selector";
+
 export default function mapToStateProps(component) {
     switch (component) {
         case 'ToDoList' :
             return function (state) {
                 return {
-                    value: state.todos,
+                    value: getVisibleTodos(state),
                 };
 
             }
@@ -17,13 +19,13 @@ export default function mapToStateProps(component) {
         case  'ToDoListItem':
             return function (state){
                 return{
-                    completed: state.todos.completed
+                    state: state.todos,
                 }
             }
         case 'FilterLink' :
             return function (state,action){
                 return{
-                    active: action.payload === state.filter
+                    state: state.todos
                 }
             }
     }

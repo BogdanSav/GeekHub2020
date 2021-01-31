@@ -6,7 +6,7 @@ import filterReducer from './filterReducer';
 const rootReducer = combineReducers(
     {
         todos: reducer,
-        filter: filterReducer
+        filter: filterReducer,
     }
 )
 export default rootReducer;

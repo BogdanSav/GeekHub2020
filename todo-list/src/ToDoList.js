@@ -9,14 +9,9 @@ class ToDoList extends React.Component {
     constructor(props) {
         super(props);
         this.item = undefined;
-        this.onChange = this.onChange.bind(this);
-    }
-    onChange(){
-        this.props.completeAll();
     }
 
     render() {
-        console.log(this.props)
         return (
             <section className="main">
                 <input id="toggle-all" className="toggle-all" type="checkbox"/>
@@ -32,4 +27,4 @@ class ToDoList extends React.Component {
         );
     }
 }
-export default connect(mapToStateProps('ToDoList'),mapToDispatchProps('ToDoList'))(ToDoList)
+export  default  connect(mapToStateProps('ToDoList'),mapToDispatchProps('ToDoList'))(ToDoList);

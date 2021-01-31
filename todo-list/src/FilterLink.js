@@ -8,10 +8,14 @@ import classnames from 'classnames'
 class FilterLink extends React.Component{
     constructor(props) {
         super(props);
+        this.setFilter = this.setFilter.bind(this);
+    }
+    setFilter(){
+        this.props.setFilter(this.props.filter);
     }
     render() {
         return(
-            <a className={classnames({selected: this.props.active})} onClick={this.props.setFilter}>{this.props.text}</a>
+            <a className={classnames({selected: this.props.active})} onClick={e=>{ e.preventDefault() ; this.setFilter()}}>{this.props.text}</a>
         );
     }
 }
