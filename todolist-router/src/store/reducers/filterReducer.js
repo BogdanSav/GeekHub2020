@@ -5,7 +5,6 @@ const filterReducer  =createSlice({
     initialState: "ALL",
     reducers:{
        setVisibilityFilter(state,action){
-
            return action.payload;
        },
     }
