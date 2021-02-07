@@ -21,7 +21,7 @@ export default function mapToDispatchProps(component) {
         case "ToDoList" :
             return function (dispatch){
                 return {
-                    setFilter : bindActionCreators(setVisibilityFilter,dispatch),
+                     setFilter : bindActionCreators(setVisibilityFilter,dispatch),
                 }
             }
         case "ToDoFilters" :

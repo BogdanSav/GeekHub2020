@@ -3,6 +3,7 @@ import React from 'react';
 import ToDoHeader from "./ToDoHeader";
 import ToDoList from "./ToDoList";
 import ToDoFilters from './ToDoFilters';
+import ToDoListItem from './ToDoListItem'
 import {
     BrowserRouter as Router,
     Switch,
@@ -11,6 +12,9 @@ import {
 } from "react-router-dom";
 
 import './index.css'
+import {createBrowserHistory} from "history";
+
+const history = createBrowserHistory()
 
 class App extends React.Component {
     constructor(props) {
@@ -20,31 +24,25 @@ class App extends React.Component {
 
     render() {
         return (
-            <Router>
-
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/active">Active</Link>
-                    </li>
-                    <li>
-                        <Link to="/completed">Completed</Link>
-                    </li>
-                </ul>
-
+            <Router >
+                
                 <section className="todoapp">
-                    <ToDoHeader/>
+                <ToDoHeader/>
                     <Switch>
                         <Route exact path="/">
-                            <ToDoList filter="ALL"/>
+                    
+                            <ToDoList/>
+            
                         </Route>
-                        <Route path="/active">
-                            <ToDoList filter="ACTIVE"/>
+                        <Route  path="/active">
+                            
+                           <ToDoList/>
+                           
                         </Route>
-                        <Route path="#/completed">
-                            <ToDoList filter="COMPLETED"/>
+                        <Route path="/completed">
+                            
+                            <ToDoList/>
+                            
                         </Route>
                     </Switch>
                     <ToDoFilters/>
