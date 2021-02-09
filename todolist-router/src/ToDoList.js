@@ -3,13 +3,17 @@ import ToDoListItem from './ToDoListItem'
 import { connect } from "react-redux";
 import mapToStateProps from "./store/maptoStateProps";
 import mapToDispatchProps from "./store/mapToDispatchProps";
-import { useLocation } from "react-router-dom";
+import { useLocation,useParams } from "react-router-dom";
 import { useEffect } from 'react';
 
 
-function ToDoList({ value, setFilter }) {
-
-
+function ToDoList({ value, setFilter  }) {
+    const {id} = useParams()
+    const stand = value.map((text, index) => (
+        <ToDoListItem text={text.text} index={index} key={index} />
+    ));
+    const oneItem = stand.filter((item,index)=>Number(id)===index+1);
+    
     // let location = useLocation();
 
     // useEffect(() => {
@@ -29,9 +33,7 @@ function ToDoList({ value, setFilter }) {
             <label htmlFor="toggle-all">Mark all as complete</label>
             <ul className="todo-list">
                 {
-                    value.map((text, index) => (
-                        <ToDoListItem text={text.text} index={index} key={index} />
-                    ))
+                    id ? oneItem : stand
                 }
             </ul>
         </section>

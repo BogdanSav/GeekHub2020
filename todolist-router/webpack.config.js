@@ -45,7 +45,7 @@ module.exports = {
 
         contentBase: resolve(__dirname, 'dist'),
         contentBasePublicPath: "/",
-        historyApiFallback: true,
+
         compress: false,
         port: 9000
     },
