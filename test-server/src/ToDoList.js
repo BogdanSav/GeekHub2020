@@ -12,8 +12,10 @@ function ToDoList({value}) {
     let dispatch = useDispatch();
     let items  = useSelector(state=>state.asyncList);
     useEffect(() => {
-        dispatch(getItems());
-    }, [items])
+
+         dispatch(getItems());
+
+    }, [])
     console.log(items);
     const {id} = useParams()
     const stand = items.map((text, index) => (

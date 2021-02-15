@@ -1,4 +1,5 @@
-import {ADD_ITEM, COMPLETED, DELETE_ITEM,GET_ITEMS} from '../actions/actions';
+import {ADD_ITEM, COMPLETED, DELETE_ITEM, GET_ITEMS, POST_ITEMS} from '../actions/actions';
+import {useSelector} from "react-redux";
 
 export function addItem(item) {
     return {
@@ -20,12 +21,16 @@ export function setComplete(value) {
 
 }
 export function getItems (){
-    return async dispatch=>{
-        const response = await fetch("http://localhost:8000/all");
-        const items = await response.json();
-        dispatch({ type: GET_ITEMS, payload: items})
+
+   return{
+       type: GET_ITEMS,
+        payload :{text: "First", completed: false}
+   }
+}
+export function postItems(payload){
+    return{
+        type: POST_ITEMS,
+        payload
     }
 }
-export function postItems(items){
 
-}

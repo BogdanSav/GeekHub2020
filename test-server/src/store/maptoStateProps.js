@@ -13,7 +13,7 @@ export default function mapToStateProps(component) {
         case 'ToDoFilters':
             return function (state){
                 return {
-                    count: state.todos,
+                    count: state.asyncList,
 
                 }
             }
@@ -26,7 +26,7 @@ export default function mapToStateProps(component) {
         case 'FilterLink' :
             return function (state,action){
                 return{
-                    state: state.todos
+                    state: state.asyncList,
                 }
             }
     }
