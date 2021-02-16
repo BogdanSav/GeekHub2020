@@ -1,26 +1,28 @@
-import React from 'react';
-import {connect} from "react-redux";
+import React, {useEffect} from 'react';
+import {connect, useDispatch, useSelector} from "react-redux";
 import mapToDispatchProps from "./store/mapToDispatchProps";
 import maptoStateProps from "./store/maptoStateProps";
 
 
-class ToDoListItem extends React.Component {
-    constructor(props) {
-        super(props);
-        this.checkRef = React.createRef();
-        this.liRef = React.createRef();
-        this.setCompleted = this.setCompleted.bind(this);
-        this.delete = this.delete.bind(this);
+function ToDoListItem({_deleteItems, index, completeTodo, text}) {
+    let dispatch = useDispatch()
+    let checkRef = React.createRef();
+    let liRef = React.createRef();
+    let checkComplete = useSelector(state=>state.asyncList)
+    useEffect(()=>{
+        if(checkComplete[index].completed){
+            liRef.current.classList.toggle('completed');
+            checkRef.current.checked = true;
+        }
+    },[])
+    let setCompleted = () => {
+       dispatch(completeTodo(index));
+        liRef.current.classList.toggle('completed');
+        console.log(liRef)
     }
-
-    setCompleted() {
-        this.props.completeTodo(this.props.index);
-        this.liRef.current.classList.toggle('completed');
-        console.log(this.liRef)
-    }
-    delete(e) {
-        // store.dispatch(deleteItem(Number(e.target.getAttribute('index'))));
-        this.props.deleteItem(Number(this.props.index));
+    let _deleteItem= (e)=>
+    {
+       dispatch( _deleteItems(Number(index)));
     }
     // componentDidUpdate(prevProps, prevState, snapshot) {
     //     if(!this.props.state[this.props.index].completed){
@@ -33,19 +35,19 @@ class ToDoListItem extends React.Component {
     //     }
     // }
 
-    render() {
+
 
         return (
-            <li ref={this.liRef}>
+            <li ref={liRef}>
                 <div className="view">
-                    <input className="toggle" type="checkbox" ref={this.checkRef} onClick={this.setCompleted}/>
-                    <label>{this.props.text}</label>
-                    <button className="destroy" onClick={this.delete}></button>
+                    <input className="toggle" type="checkbox" ref={checkRef} onClick={setCompleted}/>
+                    <label>{text}</label>
+                    <button className="destroy" onClick={_deleteItem}></button>
                 </div>
                 <input className="edit" value="Create a TodoMVC template"/>
             </li>
         );
-    }
+
 }
 
 export default connect(maptoStateProps("ToDoListItem"), mapToDispatchProps('ToDoListItem'))(ToDoListItem)

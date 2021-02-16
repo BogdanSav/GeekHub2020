@@ -2,6 +2,7 @@ import { bindActionCreators } from 'redux';
 import { addItem, deleteItem,completeTodo,clearCompleted,} from './reducers/listReducer';
 import {setVisibilityFilter} from "./reducers/filterReducer";
 import {getItems, postItems} from "./actionCreators/actionCreators"
+import {deleteItems, setComplete,_clearCompleted} from './actionCreators/actionCreators';
 
 export default function mapToDispatchProps(component) {
     switch (component){
@@ -15,8 +16,8 @@ export default function mapToDispatchProps(component) {
         case "ToDoListItem":
             return function (dispatch){
                 return{
-                    deleteItem: bindActionCreators(deleteItem, dispatch),
-                    completeTodo: bindActionCreators(completeTodo,dispatch),
+                    _deleteItems: deleteItems,
+                    completeTodo: setComplete,
 
                 }
             }
@@ -31,7 +32,7 @@ export default function mapToDispatchProps(component) {
             return function (dispatch){
                 return{
 
-                    clear: bindActionCreators(clearCompleted,dispatch),
+                    clear: _clearCompleted
 
                 }
             }

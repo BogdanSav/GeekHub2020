@@ -8,15 +8,15 @@ import {useEffect, useState} from 'react';
 import {useDispatch ,useSelector} from 'react-redux'
 import {getItems} from "./store/actionCreators/actionCreators";
 
+
 function ToDoList({value}) {
     let dispatch = useDispatch();
     let items  = useSelector(state=>state.asyncList);
+
     useEffect(() => {
-
-         dispatch(getItems());
-
+         dispatch(getItems([]));
     }, [])
-    console.log(items);
+
     const {id} = useParams()
     const stand = items.map((text, index) => (
         <ToDoListItem text={text.text} index={index} key={index}/>
@@ -24,17 +24,18 @@ function ToDoList({value}) {
     const oneItem = stand.filter((item, index) => Number(id) === index + 1);
 
 
-    return (
-        <section className="main">
-            <input id="toggle-all" className="toggle-all" type="checkbox"/>
-            <label htmlFor="toggle-all">Mark all as complete</label>
-            <ul className="todo-list">
-                {
-                    id ? oneItem : stand
-                }
-            </ul>
-        </section>
-    );
+        return (
+
+            <section className="main">
+                <input id="toggle-all" className="toggle-all" type="checkbox"/>
+                <label htmlFor="toggle-all">Mark all as complete</label>
+                <ul className="todo-list">
+                    {
+                        id ? oneItem : stand
+                    }
+                </ul>
+            </section>
+        );
 
 }
 

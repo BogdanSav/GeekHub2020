@@ -1,30 +1,39 @@
-import {ADD_ITEM, COMPLETED, DELETE_ITEM, GET_ITEMS, POST_ITEMS} from '../actions/actions';
+import {
+    ADD_ITEM,
+    CLEAR,
+    COMPLETED,
+    DELETE_ITEM,
+    GET_ITEMS,
+    HIDE_LOADER,
+    POST_ITEMS,
+    SHOW_LOADER
+} from '../actions/actions';
 import {useSelector} from "react-redux";
 
-export function addItem(item) {
+export function addItem(payload) {
     return {
         type: ADD_ITEM,
-        item: item
+        payload
     }
 }
-export function deleteItem(index) {
+export function deleteItems(payload) {
     return {
         type: DELETE_ITEM,
-        index: index
+        payload
     }
 }
-export function setComplete(value) {
+export function setComplete(payload) {
     return{
         type: COMPLETED,
-        value : value
+        payload
     }
 
 }
-export function getItems (){
+export function getItems (payload){
 
    return{
        type: GET_ITEMS,
-        payload :{text: "First", completed: false}
+         payload
    }
 }
 export function postItems(payload){
@@ -33,4 +42,10 @@ export function postItems(payload){
         payload
     }
 }
+export function _clearCompleted(){
+    return {
+        type :CLEAR,
+    }
+}
+
 
