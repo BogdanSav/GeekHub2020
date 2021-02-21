@@ -5467,18 +5467,16 @@ __webpack_require__.r(__webpack_exports__);
 var history = (0,history__WEBPACK_IMPORTED_MODULE_6__.createBrowserHistory)();
 
 function App() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
       id = _useState2[0],
       setID = _useState2[1];
 
-  var onChange = function onChange(e) {
-    setID(e.target.value);
-  };
-
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("input", {
     type: "text",
-    onChange: onChange
+    onChange: function onChange(e) {
+      return setID(e.target.value);
+    }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
     to: "/todo/" + id
   }, " todo")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("li", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("section", {
@@ -5778,10 +5776,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _store_mapToDispatchProps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/mapToDispatchProps */ "./src/store/mapToDispatchProps.js");
-/* harmony import */ var _store_maptoStateProps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/maptoStateProps */ "./src/store/maptoStateProps.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_mapToDispatchProps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/mapToDispatchProps */ "./src/store/mapToDispatchProps.js");
+/* harmony import */ var _store_maptoStateProps__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/maptoStateProps */ "./src/store/maptoStateProps.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_5__);
+
+
 
 
 
@@ -5792,26 +5796,30 @@ function ToDoListItem(_ref) {
       index = _ref.index,
       completeTodo = _ref.completeTodo,
       text = _ref.text;
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
-  var checkRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-  var liRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-  var checkComplete = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
+      checked = _useState2[0],
+      setCheck = _useState2[1];
+
+  var checkComplete = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (state) {
     return state.asyncList;
   });
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     if (checkComplete[index].completed) {
-      liRef.current.classList.toggle('completed');
-      checkRef.current.checked = true;
+      setCheck(true);
     }
   }, []);
 
   var setCompleted = function setCompleted() {
     dispatch(completeTodo(index));
-    liRef.current.classList.toggle('completed');
-    console.log(liRef);
+    setCheck(!checked);
   };
 
   var _deleteItem = function _deleteItem(e) {
+    setCheck(false);
+    dispatch(completeTodo(index));
     dispatch(_deleteItems(Number(index)));
   }; // componentDidUpdate(prevProps, prevState, snapshot) {
   //     if(!this.props.state[this.props.index].completed){
@@ -5825,25 +5833,27 @@ function ToDoListItem(_ref) {
   // }
 
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
-    ref: liRef
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("li", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_5___default()({
+      completed: checked
+    })
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     className: "view"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("input", {
     className: "toggle",
     type: "checkbox",
-    ref: checkRef,
-    onClick: setCompleted
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, text), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: setCompleted,
+    checked: checked
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("label", null, text), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
     className: "destroy",
     onClick: _deleteItem
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("input", {
     className: "edit",
     value: "Create a TodoMVC template"
   }));
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)((0,_store_maptoStateProps__WEBPACK_IMPORTED_MODULE_3__.default)("ToDoListItem"), (0,_store_mapToDispatchProps__WEBPACK_IMPORTED_MODULE_2__.default)('ToDoListItem'))(ToDoListItem));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)((0,_store_maptoStateProps__WEBPACK_IMPORTED_MODULE_4__.default)("ToDoListItem"), (0,_store_mapToDispatchProps__WEBPACK_IMPORTED_MODULE_3__.default)('ToDoListItem'))(ToDoListItem));
 
 /***/ }),
 

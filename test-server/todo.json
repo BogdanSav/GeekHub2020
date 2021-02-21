@@ -1,6 +1,10 @@
 [
     {
-        "text": "Make todolist with express.js and redux-saga",
-        "completed": true
+        "text": "5",
+        "completed": false
+    },
+    {
+        "text": "6",
+        "completed": false
     }
 ]

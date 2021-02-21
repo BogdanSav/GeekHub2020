@@ -44,7 +44,8 @@
   },
   "scripts": {
     "build": "webpack",
-    "server": " nodemon server.js"
+    "server": " nodemon server.js",
+    "server-mongoose": " nodemon server-mongoose.js"
   },
   "repository": {
     "type": "git",

@@ -1,28 +1,28 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect, useDispatch, useSelector} from "react-redux";
 import mapToDispatchProps from "./store/mapToDispatchProps";
 import maptoStateProps from "./store/maptoStateProps";
+import classnames from 'classnames'
 
 
 function ToDoListItem({_deleteItems, index, completeTodo, text}) {
     let dispatch = useDispatch()
-    let checkRef = React.createRef();
-    let liRef = React.createRef();
+    let [checked, setCheck] = useState(false);
     let checkComplete = useSelector(state=>state.asyncList)
     useEffect(()=>{
         if(checkComplete[index].completed){
-            liRef.current.classList.toggle('completed');
-            checkRef.current.checked = true;
+            setCheck(true);
         }
     },[])
     let setCompleted = () => {
-       dispatch(completeTodo(index));
-        liRef.current.classList.toggle('completed');
-        console.log(liRef)
+       dispatch(completeTodo(index))
+        setCheck(!checked);
     }
     let _deleteItem= (e)=>
-    {
+    {setCheck(false)
+        dispatch(completeTodo(index))
        dispatch( _deleteItems(Number(index)));
+
     }
     // componentDidUpdate(prevProps, prevState, snapshot) {
     //     if(!this.props.state[this.props.index].completed){
@@ -38,9 +38,9 @@ function ToDoListItem({_deleteItems, index, completeTodo, text}) {
 
 
         return (
-            <li ref={liRef}>
+            <li className={classnames({completed: checked})}>
                 <div className="view">
-                    <input className="toggle" type="checkbox" ref={checkRef} onClick={setCompleted}/>
+                    <input className="toggle" type="checkbox" onClick={setCompleted} checked={checked}/>
                     <label>{text}</label>
                     <button className="destroy" onClick={_deleteItem}></button>
                 </div>
