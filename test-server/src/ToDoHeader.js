@@ -6,35 +6,34 @@ import mapToDispatchProps from './store/mapToDispatchProps';
 // import postItems from "./store/actionCreators/actionCreators"
 import {connect} from 'react-redux';
 import {useDispatch} from "react-redux";
-import io from "socket.io-client"
+import socket from "../sockets";
+import {SOCKET_EVENT} from "./store/actions/actions";
 
 function ToDoHeader ({addNew})  {
-    let socket;
-
-    useEffect(()=>{
-        socket =io("http://localhost:8000");
-    },[])
-    let [text, setText] = useState("");
     let dispatch = useDispatch();
+
+    let [text, setText] = useState("");
+    useEffect(function (){
+       socket.emit("joinRoom","room1")
+    },[])
+    socket.emit("setData","room1",text);
+    socket.on('getData',(data)=>{
+        setText(data);
+    })
    let KeyDown = (e) => {
         if (e.keyCode === 13 && e.target.value) {
-          dispatch(addNew(e.target.value));
+            socket.emit('addTodo',e.target.value);
+            dispatch(addNew(e.target.value));
            e.target.value = ""
         }
     }
-    let change =(e)=>{
-       setText(e.target.value)
-       socket.emit('setData',e.target.value);
-       socket.on("getData", data=>{
-           setText(data);
-       })
-    }
-    console.log(text);
+
+
 
         return (
             <header className="header">
             <h1> todos</h1>
-            <input className="new-todo" placeholder="What needs to be done?" autoFocus={true} onKeyDown={KeyDown} onChange={e=>change(e)} value={text}/>
+            <input className="new-todo" placeholder="What needs to be done?" autoFocus={true} onKeyDown={KeyDown} onChange={e=> setText(e.target.value)} value={text}/>
             </header>
         );
 

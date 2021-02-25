@@ -6,3 +6,4 @@ export const POST_ITEMS = 'POST_ITEMS';
 export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER  = 'HIDE_LOADER';
 export const CLEAR = "CLEAR"
+export const SOCKET_EVENT = "SOCKET_EVENT";

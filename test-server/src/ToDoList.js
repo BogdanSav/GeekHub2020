@@ -7,6 +7,7 @@ import {useLocation, useParams} from "react-router-dom";
 import {useEffect, useState} from 'react';
 import {useDispatch ,useSelector} from 'react-redux'
 import {getItems} from "./store/actionCreators/actionCreators";
+import socket from "../sockets";
 
 function ToDoList({value}) {
 
@@ -16,7 +17,6 @@ function ToDoList({value}) {
     useEffect(() => {
          dispatch(getItems([]));
     }, [])
-
     const {id} = useParams()
     const stand = items.map((text, index) => (
         <ToDoListItem text={text.text} index={index} key={index}/>

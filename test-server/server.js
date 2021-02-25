@@ -18,15 +18,24 @@ app.use(express.static(
 ));
 app.use(bodyParser.json())
 
+io.on("connection", (socket) => {
+    console.log("connected",socket.id);
+    socket.on("joinRoom",(room)=>{
+        socket.join(room);
+    })
+    socket.on("setData",(room, data)=>{
+        console.log(`room:${room}, data:${data}`)
+        socket.to(room).emit("getData",data);
+    })
+    socket.on("addTodo",(todo)=>{
+        socket.emit("addTodo",todo);
+    })
 
+
+});
 app.get("/all", (req, res) => {
-    io.on("connection", (socket) => {
-        console.log("connected", socket.id);
-    });
-    io.on("setData",data=>{
-        console.log(data);
-        io.emit("getData", data);
-    });
+
+
     fs.readFile(resolve(__dirname, "todo.json"), 'utf8', (err, data) => {
         if (err) {
             console.log(err)

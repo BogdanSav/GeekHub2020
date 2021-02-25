@@ -40,7 +40,7 @@ function ToDoListItem({_deleteItems, index, completeTodo, text}) {
         return (
             <li className={classnames({completed: checked})}>
                 <div className="view">
-                    <input className="toggle" type="checkbox" onClick={setCompleted} checked={checked}/>
+                    <input className="toggle" type="checkbox" onClick={setCompleted} checked={checked} readOnly={true}/>
                     <label>{text}</label>
                     <button className="destroy" onClick={_deleteItem}></button>
                 </div>

@@ -1,21 +1,29 @@
-import {takeEvery, call, put, takeLatest, takeLeading, select} from "redux-saga/effects"
+import {put, select, takeLatest, takeLeading, takeEvery,call} from "redux-saga/effects"
 
-import {CLEAR, COMPLETED, DELETE_ITEM, GET_ITEMS, POST_ITEMS} from "../actions/actions";
+import {CLEAR, COMPLETED, DELETE_ITEM, GET_ITEMS, POST_ITEMS,SOCKET_EVENT} from "../actions/actions";
+import io from "socket.io-client";
+
 
 
 // const todos = useSelector(state=>state.asyncList);
 export function* sagasWatcher() {
     yield takeLeading(GET_ITEMS, getResponse);
-    yield takeLatest([POST_ITEMS,DELETE_ITEM,COMPLETED,CLEAR], postResponse);
+    yield takeLatest([POST_ITEMS, DELETE_ITEM, COMPLETED, CLEAR], postResponse);
+    // yield takeEvery(SOCKET_EVENT,socketResponse)
+
+}
+
+function* socketResponse() {
 
 }
 
 function* getResponse() {
+
     const payload = yield call(fetchItems);
-    yield put({type:GET_ITEMS, payload});
+    yield put({type: GET_ITEMS, payload});
 }
 
-function* postResponse(){
+function* postResponse() {
     const todos = yield select(state => state.asyncList);
     yield fetch("http://localhost:8000/post", {
         method: 'POST',
