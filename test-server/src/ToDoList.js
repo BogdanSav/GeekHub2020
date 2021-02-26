@@ -15,6 +15,7 @@ function ToDoList({value}) {
     let items  = useSelector(state=>state.asyncList);
 
     useEffect(() => {
+        socket.emit("getResponse",'room1');
          dispatch(getItems([]));
     }, [])
     const {id} = useParams()

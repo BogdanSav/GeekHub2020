@@ -27,27 +27,37 @@ io.on("connection", (socket) => {
         console.log(`room:${room}, data:${data}`)
         socket.to(room).emit("getData",data);
     })
-    socket.on("addTodo",(todo)=>{
-        socket.emit("addTodo",todo);
+    socket.on("addTodo",(room,todo)=>{
+        socket.to(room).emit("setTodo",todo);
+    })
+    socket.on("getResponse",(room)=>{
+        fs.readFile(resolve(__dirname, "todo.json"), 'utf8', (err, data) => {
+            if (err) {
+                socket.to(room).emit('responseErr',err)
+                console.log(err);
+            }
+            socket.to(room).emit('responseData', data);
+            // console.log(data);
+        });
     })
 
 
 });
-app.get("/all", (req, res) => {
-
-
-    fs.readFile(resolve(__dirname, "todo.json"), 'utf8', (err, data) => {
-        if (err) {
-            console.log(err)
-        }
-        res.send(data);
-    });
-
-
-})
-app.post("/post", (req, res) => {
-
-    fs.writeFile(resolve(__dirname, "todo.json"), JSON.stringify(req.body, null, 4), 'utf8', (err) => {console.log(err)});
-})
+// app.get("/all", (req, res) => {
+//
+//
+//     fs.readFile(resolve(__dirname, "todo.json"), 'utf8', (err, data) => {
+//         if (err) {
+//             console.log(err)
+//         }
+//         res.send(data);
+//     });
+//
+//
+// })
+// app.post("/post", (req, res) => {
+//
+//     fs.writeFile(resolve(__dirname, "todo.json"), JSON.stringify(req.body, null, 4), 'utf8', (err) => {console.log(err)});
+// })
 
 httpServer.listen(8000);
