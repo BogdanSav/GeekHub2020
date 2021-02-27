@@ -22,13 +22,12 @@ function ToDoHeader ({addNew})  {
     })
    let KeyDown = (e) => {
         if (e.keyCode === 13 && e.target.value) {
-            socket.emit('addTodo', "room1",e.target.value);
+            socket.emit('addTodo');
+            dispatch(addNew(e.target.value));
            e.target.value = ""
         }
     }
-    socket.on('setTodo',(todo)=>{
-        dispatch(addNew(todo));
-    })
+
         return (
             <header className="header">
             <h1> todos</h1>

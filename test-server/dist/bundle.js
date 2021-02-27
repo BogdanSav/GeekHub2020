@@ -5716,14 +5716,12 @@ function ToDoHeader(_ref) {
 
   var KeyDown = function KeyDown(e) {
     if (e.keyCode === 13 && e.target.value) {
-      _sockets__WEBPACK_IMPORTED_MODULE_6__.default.emit('addTodo', "room1", e.target.value);
+      _sockets__WEBPACK_IMPORTED_MODULE_6__.default.emit('addTodo');
+      dispatch(addNew(e.target.value));
       e.target.value = "";
     }
   };
 
-  _sockets__WEBPACK_IMPORTED_MODULE_6__.default.on('setTodo', function (todo) {
-    dispatch(addNew(todo));
-  });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("header", {
     className: "header"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h1", null, " todos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("input", {
@@ -6017,7 +6015,6 @@ var _marked = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1
 
 
 
- // const todos = useSelector(state=>state.asyncList);
 
 function sagasWatcher() {
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function sagasWatcher$(_context) {
@@ -6037,45 +6034,43 @@ function sagasWatcher() {
       }
     }
   }, _marked);
-} // const connect = ()=>{
-//     return new Promise((resolve => {
-//         socket.on('connection',()=>{
-//             resolve(socket);
-//         })
-//     }))
-// }
-
-var createSocketChannel = function createSocketChannel(socket) {
-  return (0,redux_saga__WEBPACK_IMPORTED_MODULE_3__.eventChannel)(function (emit) {
-    var handler = function handler(data) {
-      emit(data);
-    };
-
-    socket.on('responseData', handler);
-    return function () {
-      socket.off('responseData', handler);
-    };
-  });
-};
+} // const createSocketChannel= socket =>eventChannel((emit)=>{
+//     const handler = (data)=>{
+//         emit(data);
+//     }
+//     socket.on('responseData',handler);
+//     return()=>{
+//         socket.off('responseData',handler);
+//     };
+// })
 
 function getResponse() {
-  var socketChannel, payload;
+  var data, response;
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function getResponse$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
-          _context2.next = 2;
-          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.call)(createSocketChannel, _sockets__WEBPACK_IMPORTED_MODULE_5__.default);
+          data = new Promise(function (resolve) {
+            _sockets__WEBPACK_IMPORTED_MODULE_5__.default.on("responseData", function (data) {
+              resolve(data);
+            });
+          });
+          _context2.next = 3;
+          return data.then(function (data) {
+            return data;
+          });
 
-        case 2:
-          socketChannel = _context2.sent;
-          _context2.next = 5;
-          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.take)(socketChannel);
+        case 3:
+          response = _context2.sent;
+          _context2.next = 6;
+          return console.log(response);
 
-        case 5:
-          payload = _context2.sent;
+        case 6:
           _context2.next = 8;
-          return console.log(payload);
+          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.put)({
+            type: _actions_actions__WEBPACK_IMPORTED_MODULE_4__.GET_ITEMS,
+            payload: JSON.parse(response)
+          });
 
         case 8:
         case "end":
@@ -6098,16 +6093,16 @@ function postResponse() {
 
         case 2:
           todos = _context3.sent;
-          _context3.next = 5;
-          return fetch("http://localhost:8000/post", {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(todos)
-          });
+          _sockets__WEBPACK_IMPORTED_MODULE_5__.default.emit('saveData', todos); // const todos = yield select(state => state.asyncList);
+          // yield fetch("http://localhost:8000/post", {
+          //     method: 'POST',
+          //     headers: {
+          //         'Content-Type': 'application/json;charset=utf-8'
+          //     },
+          //     body: JSON.stringify(todos),
+          // });
 
-        case 5:
+        case 4:
         case "end":
           return _context3.stop();
       }
@@ -6145,6 +6140,10 @@ function _fetchItems() {
     }, _callee);
   }));
   return _fetchItems.apply(this, arguments);
+}
+
+function data(payload) {
+  return payload;
 }
 
 /***/ }),

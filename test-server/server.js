@@ -36,9 +36,12 @@ io.on("connection", (socket) => {
                 socket.to(room).emit('responseErr',err)
                 console.log(err);
             }
-            socket.to(room).emit('responseData', data);
+            socket.emit('responseData', data);
             // console.log(data);
         });
+    })
+    socket.on("saveData",(data)=>{
+        fs.writeFile(resolve(__dirname, "todo.json"), JSON.stringify(data, null, 4), 'utf8', (err) => {console.log(err)});
     })
 
 
