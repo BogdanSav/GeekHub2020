@@ -28,7 +28,8 @@ io.on("connection", (socket) => {
         socket.to(room).emit("getData",data);
     })
     socket.on("addTodo",(room,todo)=>{
-        socket.to(room).emit("setTodo",todo);
+        console.log(`room:${room}, todo:${todo}`)
+        io.emit("setTodo",todo);
     })
     socket.on("getResponse",(room)=>{
         fs.readFile(resolve(__dirname, "todo.json"), 'utf8', (err, data) => {

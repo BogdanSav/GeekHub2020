@@ -14,7 +14,7 @@ function ToDoHeader ({addNew})  {
 
     let [text, setText] = useState("");
     useEffect(function (){
-       socket.emit("joinRoom","room1")
+       // socket.emit("joinRoom","room1")
     },[])
     socket.emit("setData","room1",text);
     socket.on('getData',(data)=>{
@@ -22,12 +22,18 @@ function ToDoHeader ({addNew})  {
     })
    let KeyDown = (e) => {
         if (e.keyCode === 13 && e.target.value) {
-            socket.emit('addTodo');
-            dispatch(addNew(e.target.value));
+            socket.emit('addTodo',"room1",e.target.value);
            e.target.value = ""
         }
     }
-
+    socket.on('setTodo',(todo)=>{
+        console.log(todo);
+        dispatch(addNew(todo));
+    })
+    socket.off('setTodo',(todo)=>{
+        console.log(todo);
+        dispatch(addNew(todo));
+    })
         return (
             <header className="header">
             <h1> todos</h1>
