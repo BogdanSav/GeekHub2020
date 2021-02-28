@@ -13,11 +13,14 @@ function ToDoList({value}) {
 
     let dispatch = useDispatch();
     let items  = useSelector(state=>state.asyncList);
-
+    let [state,setState] = useState(false);
     useEffect(() => {
-        socket.emit("getResponse",'room1');
          dispatch(getItems([]));
-    }, [])
+    }, [state])
+    socket.on('modified',()=>{
+       setState(!state);
+    });
+
     const {id} = useParams()
     const stand = items.map((text, index) => (
         <ToDoListItem text={text.text} index={index} key={index}/>

@@ -20,48 +20,44 @@ app.use(bodyParser.json())
 
 io.on("connection", (socket) => {
     console.log("connected",socket.id);
-    socket.on("joinRoom",(room)=>{
-        socket.join(room);
+
+    socket.on("setData",(data)=>{
+        io.emit("getData",data);
     })
-    socket.on("setData",(room, data)=>{
-        console.log(`room:${room}, data:${data}`)
-        socket.to(room).emit("getData",data);
+    socket.on("modify",()=> {
+        io.emit("modified");
     })
-    socket.on("addTodo",(room,todo)=>{
-        console.log(`room:${room}, todo:${todo}`)
-        io.emit("setTodo",todo);
-    })
-    socket.on("getResponse",(room)=>{
-        fs.readFile(resolve(__dirname, "todo.json"), 'utf8', (err, data) => {
-            if (err) {
-                socket.to(room).emit('responseErr',err)
-                console.log(err);
-            }
-            socket.emit('responseData', data);
-            // console.log(data);
-        });
-    })
-    socket.on("saveData",(data)=>{
-        fs.writeFile(resolve(__dirname, "todo.json"), JSON.stringify(data, null, 4), 'utf8', (err) => {console.log(err)});
-    })
+    // socket.on("getResponse",(room)=>{
+    //     fs.readFile(resolve(__dirname, "todo.json"), 'utf8', (err, data) => {
+    //         if (err) {
+    //            io.emit('responseErr',err)
+    //             console.log(err);
+    //         }
+    //         io.emit('responseData', data);
+    //         // console.log(data);
+    //     });
+    // })
+    // socket.on("saveData",(data)=>{
+    //     fs.writeFile(resolve(__dirname, "todo.json"), JSON.stringify(data, null, 4), 'utf8', (err) => {console.log(err)});
+    // })
 
 
 });
-// app.get("/all", (req, res) => {
-//
-//
-//     fs.readFile(resolve(__dirname, "todo.json"), 'utf8', (err, data) => {
-//         if (err) {
-//             console.log(err)
-//         }
-//         res.send(data);
-//     });
-//
-//
-// })
-// app.post("/post", (req, res) => {
-//
-//     fs.writeFile(resolve(__dirname, "todo.json"), JSON.stringify(req.body, null, 4), 'utf8', (err) => {console.log(err)});
-// })
+app.get("/all", (req, res) => {
+
+
+    fs.readFile(resolve(__dirname, "todo.json"), 'utf8', (err, data) => {
+        if (err) {
+            console.log(err)
+        }
+        res.send(data);
+    });
+
+
+})
+app.post("/post", (req, res) => {
+
+    fs.writeFile(resolve(__dirname, "todo.json"), JSON.stringify(req.body, null, 4), 'utf8', (err) => {console.log(err)});
+})
 
 httpServer.listen(8000);

@@ -5,6 +5,7 @@ export default function asyncListReducer(state = [], action) {
     console.log(action)
     switch (action.type) {
         case GET_ITEMS :
+            state=[];
             return state.concat(action.payload);
         case POST_ITEMS :
             return state.concat([{text: action.payload, completed: false}]);

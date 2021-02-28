@@ -53,6 +53,52 @@ module.exports = _assertThisInitialized;
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/asyncToGenerator.js ***!
+  \*****************************************************************/
+/***/ ((module) => {
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+        args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+
+      _next(undefined);
+    });
+  };
+}
+
+module.exports = _asyncToGenerator;
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/classCallCheck.js":
 /*!***************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/classCallCheck.js ***!
@@ -5660,27 +5706,22 @@ function ToDoHeader(_ref) {
       text = _useState2[0],
       setText = _useState2[1];
 
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {// socket.emit("joinRoom","room1")
-  }, []);
-  _sockets__WEBPACK_IMPORTED_MODULE_6__.default.emit("setData", "room1", text);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    _sockets__WEBPACK_IMPORTED_MODULE_6__.default.emit("setData", text);
+  }, [text]);
   _sockets__WEBPACK_IMPORTED_MODULE_6__.default.on('getData', function (data) {
     setText(data);
   });
 
   var KeyDown = function KeyDown(e) {
     if (e.keyCode === 13 && e.target.value) {
-      _sockets__WEBPACK_IMPORTED_MODULE_6__.default.emit('addTodo', "room1", e.target.value);
+      dispatch(addNew(e.target.value));
       e.target.value = "";
     }
   };
 
-  _sockets__WEBPACK_IMPORTED_MODULE_6__.default.on('setTodo', function (todo) {
-    console.log(todo);
-    dispatch(addNew(todo));
-  });
-  _sockets__WEBPACK_IMPORTED_MODULE_6__.default.off('setTodo', function (todo) {
-    console.log(todo);
-    dispatch(addNew(todo));
+  _sockets__WEBPACK_IMPORTED_MODULE_6__.default.on('modified', function () {
+    setText("");
   });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("header", {
     className: "header"
@@ -5711,14 +5752,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _ToDoListItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ToDoListItem */ "./src/ToDoListItem.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _store_maptoStateProps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/maptoStateProps */ "./src/store/maptoStateProps.js");
-/* harmony import */ var _store_mapToDispatchProps__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/mapToDispatchProps */ "./src/store/mapToDispatchProps.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var _store_actionCreators_actionCreators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/actionCreators/actionCreators */ "./src/store/actionCreators/actionCreators.js");
-/* harmony import */ var _sockets__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../sockets */ "./sockets.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _ToDoListItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ToDoListItem */ "./src/ToDoListItem.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_maptoStateProps__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/maptoStateProps */ "./src/store/maptoStateProps.js");
+/* harmony import */ var _store_mapToDispatchProps__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/mapToDispatchProps */ "./src/store/mapToDispatchProps.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var _store_actionCreators_actionCreators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store/actionCreators/actionCreators */ "./src/store/actionCreators/actionCreators.js");
+/* harmony import */ var _sockets__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../sockets */ "./sockets.js");
+
 
 
 
@@ -5732,20 +5776,28 @@ __webpack_require__.r(__webpack_exports__);
 
 function ToDoList(_ref) {
   var value = _ref.value;
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
-  var items = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (state) {
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.useDispatch)();
+  var items = (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.useSelector)(function (state) {
     return state.asyncList;
   });
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    _sockets__WEBPACK_IMPORTED_MODULE_6__.default.emit("getResponse", 'room1');
-    dispatch((0,_store_actionCreators_actionCreators__WEBPACK_IMPORTED_MODULE_5__.getItems)([]));
-  }, []);
 
-  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useParams)(),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
+      state = _useState2[0],
+      setState = _useState2[1];
+
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    dispatch((0,_store_actionCreators_actionCreators__WEBPACK_IMPORTED_MODULE_6__.getItems)([]));
+  }, [state]);
+  _sockets__WEBPACK_IMPORTED_MODULE_7__.default.on('modified', function () {
+    setState(!state);
+  });
+
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useParams)(),
       id = _useParams.id;
 
   var stand = items.map(function (text, index) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_ToDoListItem__WEBPACK_IMPORTED_MODULE_1__.default, {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_ToDoListItem__WEBPACK_IMPORTED_MODULE_2__.default, {
       text: text.text,
       index: index,
       key: index
@@ -5754,20 +5806,20 @@ function ToDoList(_ref) {
   var oneItem = stand.filter(function (item, index) {
     return Number(id) === index + 1;
   });
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("section", {
     className: "main"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("input", {
     id: "toggle-all",
     className: "toggle-all",
     type: "checkbox"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("label", {
     htmlFor: "toggle-all"
-  }, "Mark all as complete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
+  }, "Mark all as complete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("ul", {
     className: "todo-list"
   }, id ? oneItem : stand));
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)((0,_store_maptoStateProps__WEBPACK_IMPORTED_MODULE_3__.default)('ToDoList'), (0,_store_mapToDispatchProps__WEBPACK_IMPORTED_MODULE_4__.default)('ToDoList'))(ToDoList));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_3__.connect)((0,_store_maptoStateProps__WEBPACK_IMPORTED_MODULE_4__.default)('ToDoList'), (0,_store_mapToDispatchProps__WEBPACK_IMPORTED_MODULE_5__.default)('ToDoList'))(ToDoList));
 
 /***/ }),
 
@@ -5957,33 +6009,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "sagasWatcher": () => (/* binding */ sagasWatcher)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-saga/effects */ "./node_modules/redux-saga/dist/redux-saga-effects-npm-proxy.esm.js");
-/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux-saga */ "./node_modules/redux-saga/dist/redux-saga-core-npm-proxy.esm.js");
-/* harmony import */ var _actions_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/actions */ "./src/store/actions/actions.js");
-/* harmony import */ var _sockets__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../sockets */ "./sockets.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux-saga/effects */ "./node_modules/redux-saga/dist/redux-saga-effects-npm-proxy.esm.js");
+/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux-saga */ "./node_modules/redux-saga/dist/redux-saga-core-npm-proxy.esm.js");
+/* harmony import */ var _actions_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions/actions */ "./src/store/actions/actions.js");
+/* harmony import */ var _sockets__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../sockets */ "./sockets.js");
 
 
-var _marked = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(sagasWatcher),
-    _marked2 = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(getResponse),
-    _marked3 = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(postResponse);
+
+var _marked = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(sagasWatcher),
+    _marked2 = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(getResponse),
+    _marked3 = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(postResponse);
 
 
 
 
 
 function sagasWatcher() {
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function sagasWatcher$(_context) {
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function sagasWatcher$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
           _context.next = 2;
-          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__.takeLeading)(_actions_actions__WEBPACK_IMPORTED_MODULE_3__.GET_ITEMS, getResponse);
+          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.takeLeading)(_actions_actions__WEBPACK_IMPORTED_MODULE_4__.GET_ITEMS, getResponse);
 
         case 2:
           _context.next = 4;
-          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__.takeLatest)([_actions_actions__WEBPACK_IMPORTED_MODULE_3__.POST_ITEMS, _actions_actions__WEBPACK_IMPORTED_MODULE_3__.DELETE_ITEM, _actions_actions__WEBPACK_IMPORTED_MODULE_3__.COMPLETED, _actions_actions__WEBPACK_IMPORTED_MODULE_3__.CLEAR], postResponse);
+          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.takeLatest)([_actions_actions__WEBPACK_IMPORTED_MODULE_4__.POST_ITEMS, _actions_actions__WEBPACK_IMPORTED_MODULE_4__.DELETE_ITEM, _actions_actions__WEBPACK_IMPORTED_MODULE_4__.COMPLETED, _actions_actions__WEBPACK_IMPORTED_MODULE_4__.CLEAR], postResponse);
 
         case 4:
         case "end":
@@ -5991,45 +6046,26 @@ function sagasWatcher() {
       }
     }
   }, _marked);
-} // const createSocketChannel= socket =>eventChannel((emit)=>{
-//     const handler = (data)=>{
-//         emit(data);
-//     }
-//     socket.on('responseData',handler);
-//     return()=>{
-//         socket.off('responseData',handler);
-//     };
-// })
+}
 
 function getResponse() {
-  var data, response;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function getResponse$(_context2) {
+  var payload;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function getResponse$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
-          data = new Promise(function (resolve) {
-            _sockets__WEBPACK_IMPORTED_MODULE_4__.default.on("responseData", function (data) {
-              resolve(data);
-            });
-          });
-          _context2.next = 3;
-          return data.then(function (data) {
-            return data;
-          });
+          _context2.next = 2;
+          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.call)(fetchItems);
 
-        case 3:
-          response = _context2.sent;
-          _context2.next = 6;
-          return console.log(response);
-
-        case 6:
-          _context2.next = 8;
-          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__.put)({
-            type: _actions_actions__WEBPACK_IMPORTED_MODULE_3__.GET_ITEMS,
-            payload: JSON.parse(response)
+        case 2:
+          payload = _context2.sent;
+          _context2.next = 5;
+          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.put)({
+            type: _actions_actions__WEBPACK_IMPORTED_MODULE_4__.GET_ITEMS,
+            payload: payload
           });
 
-        case 8:
+        case 5:
         case "end":
           return _context2.stop();
       }
@@ -6039,39 +6075,66 @@ function getResponse() {
 
 function postResponse() {
   var todos;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function postResponse$(_context3) {
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function postResponse$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
           _context3.next = 2;
-          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__.select)(function (state) {
+          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.select)(function (state) {
             return state.asyncList;
           });
 
         case 2:
           todos = _context3.sent;
-          _sockets__WEBPACK_IMPORTED_MODULE_4__.default.emit('saveData', todos); // const todos = yield select(state => state.asyncList);
-          // yield fetch("http://localhost:8000/post", {
-          //     method: 'POST',
-          //     headers: {
-          //         'Content-Type': 'application/json;charset=utf-8'
-          //     },
-          //     body: JSON.stringify(todos),
-          // });
+          _sockets__WEBPACK_IMPORTED_MODULE_5__.default.emit('modify');
+          _context3.next = 6;
+          return fetch("http://localhost:8000/post", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(todos)
+          });
 
-        case 4:
+        case 6:
         case "end":
           return _context3.stop();
       }
     }
   }, _marked3);
-} // async function fetchItems() {
-//     const response = await fetch("http://localhost:8000/all");
-//     return await response.json();
-// }
-// function data (payload){
-//    return payload;
-// }
+}
+
+function fetchItems() {
+  return _fetchItems.apply(this, arguments);
+}
+
+function _fetchItems() {
+  _fetchItems = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
+    var response;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.next = 2;
+            return fetch("http://localhost:8000/all");
+
+          case 2:
+            response = _context4.sent;
+            _context4.next = 5;
+            return response.json();
+
+          case 5:
+            return _context4.abrupt("return", _context4.sent);
+
+          case 6:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _fetchItems.apply(this, arguments);
+}
 
 /***/ }),
 
@@ -6247,6 +6310,7 @@ function asyncListReducer() {
 
   switch (action.type) {
     case _actions_actions__WEBPACK_IMPORTED_MODULE_1__.GET_ITEMS:
+      state = [];
       return state.concat(action.payload);
 
     case _actions_actions__WEBPACK_IMPORTED_MODULE_1__.POST_ITEMS:
