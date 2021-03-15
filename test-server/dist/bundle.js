@@ -5684,13 +5684,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_mapToDispatchProps__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/mapToDispatchProps */ "./src/store/mapToDispatchProps.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _sockets__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../sockets */ "./sockets.js");
-/* harmony import */ var _store_actions_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store/actions/actions */ "./src/store/actions/actions.js");
 
 
- // import {addItem} from '../store/actionCreators/actionCreators';
 
-
- // import postItems from "./store/actionCreators/actionCreators"
 
 
 
@@ -5714,10 +5710,10 @@ function ToDoHeader(_ref) {
   });
 
   var KeyDown = function KeyDown(e) {
-    if (e.keyCode === 13 && e.target.value) {
-      dispatch(addNew(e.target.value));
-      e.target.value = "";
-    }
+    if (e.keyCode === 13 && text) {
+      dispatch(addNew(text));
+      setText("");
+    } else if (e.keyCode === 13 && !text) alert("empty Todo");
   };
 
   _sockets__WEBPACK_IMPORTED_MODULE_6__.default.on('modified', function () {
@@ -6022,7 +6018,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var _marked = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(sagasWatcher),
     _marked2 = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(getResponse),
-    _marked3 = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(postResponse);
+    _marked3 = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(setComplete),
+    _marked4 = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(addNewTodo),
+    _marked5 = /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(deleteTodo);
 
 
 
@@ -6038,9 +6036,17 @@ function sagasWatcher() {
 
         case 2:
           _context.next = 4;
-          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.takeLatest)([_actions_actions__WEBPACK_IMPORTED_MODULE_4__.POST_ITEMS, _actions_actions__WEBPACK_IMPORTED_MODULE_4__.DELETE_ITEM, _actions_actions__WEBPACK_IMPORTED_MODULE_4__.COMPLETED, _actions_actions__WEBPACK_IMPORTED_MODULE_4__.CLEAR], postResponse);
+          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.takeLatest)(_actions_actions__WEBPACK_IMPORTED_MODULE_4__.COMPLETED, setComplete);
 
         case 4:
+          _context.next = 6;
+          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.takeLatest)(_actions_actions__WEBPACK_IMPORTED_MODULE_4__.POST_ITEMS, addNewTodo);
+
+        case 6:
+          _context.next = 8;
+          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.takeLatest)(_actions_actions__WEBPACK_IMPORTED_MODULE_4__.DELETE_ITEM, deleteTodo);
+
+        case 8:
         case "end":
           return _context.stop();
       }
@@ -6054,28 +6060,38 @@ function getResponse() {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
-          _context2.next = 2;
+          _context2.prev = 0;
+          _context2.next = 3;
           return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.call)(fetchItems);
 
-        case 2:
+        case 3:
           payload = _context2.sent;
-          _context2.next = 5;
+          _context2.next = 6;
           return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.put)({
             type: _actions_actions__WEBPACK_IMPORTED_MODULE_4__.GET_ITEMS,
             payload: payload
           });
 
-        case 5:
+        case 6:
+          _context2.next = 11;
+          break;
+
+        case 8:
+          _context2.prev = 8;
+          _context2.t0 = _context2["catch"](0);
+          alert(_context2.t0);
+
+        case 11:
         case "end":
           return _context2.stop();
       }
     }
-  }, _marked2);
+  }, _marked2, null, [[0, 8]]);
 }
 
-function postResponse() {
-  var todos;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function postResponse$(_context3) {
+function setComplete() {
+  var todos, payload;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function setComplete$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
@@ -6088,7 +6104,45 @@ function postResponse() {
           todos = _context3.sent;
           _sockets__WEBPACK_IMPORTED_MODULE_5__.default.emit('modify');
           _context3.next = 6;
-          return fetch("http://localhost:8000/post", {
+          return fetch("http://localhost:8000/setComplete", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(todos)
+          });
+
+        case 6:
+          payload = _context3.sent;
+
+          if (payload) {
+            alert(payload);
+          }
+
+        case 8:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  }, _marked3);
+}
+
+function addNewTodo() {
+  var todos;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function addNewTodo$(_context4) {
+    while (1) {
+      switch (_context4.prev = _context4.next) {
+        case 0:
+          _context4.next = 2;
+          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.select)(function (state) {
+            return state.asyncList;
+          });
+
+        case 2:
+          todos = _context4.sent;
+          _sockets__WEBPACK_IMPORTED_MODULE_5__.default.emit('modify');
+          _context4.next = 6;
+          return fetch("http://localhost:8000/addNew", {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=utf-8'
@@ -6098,10 +6152,41 @@ function postResponse() {
 
         case 6:
         case "end":
-          return _context3.stop();
+          return _context4.stop();
       }
     }
-  }, _marked3);
+  }, _marked4);
+}
+
+function deleteTodo() {
+  var todos;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function deleteTodo$(_context5) {
+    while (1) {
+      switch (_context5.prev = _context5.next) {
+        case 0:
+          _context5.next = 2;
+          return (0,redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__.select)(function (state) {
+            return state.asyncList;
+          });
+
+        case 2:
+          todos = _context5.sent;
+          _sockets__WEBPACK_IMPORTED_MODULE_5__.default.emit('modify');
+          _context5.next = 6;
+          return fetch("http://localhost:8000/deleteTodo", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(todos)
+          });
+
+        case 6:
+        case "end":
+          return _context5.stop();
+      }
+    }
+  }, _marked5);
 }
 
 function fetchItems() {
@@ -6111,24 +6196,24 @@ function fetchItems() {
 function _fetchItems() {
   _fetchItems = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
     var response;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context4) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context6) {
       while (1) {
-        switch (_context4.prev = _context4.next) {
+        switch (_context6.prev = _context6.next) {
           case 0:
-            _context4.next = 2;
+            _context6.next = 2;
             return fetch("http://localhost:8000/all");
 
           case 2:
-            response = _context4.sent;
-            _context4.next = 5;
+            response = _context6.sent;
+            _context6.next = 5;
             return response.json();
 
           case 5:
-            return _context4.abrupt("return", _context4.sent);
+            return _context6.abrupt("return", _context6.sent);
 
           case 6:
           case "end":
-            return _context4.stop();
+            return _context6.stop();
         }
       }
     }, _callee);

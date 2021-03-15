@@ -1,18 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import store from './store/store';
-// import {addItem} from '../store/actionCreators/actionCreators';
 import mapToStateProps from './store/maptoStateProps';
 import mapToDispatchProps from './store/mapToDispatchProps';
-// import postItems from "./store/actionCreators/actionCreators"
 import {connect} from 'react-redux';
 import {useDispatch} from "react-redux";
 import socket from "../sockets";
-import {SOCKET_EVENT} from "./store/actions/actions";
 
 function ToDoHeader ({addNew})  {
     let dispatch = useDispatch();
-
     let [text, setText] = useState("");
+
     useEffect(function (){
         socket.emit("setData",text);
     },[text])
@@ -21,16 +18,15 @@ function ToDoHeader ({addNew})  {
         setText(data);
     })
    let KeyDown = (e) => {
-        if (e.keyCode === 13 && e.target.value) {
-            dispatch(addNew(e.target.value));
-           e.target.value = ""
+        if (e.keyCode === 13  && text) {
+            dispatch(addNew(text));
+           setText("");
         }
+        else if(e.keyCode === 13  && !text) alert("empty Todo");
     }
     socket.on('modified',()=>{
         setText("")
     })
-
-
         return (
             <header className="header">
             <h1> todos</h1>

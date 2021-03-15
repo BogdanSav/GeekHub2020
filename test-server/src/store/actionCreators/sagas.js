@@ -7,21 +7,45 @@ import socket from "../../../sockets";
 
 export function* sagasWatcher() {
     yield takeLeading(GET_ITEMS, getResponse);
-    yield takeLatest([POST_ITEMS,DELETE_ITEM,COMPLETED, CLEAR], postResponse);
+    yield takeLatest(COMPLETED, setComplete);
+    yield takeLatest(POST_ITEMS, addNewTodo);
+    yield takeLatest(DELETE_ITEM, deleteTodo);
+
 
 
 }
 
 function* getResponse() {
-    const payload = yield call(fetchItems);
-    yield put({type:GET_ITEMS, payload});
+    try {
+        const payload = yield call(fetchItems);
+        yield put({type:GET_ITEMS, payload});
+    }
+    catch (err){
+        alert(err);
+    }
+
 
 }
 
-function* postResponse() {
+function* setComplete() {
     const todos = yield select(state => state.asyncList);
     socket.emit('modify');
-    yield fetch("http://localhost:8000/post", {
+    const payload =  yield fetch("http://localhost:8000/setComplete", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(todos),
+    });
+    if(payload){
+        alert(payload);
+    }
+
+}
+function* addNewTodo(){
+    const todos = yield select(state => state.asyncList);
+    socket.emit('modify');
+    yield fetch("http://localhost:8000/addNew", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -30,7 +54,18 @@ function* postResponse() {
     });
 
 }
+function* deleteTodo(){
+    const todos = yield select(state => state.asyncList);
+    socket.emit('modify');
+    yield fetch("http://localhost:8000/deleteTodo", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(todos),
+    });
 
+}
 
 async function fetchItems() {
     const response = await fetch("http://localhost:8000/all");

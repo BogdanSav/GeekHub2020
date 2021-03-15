@@ -1,7 +1,7 @@
 [
     {
         "text": "ddd",
-        "completed": false
+        "completed": true
     },
     {
         "text": "1234",
@@ -9,10 +9,10 @@
     },
     {
         "text": "12",
-        "completed": false
+        "completed": true
     },
     {
-        "text": "awdawdawd",
+        "text": "dawdawd",
         "completed": false
     }
 ]
