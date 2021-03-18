@@ -5490,6 +5490,7 @@ function App() {
       id = _useState2[0],
       setID = _useState2[1];
 
+  var routes = ["addNew", "delete", "setComplete", "active", "completed", "all", "todo/:id"];
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("input", {
     type: "text",
     onChange: function onChange(e) {
@@ -5502,13 +5503,11 @@ function App() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_ToDoHeader__WEBPACK_IMPORTED_MODULE_2__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
     exact: true,
     path: "/"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_ToDoList__WEBPACK_IMPORTED_MODULE_3__.default, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
-    path: "/active"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_ToDoList__WEBPACK_IMPORTED_MODULE_3__.default, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
-    path: "/completed"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_ToDoList__WEBPACK_IMPORTED_MODULE_3__.default, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
-    path: "/todo/:id"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_ToDoList__WEBPACK_IMPORTED_MODULE_3__.default, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_ToDoFilters__WEBPACK_IMPORTED_MODULE_4__.default, null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_ToDoList__WEBPACK_IMPORTED_MODULE_3__.default, null)), routes.map(function (route) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+      path: "/" + route
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_ToDoList__WEBPACK_IMPORTED_MODULE_3__.default, null));
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_ToDoFilters__WEBPACK_IMPORTED_MODULE_4__.default, null)));
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -5681,9 +5680,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/store */ "./src/store/store.js");
 /* harmony import */ var _store_maptoStateProps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/maptoStateProps */ "./src/store/maptoStateProps.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _store_mapToDispatchProps__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/mapToDispatchProps */ "./src/store/mapToDispatchProps.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _sockets__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../sockets */ "./sockets.js");
+
 
 
 
@@ -5702,6 +5703,7 @@ function ToDoHeader(_ref) {
       text = _useState2[0],
       setText = _useState2[1];
 
+  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useHistory)();
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     _sockets__WEBPACK_IMPORTED_MODULE_6__.default.emit("setData", text);
   }, [text]);
@@ -5713,6 +5715,7 @@ function ToDoHeader(_ref) {
     if (e.keyCode === 13 && text) {
       dispatch(addNew(text));
       setText("");
+      history.push("/addNew");
     } else if (e.keyCode === 13 && !text) alert("empty Todo");
   };
 
@@ -5838,6 +5841,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_maptoStateProps__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/maptoStateProps */ "./src/store/maptoStateProps.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+
 
 
 
@@ -5857,6 +5862,7 @@ function ToDoListItem(_ref) {
       checked = _useState2[0],
       setCheck = _useState2[1];
 
+  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useHistory)();
   var checkComplete = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (state) {
     return state.asyncList;
   });
@@ -5869,12 +5875,14 @@ function ToDoListItem(_ref) {
   var setCompleted = function setCompleted() {
     dispatch(completeTodo(index));
     setCheck(!checked);
+    history.push("setComplete");
   };
 
   var _deleteItem = function _deleteItem(e) {
     setCheck(false);
     dispatch(completeTodo(index));
     dispatch(_deleteItems(Number(index)));
+    history.push("delete");
   }; // componentDidUpdate(prevProps, prevState, snapshot) {
   //     if(!this.props.state[this.props.index].completed){
   //         this.liRef.current.classList.remove('completed');
@@ -6687,7 +6695,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var saga = (0,redux_saga__WEBPACK_IMPORTED_MODULE_2__.default)();
-var store = (0,redux__WEBPACK_IMPORTED_MODULE_4__.createStore)(_reducers_rootReducer__WEBPACK_IMPORTED_MODULE_0__.default, (0,redux__WEBPACK_IMPORTED_MODULE_4__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_1__.default, saga));
+var store = (0,redux__WEBPACK_IMPORTED_MODULE_4__.createStore)(_reducers_rootReducer__WEBPACK_IMPORTED_MODULE_0__.default, (0,redux__WEBPACK_IMPORTED_MODULE_4__.applyMiddleware)(saga));
 saga.run(_actionCreators_sagas__WEBPACK_IMPORTED_MODULE_3__.sagasWatcher);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
 

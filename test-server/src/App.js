@@ -13,7 +13,7 @@ const history = createBrowserHistory()
 
 function App() {
     let [id, setID] = useState("");
-
+    const routes = ["addNew","delete","setComplete","active", "completed","all","todo/:id"];
     return (
         <Router>
             <ul>
@@ -33,15 +33,9 @@ function App() {
                     <Route exact path="/">
                         <ToDoList/>
                     </Route>
-                    <Route path="/active">
-                        <ToDoList/>
-                    </Route>
-                    <Route path="/completed">
-                        <ToDoList/>
-                    </Route>
-                    <Route path="/todo/:id">
-                        <ToDoList/>
-                    </Route>
+                    {
+                        routes.map(route=>(<Route path={"/"+route}><ToDoList/></Route>))
+                    }
                 </Switch>
                 <ToDoFilters/>
             </section>

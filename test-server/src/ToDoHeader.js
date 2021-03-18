@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import store from './store/store';
 import mapToStateProps from './store/maptoStateProps';
+import {useHistory} from "react-router-dom";
 import mapToDispatchProps from './store/mapToDispatchProps';
 import {connect} from 'react-redux';
 import {useDispatch} from "react-redux";
@@ -9,6 +10,7 @@ import socket from "../sockets";
 function ToDoHeader ({addNew})  {
     let dispatch = useDispatch();
     let [text, setText] = useState("");
+    const history = useHistory();
 
     useEffect(function (){
         socket.emit("setData",text);
@@ -21,6 +23,8 @@ function ToDoHeader ({addNew})  {
         if (e.keyCode === 13  && text) {
             dispatch(addNew(text));
            setText("");
+           history.push("/addNew");
+
         }
         else if(e.keyCode === 13  && !text) alert("empty Todo");
     }

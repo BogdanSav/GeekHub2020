@@ -3,11 +3,13 @@ import {connect, useDispatch, useSelector} from "react-redux";
 import mapToDispatchProps from "./store/mapToDispatchProps";
 import maptoStateProps from "./store/maptoStateProps";
 import classnames from 'classnames'
+import {useHistory} from "react-router-dom";
 
 
 function ToDoListItem({_deleteItems, index, completeTodo, text}) {
     let dispatch = useDispatch()
     let [checked, setCheck] = useState(false);
+    let history = useHistory();
     let checkComplete = useSelector(state=>state.asyncList)
     useEffect(()=>{
         if(checkComplete[index].completed){
@@ -15,13 +17,15 @@ function ToDoListItem({_deleteItems, index, completeTodo, text}) {
         }
     },[])
     let setCompleted = () => {
-       dispatch(completeTodo(index))
-        setCheck(!checked);
+       dispatch(completeTodo(index));
+       setCheck(!checked);
+       history.push("setComplete");
     }
     let _deleteItem= (e)=>
     {setCheck(false)
         dispatch(completeTodo(index))
        dispatch( _deleteItems(Number(index)));
+        history.push("delete");
 
     }
     // componentDidUpdate(prevProps, prevState, snapshot) {
