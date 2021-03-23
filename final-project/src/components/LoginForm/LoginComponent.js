@@ -1,22 +1,13 @@
 import React from 'react';
-import { FormControl, InputLabel, Input, Grid,Button, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
+import InputComponent from "./InputComponent";
 import LoginButtons from "./LoginButtons"
 function LoginComponent() {
     return (
         <form>
             <Grid container direction="column" justify="space-between" alignItems="center" spacing={4} >
-                <Grid item >
-                    <FormControl size="medium">
-                        <InputLabel htmlFor="emailInput">Email</InputLabel>
-                        <Input type="email" id="emailInput"  placeholder="Type your Email" required/>
-                    </FormControl>
-                </Grid>
-                <Grid item> 
-                    <FormControl size="medium">
-                        <InputLabel htmlFor="passwordInput">Password</InputLabel>
-                        <Input type="password" id="passwordInput" required />
-                    </FormControl>
-                </Grid>
+               <InputComponent id={"emailInput"} type={"email"} holder={"type your email"}  text={"Email"}/>
+               <InputComponent id={"passwordInput"} type={"password"} text={"Password"}/>
                 <Grid item>
                     <LoginButtons/>
                 </Grid>

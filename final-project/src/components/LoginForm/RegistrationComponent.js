@@ -1,29 +1,21 @@
-import React from 'react';
-import { Grid,FormControl,Input, InputLabel, Button,} from "@material-ui/core"
+import React, {useState} from 'react';
+import { Grid,Button,} from "@material-ui/core";
+import InputComponent from "./InputComponent";
 function RegistrationComponent(){
+    let [state,setState] = useState(false);
+    let onSubmit =(e)=>{
+        e.preventDefault();
+       setState(!state)
+    }
    return (
-    <form>
+    <form onSubmit={onSubmit}>
             <Grid container direction="column" justify="space-between" alignItems="center" spacing={4} >
-            <Grid item>
-                <FormControl size="medium">
-                        <InputLabel htmlFor="nameInput">Name</InputLabel>
-                        <Input type="text" id="nameInput" required placeholder="Type your name/nickname"/>
-                    </FormControl>
-                </Grid>
-                <Grid item >
-                    <FormControl size="medium">
-                        <InputLabel htmlFor="emailInput">Email</InputLabel>
-                        <Input type="email" id="emaiInput"  placeholder="Type your Email" required/>
-                    </FormControl>
-                </Grid>
-                <Grid item> 
-                    <FormControl size="medium">
-                        <InputLabel htmlFor="passwordInput">Password</InputLabel>
-                        <Input type="password" id="passwordInput" required />
-                    </FormControl>
-                </Grid>
+                <InputComponent id="nameInput" type="text" holder={"type your name/nickname"} text={"Name"} state={state}/>
+                <InputComponent id="emailInput" type="email" holder={"type your email"} text={"Email"} state={state}/>
+                <InputComponent id="passwordInput" type="password" text={"Password"} state={state}/>
+
                 <Grid item>
-                    <Button type="submit" color={"primary"} variant={"outlined"}>Register now</Button>
+                    <Button type={"submit"} color={"primary"} variant={"outlined"} >Register now</Button>
                 </Grid>
               
             </Grid>

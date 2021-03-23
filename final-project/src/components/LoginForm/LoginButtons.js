@@ -10,7 +10,7 @@ function LoginButtons() {
                 <Button type="submit" variant="outlined" color="primary">Login</Button>
             </Grid>
             <Grid item>
-                <Typography variant="h7"> OR</Typography>
+                <Typography variant="h6"> OR</Typography>
             </Grid>
             <Grid item>
                 <Button variant="outlined" color="primary" onClick={()=>{dispatch({type:REGISTER,payload:true})}}>Register</Button>
