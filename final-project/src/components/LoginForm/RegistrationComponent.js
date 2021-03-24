@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Grid,Button} from "@material-ui/core";
 import {useDispatch} from "react-redux";
 import InputComponent from "./InputComponent";
-;
+import {Link} from "react-router-dom";
 
 function RegistrationComponent(){
 
@@ -20,7 +20,7 @@ function RegistrationComponent(){
                 <InputComponent id="passwordInput" type="password" text={"Password"} state={state}/>
 
                 <Grid item>
-                    <Button type={"submit"} color={"primary"} variant={"outlined"}>Register now</Button>
+                   <Link to={"/main"}><Button type={"submit"} color={"primary"} variant={"outlined"}>Register now</Button> </Link>
                 </Grid>
               
             </Grid>
