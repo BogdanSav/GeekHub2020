@@ -10,9 +10,6 @@ function InputComponent({id,type,holder,text,state}){
         if(state&&inputValue){
             dispatch({type: REGISTER_NEW_USER,payload:{[text]:inputValue}});
         }
-        if(state&&type==="password"){
-            dispatch({type: REGISTER_NEW_USER,payload:{[text]:inputValue}});
-        }
         setInputValue("");
     },[state]);
     return(

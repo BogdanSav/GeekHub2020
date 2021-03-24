@@ -1,11 +1,16 @@
 import React, {useState} from 'react';
-import { Grid,Button,} from "@material-ui/core";
+import { Grid,Button} from "@material-ui/core";
+import {useDispatch} from "react-redux";
 import InputComponent from "./InputComponent";
+;
+
 function RegistrationComponent(){
+
     let [state,setState] = useState(false);
     let onSubmit =(e)=>{
         e.preventDefault();
        setState(!state)
+
     }
    return (
     <form onSubmit={onSubmit}>
@@ -15,7 +20,7 @@ function RegistrationComponent(){
                 <InputComponent id="passwordInput" type="password" text={"Password"} state={state}/>
 
                 <Grid item>
-                    <Button type={"submit"} color={"primary"} variant={"outlined"} >Register now</Button>
+                    <Button type={"submit"} color={"primary"} variant={"outlined"}>Register now</Button>
                 </Grid>
               
             </Grid>

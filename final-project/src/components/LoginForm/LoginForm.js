@@ -11,7 +11,6 @@ function LoginForm() {
                 <Grid item><LoginTitle /></Grid>
                 <Grid item><LoginComponent /></Grid>
             </Grid>
-            <CalendarTable/>
         </Container>
     );
 }
