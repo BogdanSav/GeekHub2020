@@ -20,7 +20,7 @@ function TableBodyComponent() {
    console.log(calendar);
     return (
         <TableBody>
-                {calendar.map((week, index) => (
+                {calendar.map((week) => (
                        <TableRow>
                            {week.map((day)=>(
                                <TableCell>{day}</TableCell>

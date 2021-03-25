@@ -1,12 +1,16 @@
-import {REGISTER_NEW_USER} from "../actions/actions";
+import {REGISTER_NEW_USER,REGISTER} from "../actions/actions";
 
-let initialSate = {}
+let initialSate = {
+    register:false,
+    registrationData:{}
+}
 
 function registrationReducer(state = initialSate, action) {
     console.log(state);
     switch (action.type) {
+        case REGISTER: return {...state, register: action.payload};
         case REGISTER_NEW_USER:
-            return Object.assign(state, action.payload);
+            return {...state,registrationData:Object.assign(state.registrationData, action.payload) } ;
         default:
             return state;
     }

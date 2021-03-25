@@ -1,8 +1,15 @@
-import { REGISTER } from "../actions/actions";
-
-function loginReducer(state=false,action) {
+import { LOGGING_IN,LOGGING_DATA,LOGIN_AUTH } from "../actions/actions";
+let initialState = {
+    loggedIn:false,
+    loginingData: {},
+    auth:false
+}
+function loginReducer(state=initialState,action) {
+    console.log(action.type,state.auth)
     switch (action.type) {
-        case REGISTER : return action.payload;
+        case LOGIN_AUTH:return {...state,auth: action.payload};
+        case LOGGING_IN : return {...state,loggedIn: action.payload};
+        case LOGGING_DATA : return {...state, loginingData: Object.assign(state.loginingData,action.payload)}
         default :return state;
     }
 }

@@ -1,17 +1,22 @@
 import React,{useState,useEffect} from "react";
 import { Grid,FormControl,Input, InputLabel} from "@material-ui/core"
-import {useDispatch} from "react-redux";
-import {REGISTER_NEW_USER} from "../../redux/actions/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {REGISTER_NEW_USER,LOGGING_IN, LOGGING_DATA} from "../../redux/actions/actions";
 
-function InputComponent({id,type,holder,text,state}){
+function InputComponent({id,type,holder,text}){
+    let logining = useSelector(state => state.login.loggedIn);
+    let register = useSelector(state => state.registration.register);
     let [inputValue, setInputValue] = useState("");
     let dispatch = useDispatch();
     useEffect(()=>{
-        if(state&&inputValue){
+        if(register&&inputValue){
             dispatch({type: REGISTER_NEW_USER,payload:{[text]:inputValue}});
         }
+        if(logining&&inputValue){
+            dispatch({type:LOGGING_DATA,payload: {[text]:inputValue}});
+        }
         setInputValue("");
-    },[state]);
+    },[logining,register]);
     return(
         <Grid item>
             <FormControl size="medium">
