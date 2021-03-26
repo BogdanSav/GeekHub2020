@@ -1,7 +1,9 @@
 import React from "react";
 import {Typography} from "@material-ui/core";
+import {useSelector} from "react-redux";
 
 function MainTitle(){
-    return(<Typography variant={"h2"}>Hello User</Typography>)
+    let user = useSelector(state => state.login.loginingData.Email)
+    return(<Typography variant={"h2"}>Hello User {user}</Typography>)
 }
 export default MainTitle;

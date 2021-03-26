@@ -31,7 +31,7 @@ function App() {
                 <RegistrationForm/>
             </Route>
             <Route exact path={"/main"}>
-                {loggedIn  ?  <MainContainer/> : <Redirect to={"/login"}/>}
+                {loggedIn || register ?  <MainContainer/> : <Redirect to={"/login"}/>}
             </Route>
         </Switch>
 

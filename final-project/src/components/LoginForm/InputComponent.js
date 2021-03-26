@@ -14,7 +14,12 @@ function InputComponent({id,type,holder,text}){
         }
         if(logining&&inputValue){
             dispatch({type:LOGGING_DATA,payload: {[text]:inputValue}});
+
         }
+        else {
+            dispatch({type:LOGGING_DATA,payload: {}})
+
+        };
         setInputValue("");
     },[logining,register]);
     return(

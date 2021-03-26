@@ -3,7 +3,7 @@ import {TableHead,TableRow,TableCell} from "@material-ui/core";
 import moment from "moment";
 
 function TableHeadComponent(){
-    const weekdays = moment.localeData("en-gb").weekdaysShort(true);
+    const weekdays = moment.localeData("uk").weekdaysShort(true);
     return(
         <TableHead>
             <TableRow>

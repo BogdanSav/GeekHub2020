@@ -11,13 +11,14 @@ function LoginComponent() {
         if(state){
             history.push("/main");
         }
+
     })
     let onSubmit =(event)=>{
         event.preventDefault();
 
     }
     return (
-        <form onSubmit={onSubmit}>
+        <form>
             <Grid container direction="column" justify="space-between" alignItems="center" spacing={4}  >
                <InputComponent id={"emailInput"} type={"email"} holder={"type your email"}  text={"Email"} />
                <InputComponent id={"passwordInput"} type={"password"} text={"Password"}/>
