@@ -12,7 +12,7 @@ import RegistrationForm from "./components/LoginForm/RegistrationForm";
 // import CalendarTable from "./components/CalendarComponent/CalendarTable";
 import MainContainer from "./components/Main/MainContainer";
 function App() {
-    let loggedIn = useSelector(state => state.login.auth);
+    let loggedIn =   useSelector(state => state.login.auth);
     let register = useSelector(state => state.registration.register);
     useEffect(()=>{
             console.log(loggedIn);

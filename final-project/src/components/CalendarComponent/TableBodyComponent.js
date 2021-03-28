@@ -1,29 +1,19 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Button, TableBody, TableCell, TableRow} from "@material-ui/core";
-import moment from "moment";
-
+import DateComponent from "./DateComponent";
+import useCalendar from "../../hooks/useCalendar";
 function TableBodyComponent() {
-    let month = "June";
-    const startWeek = moment().month(month).startOf('month').week();
-    const endWeek = moment().month(month).endOf('month').week();
-    let calendar = [];
-    let weekdays = moment.localeData("en-gb").weekdaysShort(true);
-
-    for (let i = startWeek; i <= endWeek; i++) {
-        console.log(i)
-       calendar.push(weekdays.map((day ,index)=>{
-          return  moment().locale("en-gb").week(i-1).startOf('week').add(index, 'day').format(" D")
-       }))
-        // console.log(moment().month(month).date(i).format("ddd,MMM, D"));
-    }
-
-   console.log(calendar);
+     let getCalendar = useCalendar();
+     let [calendar,setCalendar] = useState(getCalendar.calendar)
+    useEffect(()=>{
+        setCalendar(getCalendar.calendar)
+    },[getCalendar.currMonth]);
     return (
         <TableBody>
-                {calendar.map((week) => (
-                       <TableRow>
-                           {week.map((day)=>(
-                               <TableCell>{day}</TableCell>
+                {calendar.map((week ,index) => (
+                       <TableRow key={index}>
+                           {week.map((day, ind)=>(
+                               <TableCell key={ind}><DateComponent day={day}/> </TableCell>
                            ))}
                        </TableRow>
                     )

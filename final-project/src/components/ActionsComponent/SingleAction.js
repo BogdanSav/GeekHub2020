@@ -1,22 +1,17 @@
 import React, {useState} from "react";
 
-import {Input ,Grid ,Select,MenuItem ,InputLabel, FormControl} from "@material-ui/core";
+import {Input ,Grid ,Select,MenuItem, Button} from "@material-ui/core";
+import {useDispatch} from "react-redux";
+import {DELETE} from "../../redux/actions/actions";
 
+function SingleAction({value,time,index}){
+    const dispatch = useDispatch()
 
-function SingleAction({value}){
-    const variants = ["single input", "multiple input"];
-    const [selectVar, setVar] = useState("select");
     return(
         <Grid item>
                 <Input value={value} />
-                <Select defaultValue={selectVar} value={selectVar} onChange={event => setVar(event.target.value)}>
-                    {variants.map((variant)=>(
-                        <MenuItem value={variant}>
-                            {variant}
-                        </MenuItem>
-                    ))}
-                </Select>
-            { selectVar=="single input" ? <span> 1</span>: null}
+                <Input value={time} style={{width:"100px"}}/>
+            <Button onClick={()=>{dispatch({type:DELETE,payload:index})}}> Delete</Button>
         </Grid>
     );
 }

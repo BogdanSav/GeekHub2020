@@ -6,4 +6,6 @@ export const LOGIN_AUTH = "LOGIN_AUTH";
 export const ADD_NEW = "ADD_NEW";
 export const DELETE = "DELETE";
 export const MODIFY = "MODIFY";
-
+export const CHANGE_MONTH = "CHANGE_MONTH"
+export const CHANGE_DAY = "CHANGE_DAY"
+export const GET_USER_DATA="GET_USER_DATA"

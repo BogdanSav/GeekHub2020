@@ -12,7 +12,7 @@ function LoginComponent() {
             history.push("/main");
         }
 
-    })
+    },[state])
     let onSubmit =(event)=>{
         event.preventDefault();
 

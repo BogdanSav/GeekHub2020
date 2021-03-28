@@ -5,7 +5,9 @@ const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt')
 const saltRounds = 10;
 
-const Auth = require('./dbSchemas/LoginModel')
+const Auth = require('./dbSchemas/LoginModel');
+const UserData = require('./dbSchemas/UserDataModel')
+const date = new Date;
 require("dotenv/config");
 const app = express();
 
@@ -23,9 +25,23 @@ app.post("/registerUser", async (req, res) => {
         email: req.body.Email,
         password: bcrypt.hashSync(req.body.Password, saltRounds),
     })
+    const newUserData = new UserData({
+        name: req.body.Name,
+        email: req.body.Email,
+        userData:[{
+            month: date.getMonth(),
+            day: date.getDate(),
+            actions: [{
+                text:"default action",
+                time:"00:00"
+            }]
+        }]
+    })
+
     try {
         const savedUser = await register.save();
-        console.log(savedUser);
+        const saveUserData = await newUserData.save();
+        console.log(savedUser,saveUserData);
     } catch (err) {
         console.log(err);
     }
@@ -43,8 +59,25 @@ app.post("/loggingIn",  async(req, res) => {
         console.log(err);
     }
 })
+//getData
+app.post("/getUserData",async (req, res) => {
+    console.log(req.body);
+    try {
+        const usersData = await UserData.find({
+            "email" : req.body.email,
+            "userData.month":req.body.month,
+            "userData.day":req.body.day,
+        },"userData");
+        console.log(usersData[0].userData[0].actions);
+        res.send({data:usersData[0].userData[0].actions})
+
+    }
+    catch (err){
+        console.log(err);
+    }
+});
 //connect to DB
-mongoose.connect(
+ mongoose.connect(
     process.env["DB_CONNECTION"],
     {
         useNewUrlParser: true,
