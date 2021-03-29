@@ -28,60 +28,96 @@ app.post("/registerUser", async (req, res) => {
     const newUserData = new UserData({
         name: req.body.Name,
         email: req.body.Email,
-        userData:[{
-            month: date.getMonth(),
-            day: date.getDate(),
-            actions: [{
-                text:"default action",
-                time:"00:00"
-            }]
+        month: date.getMonth(),
+        day: date.getDate(),
+        actions: [{
+
+            text: "default action",
+            time: "00:00"
         }]
+
     })
 
     try {
         const savedUser = await register.save();
         const saveUserData = await newUserData.save();
-        console.log(savedUser,saveUserData);
+        console.log(savedUser, saveUserData);
     } catch (err) {
         console.log(err);
     }
 })
 //auth
-app.post("/loggingIn",  async(req, res) => {
+app.post("/loggingIn", async (req, res) => {
     try {
-         const email = await Auth.exists({email: req.body.Email});
-         const password = await Auth.findOne({email:req.body.Email},"password");
-         if(email&&bcrypt.compareSync(req.body.Password,password.password)){
-             res.send({message:true});
-         }
-    }
-    catch (err){
+        const email = await Auth.exists({email: req.body.Email});
+        const password = await Auth.findOne({email: req.body.Email}, "password");
+        if (email && bcrypt.compareSync(req.body.Password, password.password)) {
+            res.send({message: true});
+        }
+    } catch (err) {
         console.log(err);
     }
 })
 //getData
-app.post("/getUserData",async (req, res) => {
+app.post("/getUserData", async (req, res) => {
     console.log(req.body);
     try {
         const usersData = await UserData.find({
-            "email" : req.body.email,
-            "userData.month":req.body.month,
-            "userData.day":req.body.day,
-        },"userData");
-        console.log(usersData[0].userData[0].actions);
-        res.send({data:usersData[0].userData[0].actions})
+            "email": req.body.email,
+            "month": req.body.month,
+            "day": req.body.day,
+        }, "actions");
+        console.log("getData",usersData);
+        res.send({data: usersData[0].actions})
 
-    }
-    catch (err){
-        console.log(err);
+    } catch (err) {
+        res.send({data:"nothing to see here"})
     }
 });
+app.post("/addAction", async (req, res) => {
+
+    try {
+        const data  =await UserData.exists({
+            "email": req.body.email,
+            "month": req.body.month,
+            "day": req.body.day,
+        })
+
+        if(data){
+            const usersData =await UserData.findOne({"email": req.body.email,
+                "month": req.body.month,
+                "day": req.body.day,},"actions")
+                usersData.actions = req.body.item;
+           try {
+               const savedData = await usersData.save();
+               console.log(savedData);
+           } catch (e){
+               console.log(e);
+           }
+        }
+        else {
+            const usersData = await UserData.create({
+                "name":"bogdan",
+                "email": req.body.email,
+                "month": req.body.month,
+                "day": req.body.day,
+                "actions": req.body.item
+            })
+            console.log(usersData);
+        }
+
+
+    } catch (err) {
+        console.log(err);
+    }
+})
 //connect to DB
- mongoose.connect(
+mongoose.connect(
     process.env["DB_CONNECTION"],
     {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
     },
     () => {
         console.log("connected to db")

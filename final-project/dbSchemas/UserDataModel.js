@@ -1,3 +1,5 @@
+
+
 const mongoose = require('mongoose');
 
 const UserData = mongoose.Schema({
@@ -10,10 +12,19 @@ const UserData = mongoose.Schema({
         type:String,
         required: true
     },
-    userData: {
-        type: Object,
+    month:{
+        type:Number,
         required: true
     },
+    day:{
+        type:Number,
+        required: true
+    },
+    actions:{
+        type:[],
+        required:true
+    }
+
 
 })
 module.exports = mongoose.model('UserData',UserData);

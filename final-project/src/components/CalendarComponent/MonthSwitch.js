@@ -14,22 +14,15 @@ function MonthSwitch() {
     useEffect(()=>{
         dispatch({type:CHANGE_MONTH,payload:currentMonth});
     },[currentMonth])
-    const prevMonth=()=>{
-        setCurrentMonth(currentMonth - 1);
 
-    }
-    const nextMonth=()=>{
-        setCurrentMonth(currentMonth + 1);
-
-    }
     let month = useCalendar();
     return (
         <React.Fragment>
-            <IconButton component={"span"} onClick={prevMonth}>
+            <IconButton component={"span"} onClick={()=>{currentMonth<=0 ? setCurrentMonth(0): setCurrentMonth(currentMonth - 1)}}>
                 <ArrowBackIosIcon fontSize={"large"}/>
             </IconButton>
             <Typography component={"span"} variant={"h3"}>{month.currMonth}</Typography>
-            <IconButton component={"span"} onClick={nextMonth}>
+            <IconButton component={"span"} onClick={()=>{currentMonth>=11 ? setCurrentMonth(11): setCurrentMonth(currentMonth + 1)}}>
                 <ArrowForwardIosIcon fontSize={"large"}/>
             </IconButton>
         </React.Fragment>
