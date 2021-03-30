@@ -2,14 +2,20 @@ import React, {useEffect, useState} from 'react';
 import { Grid } from "@material-ui/core";
 import InputComponent from "./InputComponent";
 import LoginButtons from "./LoginButtons"
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
+import {LOGGING_IN} from "../../redux/actions/actions";
 function LoginComponent() {
+    let dispatch = useDispatch()
     let state =useSelector(state => state.login.auth);
     let history =useHistory();
     useEffect(()=>{
         if(state){
             history.push("/main");
+        }
+        else{
+            history.push("/login");
+
         }
 
     },[state])

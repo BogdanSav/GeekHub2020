@@ -11,7 +11,7 @@ function ActionComponent(){
     }
     return(
         <Grid container direction={"column"} justify={"space-around"} alignItems={"center"}>
-            {typeof values =="string" ? <Grid item><Typography>{values}</Typography></Grid> :
+            { values.length===0 ? <Grid item><Typography>nothing to see here</Typography></Grid> :
                 values.map((val,index)=>(
                 <Grid key={index} item>
                     <SingleAction key={index} value={val.text} index={index} time={val.time}/>

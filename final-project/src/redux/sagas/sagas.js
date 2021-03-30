@@ -6,7 +6,7 @@ import {
     GET_USER_DATA,
     ADD_NEW,
     CHANGE_DAY,
-    DELETE, MODIFY
+    DELETE, MODIFY, GET_ACTIONS_COUNT
 } from "../actions/actions";
 
 export default function* sagaWatcher (){
@@ -100,4 +100,26 @@ function* getUserData(){
             yield console.log(e);
         }
 
+}
+
+function* getActionsCount() {
+    const email = yield select(state => state.login.loginingData.Email);
+    const id = yield select(state => state.calendar.id);
+    const data ={email,id};
+    try {
+        const jsonResp = yield fetch("http://localhost:5000/getActionsCount", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                "Accept": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        const response = yield jsonResp.json();
+
+        yield console.log(response.data);
+        yield put({type: GET_ACTIONS_COUNT, payload: {action:response.data,id}});
+    } catch (e) {
+        yield console.log(e);
+    }
 }

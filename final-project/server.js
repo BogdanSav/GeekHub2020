@@ -67,37 +67,38 @@ app.post("/getUserData", async (req, res) => {
             "month": req.body.month,
             "day": req.body.day,
         }, "actions");
-        console.log("getData",usersData);
+        console.log("getData", usersData);
         res.send({data: usersData[0].actions})
 
     } catch (err) {
-        res.send({data:"nothing to see here"})
+        res.send({data: "nothing to see here"})
     }
 });
 app.post("/addAction", async (req, res) => {
 
     try {
-        const data  =await UserData.exists({
+        const data = await UserData.exists({
             "email": req.body.email,
             "month": req.body.month,
             "day": req.body.day,
         })
 
-        if(data){
-            const usersData =await UserData.findOne({"email": req.body.email,
+        if (data) {
+            const usersData = await UserData.findOne({
+                "email": req.body.email,
                 "month": req.body.month,
-                "day": req.body.day,},"actions")
-                usersData.actions = req.body.item;
-           try {
-               const savedData = await usersData.save();
-               console.log(savedData);
-           } catch (e){
-               console.log(e);
-           }
-        }
-        else {
+                "day": req.body.day,
+            }, "actions")
+            usersData.actions = req.body.item;
+            try {
+                const savedData = await usersData.save();
+                console.log(savedData);
+            } catch (e) {
+                console.log(e);
+            }
+        } else {
             const usersData = await UserData.create({
-                "name":"bogdan",
+                "name": "bogdan",
                 "email": req.body.email,
                 "month": req.body.month,
                 "day": req.body.day,
@@ -112,6 +113,26 @@ app.post("/addAction", async (req, res) => {
     }
 })
 //connect to DB
+app.post("/getActionsCount", async (req, res) => {
+    try {
+        const actionsCount = await UserData.find({
+            "email": "test@test.com",
+            "month": 2
+        }, "actions day");
+        actionsCount.forEach(actions => {
+
+            if (req.body.id === actions.day) {
+                console.log(``);
+                res.send(actions.actions)
+            }
+            else res.send([])
+        });
+
+    } catch (e) {
+        console.log(e);
+    }
+})
+
 mongoose.connect(
     process.env["DB_CONNECTION"],
     {

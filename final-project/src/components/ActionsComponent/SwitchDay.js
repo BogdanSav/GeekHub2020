@@ -37,15 +37,18 @@ function SwitchDay() {
                 </IconButton></Grid>
             <Grid item>
                 <Input value={text} onChange={(event)=>{setText(event.target.value)}} placeholder={"your task"}/>
-                {selectVar === "single input" ?
-                    <Input value={time} onChange={(e)=>(setTime(e.target.value))} style={{width:"100px"}} placeholder={"time - hh:mm"}/>: null}
-                <Select defaultValue={selectVar} value={selectVar} onChange={event => setVar(event.target.value)}>
-                    <MenuItem value={"single input"} > single input</MenuItem>
-                    <MenuItem value={"multiple input"}> multiple input</MenuItem>
-                </Select>
+                <Input value={time} onChange={(e)=>(setTime(e.target.value))} style={{width:"100px"}} placeholder={"time - hh:mm"}/>
+
                 <Button onClick={()=>{
-                    dispatch({type:ADD_NEW,payload:{text,time}});
+                    const timeRule =/([0-1]?\d|2[0-3])(?::([0-5]?\d))?/;
+                    console.log((timeRule).test(time))
+                    if((timeRule).test(time)&&text){
+
+                        dispatch({type:ADD_NEW,payload:{text,time}});
+                    }
+                    else{ alert("empty action fields or invalid data")}
                     setText("")
+                    setTime("")
                 }}>Add</Button>
             </Grid>
         </Grid>

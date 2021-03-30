@@ -4,7 +4,8 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link,Redirect
+    Link,Redirect,
+    useHistory
 } from "react-router-dom";
 import {useSelector} from "react-redux";
 import LoginForm from "./components/LoginForm/LoginForm";
@@ -12,10 +13,11 @@ import RegistrationForm from "./components/LoginForm/RegistrationForm";
 // import CalendarTable from "./components/CalendarComponent/CalendarTable";
 import MainContainer from "./components/Main/MainContainer";
 function App() {
+
     let loggedIn =   useSelector(state => state.login.auth);
     let register = useSelector(state => state.registration.register);
     useEffect(()=>{
-            console.log(loggedIn);
+
     },[loggedIn])
 
     return (
