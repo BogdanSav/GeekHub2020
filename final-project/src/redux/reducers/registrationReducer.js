@@ -6,7 +6,7 @@ let initialSate = {
 }
 
 function registrationReducer(state = initialSate, action) {
-    console.log(state);
+
     switch (action.type) {
         case REGISTER: return {...state, register: action.payload};
         case REGISTER_NEW_USER:

@@ -1,8 +1,8 @@
 import React from 'react';
 import {LOGGING_IN} from "../../redux/actions/actions";
 import {useDispatch} from "react-redux";
-import { Grid,Button,Typography} from "@material-ui/core"
-import {Link ,useHistory} from "react-router-dom"
+import { Grid,Button,Typography} from "@material-ui/core";
+import {Link} from "react-router-dom";
 function LoginButtons() {
     let dispatch = useDispatch();
 

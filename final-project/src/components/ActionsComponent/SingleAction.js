@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 import {Button, Grid, Input} from "@material-ui/core";
 import {useDispatch} from "react-redux";
-import {DELETE,MODIFY} from "../../redux/actions/actions";
+import {DELETE, GET_ACTIONS_COUNT, MODIFY} from "../../redux/actions/actions";
 
 function SingleAction({value, time, index}) {
     const dispatch = useDispatch();
@@ -21,12 +21,14 @@ function SingleAction({value, time, index}) {
             }}
                    style={{width: "100px"}}
                    required/>
-            {isModify ? <Button  onClick={()=>{
-                dispatch({type:MODIFY, payload:{text,time:updatedTime, index}})
+            {isModify ? <Button onClick={() => {
+                dispatch({type: MODIFY, payload: {text, time: updatedTime, index}})
+                dispatch({type: GET_ACTIONS_COUNT})
                 setIsModify(false)
-            }}>Update</Button>: null }
+            }}>Update</Button> : null}
             <Button onClick={() => {
                 dispatch({type: DELETE, payload: index})
+                dispatch({type: GET_ACTIONS_COUNT})
             }}> Delete</Button>
         </Grid>
     );

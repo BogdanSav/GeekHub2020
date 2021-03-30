@@ -9,6 +9,7 @@ function actionsReducer(state =initialState, action){
             if (index !== action.payload) {
                 return item;
             }
+
         })
          case MODIFY: return state.map((item,index)=>{
              if(index === action.payload.index ){

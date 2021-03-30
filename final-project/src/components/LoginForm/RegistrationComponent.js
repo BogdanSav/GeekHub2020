@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import { Grid,Button} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import InputComponent from "./InputComponent";
-import {Link} from "react-router-dom";
 import {useHistory} from "react-router-dom";
 import {REGISTER} from "../../redux/actions/actions";
 
@@ -14,13 +13,10 @@ function RegistrationComponent(){
         if(register){
             history.push("/main");
         }
+        else history.push("/registration");
     },[register])
     let onSubmit =(e)=>{
-        console.log(register);
-
         e.preventDefault();
-
-
     }
     let reg =()=>{
         dispatch({type:REGISTER,payload:true});

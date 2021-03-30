@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
 import { Grid,FormControl,Input, InputLabel} from "@material-ui/core"
 import {useDispatch, useSelector} from "react-redux";
-import {REGISTER_NEW_USER,LOGGING_IN, LOGGING_DATA} from "../../redux/actions/actions";
+import {REGISTER_NEW_USER, LOGGING_DATA} from "../../redux/actions/actions";
 
 function InputComponent({id,type,holder,text}){
     let logining = useSelector(state => state.login.loggedIn);

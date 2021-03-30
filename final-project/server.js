@@ -20,28 +20,33 @@ app.use((req, res, next) => {
 });
 //registration of new user
 app.post("/registerUser", async (req, res) => {
-    const register = new Auth({
-        name: req.body.Name,
-        email: req.body.Email,
-        password: bcrypt.hashSync(req.body.Password, saltRounds),
-    })
-    const newUserData = new UserData({
-        name: req.body.Name,
-        email: req.body.Email,
-        month: date.getMonth(),
-        day: date.getDate(),
-        actions: [{
-
-            text: "default action",
-            time: "00:00"
-        }]
-
-    })
 
     try {
-        const savedUser = await register.save();
-        const saveUserData = await newUserData.save();
-        console.log(savedUser, saveUserData);
+        const registerCheck = await Auth.exists({
+            "email":req.body.Email,
+        })
+        if(!registerCheck){
+        const register = new Auth({
+            name: req.body.Name,
+            email: req.body.Email,
+            password: bcrypt.hashSync(req.body.Password, saltRounds),
+        })
+        const newUserData = new UserData({
+            name: req.body.Name,
+            email: req.body.Email,
+            month: date.getMonth(),
+            day: date.getDate(),
+            actions: []
+
+        })
+            const savedUser = await register.save();
+            const saveUserData = await newUserData.save();
+            console.log(savedUser, saveUserData);
+            res.send({message:"all done", state:true})
+        }
+        else res.send( {message:"user with this email already existed", state:false})
+
+
     } catch (err) {
         console.log(err);
     }
@@ -54,6 +59,7 @@ app.post("/loggingIn", async (req, res) => {
         if (email && bcrypt.compareSync(req.body.Password, password.password)) {
             res.send({message: true});
         }
+        else res.send({message: false});
     } catch (err) {
         console.log(err);
     }
@@ -112,27 +118,25 @@ app.post("/addAction", async (req, res) => {
         console.log(err);
     }
 })
-//connect to DB
 app.post("/getActionsCount", async (req, res) => {
+    console.log(req.body);
     try {
         const actionsCount = await UserData.find({
-            "email": "test@test.com",
-            "month": 2
-        }, "actions day");
-        actionsCount.forEach(actions => {
-
-            if (req.body.id === actions.day) {
-                console.log(``);
-                res.send(actions.actions)
-            }
-            else res.send([])
-        });
-
+            "email": req.body.email,
+            "month": req.body.id
+        }, "actions day",{new:true});
+        let countOfActions = {}
+        actionsCount.forEach((item) => {
+            Object.assign(countOfActions, {[item.day]: item.actions.length});
+        })
+        res.send(countOfActions)
+        console.log("counter", countOfActions);
     } catch (e) {
         console.log(e);
     }
 })
 
+//connect to DB
 mongoose.connect(
     process.env["DB_CONNECTION"],
     {

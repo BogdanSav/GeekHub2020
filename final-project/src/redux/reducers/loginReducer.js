@@ -5,7 +5,7 @@ let initialState = {
     auth:false
 }
 function loginReducer(state=initialState,action) {
-    console.log(action.type,state.auth)
+
     switch (action.type) {
         case LOGIN_AUTH:return {...state,auth: action.payload};
         case LOGGING_IN : return {...state,loggedIn: action.payload};
