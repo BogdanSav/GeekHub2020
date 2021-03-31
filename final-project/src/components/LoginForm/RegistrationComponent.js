@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Grid, Button, FormControl, InputLabel, Input} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import InputComponent from "./InputComponent";
+
 import {useHistory} from "react-router-dom";
-import {LOGIN_AUTH, REGISTER, REGISTER_NEW_USER} from "../../redux/actions/actions";
+import {LOGIN_AUTH, REGISTER_NEW_USER} from "../../redux/actions/actions";
 
 function RegistrationComponent(){
     let dispatch = useDispatch();

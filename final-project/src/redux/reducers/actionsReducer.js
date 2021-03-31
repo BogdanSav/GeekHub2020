@@ -1,8 +1,8 @@
-import {ADD_NEW,DELETE,MODIFY,SET_USER_DATA,GET_USER_DATA} from "../actions/actions";
+import {ADD_NEW,DELETE,MODIFY,GET_USER_DATA} from "../actions/actions";
 let initialState = []
 
 function actionsReducer(state =initialState, action){
-    console.log(action.type)
+
     switch (action.type){
          case GET_USER_DATA: state=[]; return state.concat(action.payload);
         case ADD_NEW: return state.concat([{text:action.payload.text, time:action.payload.time  ,modify:false}]);

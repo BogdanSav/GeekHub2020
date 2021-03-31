@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {CircularProgress, Grid, Typography} from "@material-ui/core";
 import SingleAction from "./SingleAction";
 import {useSelector} from "react-redux";
@@ -8,7 +8,7 @@ function ActionComponent() {
     if (!values) {
         return (<CircularProgress/>)
     }
-    // useEffect(()=>{},[values]);
+
     return (
         <Grid container direction={"column"} justify={"space-around"} alignItems={"center"}>
             {values.length === 0 ? <Grid item><Typography>nothing to see here</Typography></Grid> :

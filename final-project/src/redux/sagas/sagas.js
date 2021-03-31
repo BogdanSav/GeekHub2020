@@ -1,16 +1,15 @@
 import {put, select, takeLatest, takeLeading} from "redux-saga/effects";
 import {
     ADD_NEW,
-    CHANGE_DAY,
     DELETE,
     GET_ACTIONS_COUNT,
-    SET_USER_DATA,
     GET_USER_DATA,
     LOGGING_DATA,
     LOGIN_AUTH,
-    MODIFY, REGISTER,
+    MODIFY,
+    REGISTER,
     REGISTER_NEW_USER,
-    SET_ACTIONS_COUNT, CHANGE_MONTH
+    SET_ACTIONS_COUNT,
 } from "../actions/actions";
 
 export default function* sagaWatcher() {
@@ -24,21 +23,21 @@ export default function* sagaWatcher() {
 function* registerUser() {
     const registrationData = yield select(state => state.registration.registrationData);
 
-        try {
-            const response =yield fetch("http://localhost:5000/registerUser", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8',
-                    "Accept": "application/json",
-                },
-                body: JSON.stringify(registrationData),
-            });
-            const message = yield response.json();
-           yield alert(message.message);
-             yield put({type:REGISTER,payload:message.state})
-        } catch (e) {
-            console.log(e);
-        }
+    try {
+        const response = yield fetch("http://localhost:5000/registerUser", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                "Accept": "application/json",
+            },
+            body: JSON.stringify(registrationData),
+        });
+        const message = yield response.json();
+        yield alert(message.message);
+        yield put({type: REGISTER, payload: message.state})
+    } catch (e) {
+        console.log(e);
+    }
 
 }
 
@@ -55,7 +54,7 @@ function* logIn() {
                 body: JSON.stringify(login),
             });
             const response = yield jsonResp.json();
-            if(!response.message.status){
+            if (!response.message.status) {
                 alert(response.message.text);
             }
             yield put({type: LOGIN_AUTH, payload: response.message.status});
@@ -67,7 +66,7 @@ function* logIn() {
 }
 
 function* getUserData() {
-    const email = yield select(state => state.login.loginingData.email ||state.registration.registrationData.email);
+    const email = yield select(state => state.login.loginingData.email || state.registration.registrationData.email);
     const month = yield select(state => state.calendar.currentMonth);
     const day = yield select(state => state.calendar.currentDay);
     const data = {email, month, day}
@@ -92,7 +91,7 @@ function* getUserData() {
 }
 
 function* changeAction() {
-    const email = yield select(state => state.login.loginingData.email ||state.registration.registrationData.email);
+    const email = yield select(state => state.login.loginingData.email || state.registration.registrationData.email);
     const month = yield select(state => state.calendar.currentMonth);
     const day = yield select(state => state.calendar.currentDay);
     const item = yield select(state => state.actions);
@@ -113,7 +112,7 @@ function* changeAction() {
 }
 
 function* getActionsCount() {
-    const email = yield select(state => state.login.loginingData.email||state.registration.registrationData.email);
+    const email = yield select(state => state.login.loginingData.email || state.registration.registrationData.email);
     const id = yield select(state => state.calendar.currentMonth);
     const data = {email, id};
     try {

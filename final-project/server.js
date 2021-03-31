@@ -73,7 +73,6 @@ app.post("/getUserData", async (req, res) => {
             "month": req.body.month,
             "day": req.body.day,
         }, "actions");
-        console.log("getData", usersData);
         res.send({data: usersData[0].actions})
 
     } catch (err) {
