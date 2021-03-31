@@ -31,7 +31,7 @@ function DateComponent({day, count}) {
 
         }}>
             {
-                counter&&counter!==0 ? day + `(${counter})` : day
+                counter&&counter!==0 ?<b>{`${day}(${counter})`}</b> : day
             }
         </Typography>
     );
