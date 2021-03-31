@@ -3,7 +3,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import {Button, Grid, IconButton, Input, Typography} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import {ADD_NEW, CHANGE_DAY, GET_ACTIONS_COUNT} from "../../redux/actions/actions";
+import {ADD_NEW, CHANGE_DAY, GET_ACTIONS_COUNT, GET_USER_DATA} from "../../redux/actions/actions";
 import useCalendar from "../../hooks/useCalendar";
 
 function SwitchDay() {
@@ -18,6 +18,7 @@ function SwitchDay() {
 
     useEffect(() => {
         dispatch({type: CHANGE_DAY, payload: currDay})
+        dispatch({type:GET_USER_DATA,payload:[]});
         dispatch({type: GET_ACTIONS_COUNT})
     }, [month, currDay])
     useEffect(() => {

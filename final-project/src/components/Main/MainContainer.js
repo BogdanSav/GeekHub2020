@@ -1,14 +1,20 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
+import CircularProgress from "@material-ui/core";
 import MainTitle from "./MainTitle";
 import CalendarTable from "../CalendarComponent/CalendarTable";
 import ActionsContainer from "../ActionsComponent/ActionsContainer";
 import MonthSwitch from "../CalendarComponent/MonthSwitch";
+import {useSelector} from "react-redux";
 function MainContainer(){
     const actionStyle={
         border:"1px solid black",
         borderRadius: "10px",
+    }
+    let auth = useSelector(state => state.login.auth);
+    if(!auth){
+        return <CircularProgress/>
     }
     return(
         <Container maxWidth={"xl"}>

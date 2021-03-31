@@ -15,7 +15,7 @@ function TableBodyComponent() {
     const dispatch = useDispatch();
     useEffect(()=>{
          dispatch({type:GET_ACTIONS_COUNT})
-    },[getCalendar.currMonth ]);
+    },[getCalendar.currMonth]);
     useEffect(()=>{
         setCounter(count);
     },[count])

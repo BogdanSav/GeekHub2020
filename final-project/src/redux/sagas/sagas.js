@@ -4,25 +4,26 @@ import {
     CHANGE_DAY,
     DELETE,
     GET_ACTIONS_COUNT,
+    SET_USER_DATA,
     GET_USER_DATA,
     LOGGING_DATA,
     LOGIN_AUTH,
     MODIFY, REGISTER,
     REGISTER_NEW_USER,
-    SET_ACTIONS_COUNT
+    SET_ACTIONS_COUNT, CHANGE_MONTH
 } from "../actions/actions";
 
 export default function* sagaWatcher() {
-    yield takeLatest(REGISTER_NEW_USER, registerUser);
+    yield takeLeading(REGISTER_NEW_USER, registerUser);
     yield takeLeading(LOGGING_DATA, logIn);
-    yield takeLeading([GET_USER_DATA, CHANGE_DAY], getUserData);
+    yield takeLeading(GET_USER_DATA, getUserData);
     yield takeLatest([ADD_NEW, DELETE, MODIFY], changeAction);
     yield takeLatest(GET_ACTIONS_COUNT, getActionsCount)
 }
 
 function* registerUser() {
     const registrationData = yield select(state => state.registration.registrationData);
-    if (Object.keys(registrationData).length > 2) {
+
         try {
             const response =yield fetch("http://localhost:5000/registerUser", {
                 method: 'POST',
@@ -38,7 +39,6 @@ function* registerUser() {
         } catch (e) {
             console.log(e);
         }
-    }
 
 }
 
@@ -55,8 +55,10 @@ function* logIn() {
                 body: JSON.stringify(login),
             });
             const response = yield jsonResp.json();
-
-            yield put({type: LOGIN_AUTH, payload: response.message});
+            if(!response.message.status){
+                alert(response.message.text);
+            }
+            yield put({type: LOGIN_AUTH, payload: response.message.status});
         } catch (e) {
             yield console.log(e);
         }
@@ -65,7 +67,7 @@ function* logIn() {
 }
 
 function* getUserData() {
-    const email = yield select(state => state.login.loginingData.Email ||state.registration.registrationData.Email);
+    const email = yield select(state => state.login.loginingData.email ||state.registration.registrationData.email);
     const month = yield select(state => state.calendar.currentMonth);
     const day = yield select(state => state.calendar.currentDay);
     const data = {email, month, day}
@@ -90,7 +92,7 @@ function* getUserData() {
 }
 
 function* changeAction() {
-    const email = yield select(state => state.login.loginingData.Email ||state.registration.registrationData.Email);
+    const email = yield select(state => state.login.loginingData.email ||state.registration.registrationData.email);
     const month = yield select(state => state.calendar.currentMonth);
     const day = yield select(state => state.calendar.currentDay);
     const item = yield select(state => state.actions);
@@ -111,7 +113,7 @@ function* changeAction() {
 }
 
 function* getActionsCount() {
-    const email = yield select(state => state.login.loginingData.Email||state.registration.registrationData.Email);
+    const email = yield select(state => state.login.loginingData.email||state.registration.registrationData.email);
     const id = yield select(state => state.calendar.currentMonth);
     const data = {email, id};
     try {

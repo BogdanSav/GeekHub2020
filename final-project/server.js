@@ -23,17 +23,17 @@ app.post("/registerUser", async (req, res) => {
 
     try {
         const registerCheck = await Auth.exists({
-            "email":req.body.Email,
+            "email":req.body.email,
         })
         if(!registerCheck){
         const register = new Auth({
-            name: req.body.Name,
-            email: req.body.Email,
-            password: bcrypt.hashSync(req.body.Password, saltRounds),
+            name: req.body.name,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, saltRounds),
         })
         const newUserData = new UserData({
-            name: req.body.Name,
-            email: req.body.Email,
+            name: req.body.name,
+            email: req.body.email,
             month: date.getMonth(),
             day: date.getDate(),
             actions: []
@@ -54,12 +54,12 @@ app.post("/registerUser", async (req, res) => {
 //auth
 app.post("/loggingIn", async (req, res) => {
     try {
-        const email = await Auth.exists({email: req.body.Email});
-        const password = await Auth.findOne({email: req.body.Email}, "password");
-        if (email && bcrypt.compareSync(req.body.Password, password.password)) {
-            res.send({message: true});
+        const email = await Auth.exists({email: req.body.email});
+        const password = await Auth.findOne({email: req.body.email}, "password");
+        if (email && bcrypt.compareSync(req.body.password, password.password)) {
+            res.send({message:{text:"",status:true}});
         }
-        else res.send({message: false});
+        else res.send({message:{text:" wrong email or password",status:false}});
     } catch (err) {
         console.log(err);
     }
@@ -130,7 +130,6 @@ app.post("/getActionsCount", async (req, res) => {
             Object.assign(countOfActions, {[item.day]: item.actions.length});
         })
         res.send(countOfActions)
-        console.log("counter", countOfActions);
     } catch (e) {
         console.log(e);
     }

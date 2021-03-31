@@ -5,7 +5,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import {IconButton, Typography} from "@material-ui/core";
 
 import useCalendar from "../../hooks/useCalendar";
-import {CHANGE_MONTH} from "../../redux/actions/actions";
+import {CHANGE_MONTH, GET_USER_DATA} from "../../redux/actions/actions";
 
 function MonthSwitch() {
     const dispatch = useDispatch()
@@ -13,6 +13,7 @@ function MonthSwitch() {
     let [currentMonth, setCurrentMonth] = useState(initMonth);
     useEffect(() => {
         dispatch({type: CHANGE_MONTH, payload: currentMonth});
+        dispatch({type:GET_USER_DATA,payload:[]});
     }, [currentMonth])
 
     let month = useCalendar();
