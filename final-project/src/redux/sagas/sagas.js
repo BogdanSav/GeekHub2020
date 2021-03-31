@@ -18,7 +18,7 @@ export default function* sagaWatcher() {
     yield takeLeading(LOGGING_DATA, logIn);
     yield takeLeading(GET_USER_DATA, getUserData);
     yield takeLatest([ADD_NEW, DELETE, MODIFY], changeAction);
-    yield takeLatest(GET_ACTIONS_COUNT, getActionsCount)
+    yield takeLeading(GET_ACTIONS_COUNT, getActionsCount)
 }
 
 function* registerUser() {

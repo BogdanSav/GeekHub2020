@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import CircularProgress from "@material-ui/core";
+import CircularProgress, {Box} from "@material-ui/core";
 import MainTitle from "./MainTitle";
 import CalendarTable from "../CalendarComponent/CalendarTable";
 import ActionsContainer from "../ActionsComponent/ActionsContainer";
@@ -18,10 +18,15 @@ function MainContainer(){
     }
     return(
         <Container maxWidth={"xl"}>
-            <MainTitle/>
-            <MonthSwitch/>
-            <Grid container justify={"space-around"} alignItems={"flex-start"}alignContent={"center"} >
+            <Box component={"div"} align="center" style={{marginTop:"50px"}}>
+                <MainTitle />
+            </Box>
+            <Grid container justify={"space-around"} alignItems={"flex-start"}alignContent={"center"} style={{marginTop:"50px"}}>
                 <Grid item xl={7} style={actionStyle}>
+                    <Box component={"div"} align={"center"}>
+                        <MonthSwitch/>
+                    </Box>
+
                     <CalendarTable/>
                 </Grid>
                 <Grid item xl={4} style={actionStyle} >
