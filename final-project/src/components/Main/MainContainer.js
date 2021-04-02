@@ -12,7 +12,7 @@ function MainContainer(){
         border:"1px solid black",
         borderRadius: "10px",
     }
-    let auth = useSelector(state => state.login.auth);
+    const auth = useSelector(state => state.login.auth);
     if(!auth){
         return <CircularProgress/>
     }

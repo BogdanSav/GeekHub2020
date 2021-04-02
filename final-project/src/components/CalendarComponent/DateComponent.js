@@ -16,7 +16,7 @@ const style = makeStyles({
 function DateComponent({day, count}) {
     const dispatch = useDispatch();
     const classes = style();
-    let [counter,setCounter]= useState(count);
+    const [counter,setCounter]= useState(count);
     const state = useSelector(state => state.calendar.actionCount);
     useEffect(()=>{
         setCounter(count);

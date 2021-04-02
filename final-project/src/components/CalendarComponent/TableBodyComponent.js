@@ -5,11 +5,11 @@ import useCalendar from "../../hooks/useCalendar";
 import {useDispatch, useSelector} from "react-redux";
 import {GET_ACTIONS_COUNT} from "../../redux/actions/actions";
 function TableBodyComponent() {
-    let getCalendar = useCalendar();
+    const getCalendar = useCalendar();
     const dispatch = useDispatch();
-    let [calendar,setCalendar] = useState(getCalendar.calendar)
-    let count = useSelector(state => state.calendar.actionCount)
-    let[counter,setCounter] = useState(count);
+    const [calendar,setCalendar] = useState(getCalendar.calendar)
+    const count = useSelector(state => state.calendar.actionCount)
+    const[counter,setCounter] = useState(count);
     useEffect(()=>{
         dispatch({type:GET_ACTIONS_COUNT})
         setCalendar(getCalendar.calendar)

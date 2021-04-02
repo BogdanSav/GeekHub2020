@@ -4,7 +4,6 @@ import moment from "moment";
 
 function TableHeadComponent(){
     const weekdays = moment.localeData("en-gb").weekdaysShort(true);
-    console.log(1);
     return(
         <TableHead>
             <TableRow>
