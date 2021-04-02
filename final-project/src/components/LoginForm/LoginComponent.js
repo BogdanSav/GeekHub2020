@@ -7,17 +7,17 @@ import {LOGGING_DATA} from "../../redux/actions/actions";
 
 
 function LoginComponent() {
-    let dispatch = useDispatch()
-    let state = useSelector(state => state.login.auth);
-    let [email,setEmail] = useState("")
-    let [password,setPassword] = useState("")
-    let history = useHistory();
+    const dispatch = useDispatch()
+    const state = useSelector(state => state.login.auth);
+    const [email,setEmail] = useState("")
+    const [password,setPassword] = useState("")
+    const history = useHistory();
     useEffect(() => {
         if (state) {
             history.push("/main");
         }
     }, [state])
-    let onSubmit = (event) => {
+    const onSubmit = (event) => {
         event.preventDefault();
         if(email&&password){
             dispatch({type:LOGGING_DATA,payload:{email,password}})

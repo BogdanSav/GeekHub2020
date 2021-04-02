@@ -6,12 +6,12 @@ import {useHistory} from "react-router-dom";
 import {LOGIN_AUTH, REGISTER_NEW_USER} from "../../redux/actions/actions";
 
 function RegistrationComponent(){
-    let dispatch = useDispatch();
-    let register = useSelector(state => state.registration.register);
-    let [email,setEmail] = useState("")
-    let [password,setPassword] = useState("");
-    let [name,setName] = useState("")
-    let history = useHistory();
+    const dispatch = useDispatch();
+    const register = useSelector(state => state.registration.register);
+    const [email,setEmail] = useState("")
+    const [password,setPassword] = useState("");
+    const [name,setName] = useState("")
+    const history = useHistory();
     useEffect(()=>{
         if(register){
             dispatch({type:LOGIN_AUTH,payload:true})
@@ -19,7 +19,7 @@ function RegistrationComponent(){
         }
     },[register])
 
-    let onSubmit =(e)=>{
+    const onSubmit =(e)=>{
         e.preventDefault();
         dispatch({type:REGISTER_NEW_USER,payload:{ name, email, password}});
         setName("");

@@ -7,14 +7,14 @@ import {ADD_NEW, CHANGE_DAY, GET_ACTIONS_COUNT, GET_USER_DATA} from "../../redux
 import useCalendar from "../../hooks/useCalendar";
 
 function SwitchDay() {
-    let day = useSelector(state => state.calendar.currentDay)
+    const day = useSelector(state => state.calendar.currentDay)
     const [currDay, setCurrDay] = useState(day);
-    let month = useCalendar().currMonth;
-    let lastDay = useCalendar().endDays
+    const month = useCalendar().currMonth;
+    const lastDay = useCalendar().endDays
     const dispatch = useDispatch();
 
-    let [text, setText] = useState("");
-    let [time, setTime] = useState("");
+    const [text, setText] = useState("");
+    const [time, setTime] = useState("");
 
     useEffect(() => {
         dispatch({type: CHANGE_DAY, payload: currDay})

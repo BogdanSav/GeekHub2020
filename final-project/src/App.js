@@ -7,8 +7,8 @@ import MainContainer from "./components/Main/MainContainer";
 
 function App() {
 
-    let loggedIn = useSelector(state => state.login.auth);
-    let register = useSelector(state => state.registration.register);
+    const loggedIn = useSelector(state => state.login.auth);
+    const register = useSelector(state => state.registration.register);
 
     return (
         <Router>

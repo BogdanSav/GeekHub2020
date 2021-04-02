@@ -9,14 +9,14 @@ import {CHANGE_MONTH, GET_USER_DATA} from "../../redux/actions/actions";
 
 function MonthSwitch() {
     const dispatch = useDispatch()
-    let initMonth = useSelector(state => state.calendar.currentMonth);
-    let [currentMonth, setCurrentMonth] = useState(initMonth);
+    const initMonth = useSelector(state => state.calendar.currentMonth);
+    const [currentMonth, setCurrentMonth] = useState(initMonth);
     useEffect(() => {
         dispatch({type: CHANGE_MONTH, payload: currentMonth});
         dispatch({type:GET_USER_DATA,payload:[]});
     }, [currentMonth])
 
-    let month = useCalendar();
+    const month = useCalendar();
     return (
         <React.Fragment>
             <IconButton component={"span"} onClick={() => {
@@ -26,7 +26,7 @@ function MonthSwitch() {
             </IconButton>
             <Typography component={"span"} variant={"h3"}>{month.currMonth}</Typography>
             <IconButton component={"span"} onClick={() => {
-                currentMonth >11 ? setCurrentMonth(11) : setCurrentMonth(currentMonth + 1)
+                currentMonth >=11 ? setCurrentMonth(11) : setCurrentMonth(currentMonth + 1)
             }}>
                 <ArrowForwardIosIcon fontSize={"large"}/>
             </IconButton>
