@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Grid, Button, FormControl, InputLabel, Input} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -18,6 +18,15 @@ function RegistrationComponent(){
             history.push("/main");
         }
     },[register])
+    const handleNameChange = useCallback((e)=>{
+        setName(e.target.value)
+    },[name])
+    const handleEmailChange = useCallback((e)=>{
+        setEmail(e.target.value)
+    },[email])
+    const handlePasswordChange = useCallback((e)=>{
+        setPassword(e.target.value)
+    },[password])
 
     const onSubmit =(e)=>{
         e.preventDefault();
@@ -32,19 +41,19 @@ function RegistrationComponent(){
                 <Grid item>
                     <FormControl size="medium">
                         <InputLabel htmlFor={"nameInput"}>Name</InputLabel>
-                        <Input type={"text"} id={"nameInput"} value={name} onChange={(e)=>{setName(e.target.value)}}  required placeholder={"Type your name"}/>
+                        <Input type={"text"} id={"nameInput"} value={name} onChange={handleNameChange}  required placeholder={"Type your name"}/>
                     </FormControl>
                 </Grid>
                 <Grid item>
                     <FormControl size="medium">
                         <InputLabel htmlFor={"emailInput"}>Email</InputLabel>
-                        <Input type={"email"} id={"emailInput"} value={email} onChange={(e)=>{setEmail(e.target.value)}}  required placeholder={"Type your email"}/>
+                        <Input type={"email"} id={"emailInput"} value={email} onChange={handleEmailChange}  required placeholder={"Type your email"}/>
                     </FormControl>
                 </Grid>
                 <Grid item>
                     <FormControl size="medium">
                         <InputLabel htmlFor={"passwordInput"}>Password</InputLabel>
-                        <Input type={"password"} id={"passwordInput"} value={password} onChange={(e)=>{setPassword(e.target.value)}}  required placeholder={"Type your password"}/>
+                        <Input type={"password"} id={"passwordInput"} value={password} onChange={handlePasswordChange}  required placeholder={"Type your password"}/>
                     </FormControl>
                 </Grid>
                 <Grid item>
