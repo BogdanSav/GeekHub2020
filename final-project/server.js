@@ -60,7 +60,7 @@ app.post("/loggingIn", async (req, res) => {
         }
         else res.send({message:{text:" wrong email or password",status:false}});
     } catch (err) {
-        console.log(err);
+        res.send({data:"something went wrong"})
     }
 })
 //getData
@@ -113,7 +113,7 @@ app.post("/addAction", async (req, res) => {
 
 
     } catch (err) {
-        console.log(err);
+        res.send({data:"something went wrong"})
     }
 })
 app.post("/getActionsCount", async (req, res) => {
@@ -129,7 +129,7 @@ app.post("/getActionsCount", async (req, res) => {
         })
         res.send(countOfActions)
     } catch (e) {
-        console.log(e);
+        res.send({data:"something went wrong"})
     }
 })
 

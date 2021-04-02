@@ -1,7 +1,7 @@
 import {put, select, takeLatest, takeLeading} from "redux-saga/effects";
 import {
     ADD_NEW,
-    DELETE,
+    DELETE, ERROR,
     GET_ACTIONS_COUNT,
     GET_USER_DATA,
     LOGGING_DATA,
@@ -36,7 +36,8 @@ function* registerUser() {
         yield alert(message.message);
         yield put({type: REGISTER, payload: message.state})
     } catch (e) {
-        console.log(e);
+        yield put({type:ERROR,payload:e.message})
+
     }
 
 }
@@ -58,7 +59,7 @@ function* logIn() {
         }
         yield put({type: LOGIN_AUTH, payload: response.message.status});
     } catch (e) {
-        yield console.log(e);
+        yield put({type:ERROR,payload:e.message})
     }
 
 }
@@ -79,7 +80,8 @@ function* getUserData() {
         const response = yield jsonResp.json();
         yield put({type: GET_USER_DATA, payload: response.data});
     } catch (e) {
-        yield console.log(e);
+        yield put({type:ERROR,payload:e.message})
+
     }
 }
 
@@ -98,7 +100,7 @@ function* changeAction() {
             body: JSON.stringify({email, month, day, item}),
         });
     } catch (e) {
-        yield console.log(e);
+        yield put({type:ERROR,payload:e.message})
     }
 
 }
@@ -118,6 +120,6 @@ function* getActionsCount() {
         const response = yield jsonResp.json();
         yield put({type: SET_ACTIONS_COUNT, payload: {action: response}});
     } catch (e) {
-        yield console.log(e);
+        yield put({type:ERROR,payload:e.data})
     }
 }

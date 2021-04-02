@@ -12,3 +12,4 @@ export const GET_USER_DATA="GET_USER_DATA";
 export const SET_USER_DATA="SET_USER_DATA";
 export const GET_ACTIONS_COUNT="GET_ACTIONS_COUNT";
 export const SET_ACTIONS_COUNT="SET_ACTIONS_COUNT";
+export const ERROR="ERROR";

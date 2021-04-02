@@ -4,11 +4,16 @@ import {useSelector} from "react-redux";
 import LoginForm from "./components/LoginForm/LoginForm";
 import RegistrationForm from "./components/LoginForm/RegistrationForm";
 import MainContainer from "./components/Main/MainContainer";
+import {ErrorComponent} from "./components/ErrorComponent";
 
 function App() {
 
     const loggedIn = useSelector(state => state.login.auth);
     const register = useSelector(state => state.registration.register);
+    const error = useSelector(state => state.error);
+    if(error){
+        return <ErrorComponent/>
+    }
 
     return (
         <Router>
