@@ -26,7 +26,7 @@ function MonthSwitch() {
             </IconButton>
             <Typography component={"span"} variant={"h3"}>{month.currMonth}</Typography>
             <IconButton component={"span"} onClick={() => {
-                currentMonth >= 11 ? setCurrentMonth(11) : setCurrentMonth(currentMonth + 1)
+                currentMonth >11 ? setCurrentMonth(11) : setCurrentMonth(currentMonth + 1)
             }}>
                 <ArrowForwardIosIcon fontSize={"large"}/>
             </IconButton>

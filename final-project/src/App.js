@@ -9,9 +9,6 @@ function App() {
 
     let loggedIn = useSelector(state => state.login.auth);
     let register = useSelector(state => state.registration.register);
-    useEffect(() => {
-
-    }, [loggedIn])
 
     return (
         <Router>

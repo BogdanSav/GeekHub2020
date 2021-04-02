@@ -5,11 +5,12 @@ function actionsReducer(state =initialState, action){
 
     switch (action.type){
          case GET_USER_DATA: state=[]; return state.concat(action.payload);
-        case ADD_NEW: return state.concat([{text:action.payload.text, time:action.payload.time  ,modify:false}]);
+        case ADD_NEW: return state.concat([{text:action.payload.text, time:action.payload.time}]);
         case DELETE: return state.filter((item, index)=>{
             if (index !== action.payload) {
                 return item;
             }
+            else return null;
 
         })
          case MODIFY: return state.map((item,index)=>{

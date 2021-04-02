@@ -8,7 +8,7 @@ function ActionComponent() {
     if (!values) {
         return (<CircularProgress/>)
     }
-
+    console.log(values);
     return (
         <Grid container direction={"column"} justify={"space-around"} alignItems={"center"}>
             {values.length === 0 ? <Grid item><Typography>nothing to see here</Typography></Grid> :

@@ -1,5 +1,4 @@
 const express = require("express");
-const {resolve} = require("path");
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt')
@@ -76,7 +75,7 @@ app.post("/getUserData", async (req, res) => {
         res.send({data: usersData[0].actions})
 
     } catch (err) {
-        res.send({data: "nothing to see here"})
+        res.send({data:[]})
     }
 });
 app.post("/addAction", async (req, res) => {
