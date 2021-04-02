@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from "react";
-import { TableBody, TableCell, TableRow,CircularProgress } from "@material-ui/core";
+import { TableBody, TableCell, TableRow } from "@material-ui/core";
 import DateComponent from "./DateComponent";
 import useCalendar from "../../hooks/useCalendar";
 import {useDispatch, useSelector} from "react-redux";

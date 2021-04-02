@@ -32,7 +32,7 @@ function DateComponent({day, count}) {
     return (
         <Typography className={classes.typography} variant="body1" onClick={handleClick}>
             {
-                counter&&counter!==0 ?<b>{`${day}(${counter})`}</b> : day
+                counter ?<b>{`${day}(${counter})`}</b> : day
             }
         </Typography>
     );

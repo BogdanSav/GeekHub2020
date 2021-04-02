@@ -14,7 +14,7 @@ function useCalendar() {
         return moment().locale('uk').isoWeek(week).isoWeekday(day).format("D")
     }
     let weekdays = moment.localeData("uk").weekdaysShort(true);
-    startWeek >= 52 ?startWeek = 0 : startWeek;
+    startWeek = startWeek >= 52 ?startWeek = 0 : startWeek;
     for (let i = startWeek; i <= endWeek; i++) {
         calendar.push(weekdays.map((day, index) => {
             if(i===startWeek&&dayOfWeek(i,index+1)>22 )return null;
@@ -23,7 +23,6 @@ function useCalendar() {
             return moment().locale("uk").isoWeek(i).startOf('week').isoWeekday(index+1).format(" D")
         }))
     }
-
     return {calendar, currMonth, endDays};
 
 }

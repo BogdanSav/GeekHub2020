@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {BrowserRouter as Router, Redirect, Route, Switch,} from "react-router-dom";
 import {useSelector} from "react-redux";
 import LoginForm from "./components/LoginForm/LoginForm";
